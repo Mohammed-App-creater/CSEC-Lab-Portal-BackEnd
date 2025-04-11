@@ -1,0 +1,12 @@
+{
+    "cSpell.words": [
+        "autoincrement"
+    ],
+    "[prisma]": {
+        "editor.defaultFormatter": "Prisma.prisma",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit"
+        }
+    }
+}

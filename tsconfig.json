@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                      // Modern JavaScript output
+    "module": "commonjs",                 // Node.js module system
+    "outDir": "./dist",                   // Compiled output folder
+    "rootDir": "./src",                   // Source folder
+    "strict": true,                       // Enable strict type checking                 // Generate source maps
+    "esModuleInterop": true,              // Allow default imports from CommonJS
+    "skipLibCheck": true,                 // Skip checking .d.ts files
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,            // Allow importing JSON files
+    "baseUrl": "./src"                    // Optional: cleaner import paths
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
