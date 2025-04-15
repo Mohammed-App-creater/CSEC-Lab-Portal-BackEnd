@@ -206,7 +206,7 @@ export const Tag: {
 export type Tag = (typeof Tag)[keyof typeof Tag]
 
 
-export const state: {
+export const Status: {
   Planned: 'Planned',
   Ongoing: 'Ongoing',
   Completed: 'Completed',
@@ -214,7 +214,7 @@ export const state: {
   Postponed: 'Postponed'
 };
 
-export type state = (typeof state)[keyof typeof state]
+export type Status = (typeof Status)[keyof typeof Status]
 
 
 export const TaskStatus: {
@@ -332,9 +332,9 @@ export type Tag = $Enums.Tag
 
 export const Tag: typeof $Enums.Tag
 
-export type state = $Enums.state
+export type Status = $Enums.Status
 
-export const state: typeof $Enums.state
+export const Status: typeof $Enums.Status
 
 export type TaskStatus = $Enums.TaskStatus
 
@@ -3344,12 +3344,14 @@ export namespace Prisma {
    */
 
   export type DivisionsCountOutputType = {
+    user: number
     socialLinks: number
     sessions: number
     groups: number
   }
 
   export type DivisionsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | DivisionsCountOutputTypeCountUserArgs
     socialLinks?: boolean | DivisionsCountOutputTypeCountSocialLinksArgs
     sessions?: boolean | DivisionsCountOutputTypeCountSessionsArgs
     groups?: boolean | DivisionsCountOutputTypeCountGroupsArgs
@@ -3364,6 +3366,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the DivisionsCountOutputType
      */
     select?: DivisionsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DivisionsCountOutputType without action
+   */
+  export type DivisionsCountOutputTypeCountUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
   }
 
   /**
@@ -3807,8 +3816,10 @@ export namespace Prisma {
     cvUrl: string | null
     lastSeen: Date | null
     role: $Enums.RoleType | null
+    isDeleted: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    deletedAt: Date | null
     DivisionId: string | null
     UserSettingId: string | null
     DivisionHeadID: string | null
@@ -3833,8 +3844,10 @@ export namespace Prisma {
     cvUrl: string | null
     lastSeen: Date | null
     role: $Enums.RoleType | null
+    isDeleted: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    deletedAt: Date | null
     DivisionId: string | null
     UserSettingId: string | null
     DivisionHeadID: string | null
@@ -3859,8 +3872,10 @@ export namespace Prisma {
     cvUrl: number
     lastSeen: number
     role: number
+    isDeleted: number
     createdAt: number
     updatedAt: number
+    deletedAt: number
     DivisionId: number
     UserSettingId: number
     DivisionHeadID: number
@@ -3887,8 +3902,10 @@ export namespace Prisma {
     cvUrl?: true
     lastSeen?: true
     role?: true
+    isDeleted?: true
     createdAt?: true
     updatedAt?: true
+    deletedAt?: true
     DivisionId?: true
     UserSettingId?: true
     DivisionHeadID?: true
@@ -3913,8 +3930,10 @@ export namespace Prisma {
     cvUrl?: true
     lastSeen?: true
     role?: true
+    isDeleted?: true
     createdAt?: true
     updatedAt?: true
+    deletedAt?: true
     DivisionId?: true
     UserSettingId?: true
     DivisionHeadID?: true
@@ -3939,8 +3958,10 @@ export namespace Prisma {
     cvUrl?: true
     lastSeen?: true
     role?: true
+    isDeleted?: true
     createdAt?: true
     updatedAt?: true
+    deletedAt?: true
     DivisionId?: true
     UserSettingId?: true
     DivisionHeadID?: true
@@ -4038,8 +4059,10 @@ export namespace Prisma {
     cvUrl: string | null
     lastSeen: Date
     role: $Enums.RoleType
+    isDeleted: boolean
     createdAt: Date
     updatedAt: Date
+    deletedAt: Date | null
     DivisionId: string | null
     UserSettingId: string | null
     DivisionHeadID: string | null
@@ -4081,8 +4104,10 @@ export namespace Prisma {
     cvUrl?: boolean
     lastSeen?: boolean
     role?: boolean
+    isDeleted?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
     DivisionId?: boolean
     UserSettingId?: boolean
     DivisionHeadID?: boolean
@@ -4127,8 +4152,10 @@ export namespace Prisma {
     cvUrl?: boolean
     lastSeen?: boolean
     role?: boolean
+    isDeleted?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
     DivisionId?: boolean
     UserSettingId?: boolean
     DivisionHeadID?: boolean
@@ -4154,8 +4181,10 @@ export namespace Prisma {
     cvUrl?: boolean
     lastSeen?: boolean
     role?: boolean
+    isDeleted?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
     DivisionId?: boolean
     UserSettingId?: boolean
     DivisionHeadID?: boolean
@@ -4181,15 +4210,17 @@ export namespace Prisma {
     cvUrl?: boolean
     lastSeen?: boolean
     role?: boolean
+    isDeleted?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
     DivisionId?: boolean
     UserSettingId?: boolean
     DivisionHeadID?: boolean
     AttendanceSummaryId?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "middleName" | "lastName" | "gender" | "email" | "password" | "phone_number" | "telegramUserName" | "bio" | "berthDate" | "profileImageUrl" | "clubStatus" | "specialty" | "cvUrl" | "lastSeen" | "role" | "createdAt" | "updatedAt" | "DivisionId" | "UserSettingId" | "DivisionHeadID" | "AttendanceSummaryId", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "middleName" | "lastName" | "gender" | "email" | "password" | "phone_number" | "telegramUserName" | "bio" | "berthDate" | "profileImageUrl" | "clubStatus" | "specialty" | "cvUrl" | "lastSeen" | "role" | "isDeleted" | "createdAt" | "updatedAt" | "deletedAt" | "DivisionId" | "UserSettingId" | "DivisionHeadID" | "AttendanceSummaryId", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     universityInfo?: boolean | User$universityInfoArgs<ExtArgs>
     Divisions?: boolean | User$DivisionsArgs<ExtArgs>
@@ -4260,8 +4291,10 @@ export namespace Prisma {
       cvUrl: string | null
       lastSeen: Date
       role: $Enums.RoleType
+      isDeleted: boolean
       createdAt: Date
       updatedAt: Date
+      deletedAt: Date | null
       DivisionId: string | null
       UserSettingId: string | null
       DivisionHeadID: string | null
@@ -4725,8 +4758,10 @@ export namespace Prisma {
     readonly cvUrl: FieldRef<"User", 'String'>
     readonly lastSeen: FieldRef<"User", 'DateTime'>
     readonly role: FieldRef<"User", 'RoleType'>
+    readonly isDeleted: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly deletedAt: FieldRef<"User", 'DateTime'>
     readonly DivisionId: FieldRef<"User", 'String'>
     readonly UserSettingId: FieldRef<"User", 'String'>
     readonly DivisionHeadID: FieldRef<"User", 'String'>
@@ -8039,7 +8074,7 @@ export namespace Prisma {
     name: "Divisions"
     objects: {
       currentHead: Prisma.$UserPayload<ExtArgs> | null
-      user: Prisma.$UserPayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs>[]
       socialLinks: Prisma.$socialLinkPayload<ExtArgs>[]
       sessions: Prisma.$SessionsPayload<ExtArgs>[]
       groups: Prisma.$GroupsPayload<ExtArgs>[]
@@ -8448,7 +8483,7 @@ export namespace Prisma {
   export interface Prisma__DivisionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     currentHead<T extends Divisions$currentHeadArgs<ExtArgs> = {}>(args?: Subset<T, Divisions$currentHeadArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    user<T extends Divisions$userArgs<ExtArgs> = {}>(args?: Subset<T, Divisions$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends Divisions$userArgs<ExtArgs> = {}>(args?: Subset<T, Divisions$userArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     socialLinks<T extends Divisions$socialLinksArgs<ExtArgs> = {}>(args?: Subset<T, Divisions$socialLinksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$socialLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends Divisions$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Divisions$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     groups<T extends Divisions$groupsArgs<ExtArgs> = {}>(args?: Subset<T, Divisions$groupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -8920,6 +8955,11 @@ export namespace Prisma {
      */
     include?: UserInclude<ExtArgs> | null
     where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
@@ -13466,7 +13506,7 @@ export namespace Prisma {
     endTime: Date | null
     location: string | null
     visibility: $Enums.EventVisibility | null
-    state: $Enums.state | null
+    status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
     creatorId: string | null
@@ -13481,7 +13521,7 @@ export namespace Prisma {
     endTime: Date | null
     location: string | null
     visibility: $Enums.EventVisibility | null
-    state: $Enums.state | null
+    status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
     creatorId: string | null
@@ -13497,7 +13537,7 @@ export namespace Prisma {
     location: number
     tags: number
     visibility: number
-    state: number
+    status: number
     createdAt: number
     updatedAt: number
     creatorId: number
@@ -13514,7 +13554,7 @@ export namespace Prisma {
     endTime?: true
     location?: true
     visibility?: true
-    state?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     creatorId?: true
@@ -13529,7 +13569,7 @@ export namespace Prisma {
     endTime?: true
     location?: true
     visibility?: true
-    state?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     creatorId?: true
@@ -13545,7 +13585,7 @@ export namespace Prisma {
     location?: true
     tags?: true
     visibility?: true
-    state?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     creatorId?: true
@@ -13634,7 +13674,7 @@ export namespace Prisma {
     location: string | null
     tags: $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt: Date
     updatedAt: Date
     creatorId: string
@@ -13667,7 +13707,7 @@ export namespace Prisma {
     location?: boolean
     tags?: boolean
     visibility?: boolean
-    state?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     creatorId?: boolean
@@ -13690,7 +13730,7 @@ export namespace Prisma {
     location?: boolean
     tags?: boolean
     visibility?: boolean
-    state?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     creatorId?: boolean
@@ -13707,7 +13747,7 @@ export namespace Prisma {
     location?: boolean
     tags?: boolean
     visibility?: boolean
-    state?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     creatorId?: boolean
@@ -13724,13 +13764,13 @@ export namespace Prisma {
     location?: boolean
     tags?: boolean
     visibility?: boolean
-    state?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     creatorId?: boolean
   }
 
-  export type EventsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startDate" | "startTime" | "endTime" | "location" | "tags" | "visibility" | "state" | "createdAt" | "updatedAt" | "creatorId", ExtArgs["result"]["events"]>
+  export type EventsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startDate" | "startTime" | "endTime" | "location" | "tags" | "visibility" | "status" | "createdAt" | "updatedAt" | "creatorId", ExtArgs["result"]["events"]>
   export type EventsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     creator?: boolean | UserDefaultArgs<ExtArgs>
     timeSlots?: boolean | Events$timeSlotsArgs<ExtArgs>
@@ -13767,7 +13807,7 @@ export namespace Prisma {
       location: string | null
       tags: $Enums.Tag[]
       visibility: $Enums.EventVisibility
-      state: $Enums.state
+      status: $Enums.Status
       createdAt: Date
       updatedAt: Date
       creatorId: string
@@ -14209,7 +14249,7 @@ export namespace Prisma {
     readonly location: FieldRef<"Events", 'String'>
     readonly tags: FieldRef<"Events", 'Tag[]'>
     readonly visibility: FieldRef<"Events", 'EventVisibility'>
-    readonly state: FieldRef<"Events", 'state'>
+    readonly status: FieldRef<"Events", 'Status'>
     readonly createdAt: FieldRef<"Events", 'DateTime'>
     readonly updatedAt: FieldRef<"Events", 'DateTime'>
     readonly creatorId: FieldRef<"Events", 'String'>
@@ -14764,7 +14804,7 @@ export namespace Prisma {
     startMonth: Date | null
     endTMonth: Date | null
     location: string | null
-    state: $Enums.state | null
+    status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
     creatorId: string | null
@@ -14777,7 +14817,7 @@ export namespace Prisma {
     startMonth: Date | null
     endTMonth: Date | null
     location: string | null
-    state: $Enums.state | null
+    status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
     creatorId: string | null
@@ -14791,7 +14831,7 @@ export namespace Prisma {
     endTMonth: number
     location: number
     tags: number
-    state: number
+    status: number
     createdAt: number
     updatedAt: number
     creatorId: number
@@ -14806,7 +14846,7 @@ export namespace Prisma {
     startMonth?: true
     endTMonth?: true
     location?: true
-    state?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     creatorId?: true
@@ -14819,7 +14859,7 @@ export namespace Prisma {
     startMonth?: true
     endTMonth?: true
     location?: true
-    state?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     creatorId?: true
@@ -14833,7 +14873,7 @@ export namespace Prisma {
     endTMonth?: true
     location?: true
     tags?: true
-    state?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     creatorId?: true
@@ -14920,7 +14960,7 @@ export namespace Prisma {
     endTMonth: Date
     location: string | null
     tags: $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt: Date
     updatedAt: Date
     creatorId: string
@@ -14951,7 +14991,7 @@ export namespace Prisma {
     endTMonth?: boolean
     location?: boolean
     tags?: boolean
-    state?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     creatorId?: boolean
@@ -14973,7 +15013,7 @@ export namespace Prisma {
     endTMonth?: boolean
     location?: boolean
     tags?: boolean
-    state?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     creatorId?: boolean
@@ -14988,7 +15028,7 @@ export namespace Prisma {
     endTMonth?: boolean
     location?: boolean
     tags?: boolean
-    state?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     creatorId?: boolean
@@ -15003,13 +15043,13 @@ export namespace Prisma {
     endTMonth?: boolean
     location?: boolean
     tags?: boolean
-    state?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     creatorId?: boolean
   }
 
-  export type SessionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startMonth" | "endTMonth" | "location" | "tags" | "state" | "createdAt" | "updatedAt" | "creatorId", ExtArgs["result"]["sessions"]>
+  export type SessionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startMonth" | "endTMonth" | "location" | "tags" | "status" | "createdAt" | "updatedAt" | "creatorId", ExtArgs["result"]["sessions"]>
   export type SessionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     creator?: boolean | UserDefaultArgs<ExtArgs>
     division?: boolean | Sessions$divisionArgs<ExtArgs>
@@ -15046,7 +15086,7 @@ export namespace Prisma {
       endTMonth: Date
       location: string | null
       tags: $Enums.Tag[]
-      state: $Enums.state
+      status: $Enums.Status
       createdAt: Date
       updatedAt: Date
       creatorId: string
@@ -15487,7 +15527,7 @@ export namespace Prisma {
     readonly endTMonth: FieldRef<"Sessions", 'DateTime'>
     readonly location: FieldRef<"Sessions", 'String'>
     readonly tags: FieldRef<"Sessions", 'Tag[]'>
-    readonly state: FieldRef<"Sessions", 'state'>
+    readonly status: FieldRef<"Sessions", 'Status'>
     readonly createdAt: FieldRef<"Sessions", 'DateTime'>
     readonly updatedAt: FieldRef<"Sessions", 'DateTime'>
     readonly creatorId: FieldRef<"Sessions", 'String'>
@@ -17334,7 +17374,7 @@ export namespace Prisma {
 
   export type EventParticipationMinAggregateOutputType = {
     id: string | null
-    eventId: string | null
+    EventId: string | null
     userId: string | null
     role: $Enums.EventRole | null
     score: number | null
@@ -17345,7 +17385,7 @@ export namespace Prisma {
 
   export type EventParticipationMaxAggregateOutputType = {
     id: string | null
-    eventId: string | null
+    EventId: string | null
     userId: string | null
     role: $Enums.EventRole | null
     score: number | null
@@ -17356,7 +17396,7 @@ export namespace Prisma {
 
   export type EventParticipationCountAggregateOutputType = {
     id: number
-    eventId: number
+    EventId: number
     userId: number
     role: number
     score: number
@@ -17379,7 +17419,7 @@ export namespace Prisma {
 
   export type EventParticipationMinAggregateInputType = {
     id?: true
-    eventId?: true
+    EventId?: true
     userId?: true
     role?: true
     score?: true
@@ -17390,7 +17430,7 @@ export namespace Prisma {
 
   export type EventParticipationMaxAggregateInputType = {
     id?: true
-    eventId?: true
+    EventId?: true
     userId?: true
     role?: true
     score?: true
@@ -17401,7 +17441,7 @@ export namespace Prisma {
 
   export type EventParticipationCountAggregateInputType = {
     id?: true
-    eventId?: true
+    EventId?: true
     userId?: true
     role?: true
     score?: true
@@ -17499,7 +17539,7 @@ export namespace Prisma {
 
   export type EventParticipationGroupByOutputType = {
     id: string
-    eventId: string
+    EventId: string
     userId: string
     role: $Enums.EventRole
     score: number
@@ -17529,7 +17569,7 @@ export namespace Prisma {
 
   export type EventParticipationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    eventId?: boolean
+    EventId?: boolean
     userId?: boolean
     role?: boolean
     score?: boolean
@@ -17542,7 +17582,7 @@ export namespace Prisma {
 
   export type EventParticipationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    eventId?: boolean
+    EventId?: boolean
     userId?: boolean
     role?: boolean
     score?: boolean
@@ -17555,7 +17595,7 @@ export namespace Prisma {
 
   export type EventParticipationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    eventId?: boolean
+    EventId?: boolean
     userId?: boolean
     role?: boolean
     score?: boolean
@@ -17568,7 +17608,7 @@ export namespace Prisma {
 
   export type EventParticipationSelectScalar = {
     id?: boolean
-    eventId?: boolean
+    EventId?: boolean
     userId?: boolean
     role?: boolean
     score?: boolean
@@ -17577,7 +17617,7 @@ export namespace Prisma {
     createdAt?: boolean
   }
 
-  export type EventParticipationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "eventId" | "userId" | "role" | "score" | "feedback" | "feedbackScore" | "createdAt", ExtArgs["result"]["eventParticipation"]>
+  export type EventParticipationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "EventId" | "userId" | "role" | "score" | "feedback" | "feedbackScore" | "createdAt", ExtArgs["result"]["eventParticipation"]>
   export type EventParticipationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     event?: boolean | EventsDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -17599,7 +17639,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      eventId: string
+      EventId: string
       userId: string
       role: $Enums.EventRole
       score: number
@@ -18032,7 +18072,7 @@ export namespace Prisma {
    */
   interface EventParticipationFieldRefs {
     readonly id: FieldRef<"EventParticipation", 'String'>
-    readonly eventId: FieldRef<"EventParticipation", 'String'>
+    readonly EventId: FieldRef<"EventParticipation", 'String'>
     readonly userId: FieldRef<"EventParticipation", 'String'>
     readonly role: FieldRef<"EventParticipation", 'EventRole'>
     readonly score: FieldRef<"EventParticipation", 'Int'>
@@ -24202,7 +24242,7 @@ export namespace Prisma {
     id: string | null
     title: string | null
     description: string | null
-    type: string | null
+    type: $Enums.NotificationType | null
     isRead: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -24212,7 +24252,7 @@ export namespace Prisma {
     id: string | null
     title: string | null
     description: string | null
-    type: string | null
+    type: $Enums.NotificationType | null
     isRead: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -24337,7 +24377,7 @@ export namespace Prisma {
     id: string
     title: string
     description: string | null
-    type: string
+    type: $Enums.NotificationType
     isRead: boolean
     createdAt: Date
     updatedAt: Date
@@ -24419,7 +24459,7 @@ export namespace Prisma {
       id: string
       title: string
       description: string | null
-      type: string
+      type: $Enums.NotificationType
       isRead: boolean
       createdAt: Date
       updatedAt: Date
@@ -24850,7 +24890,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Notification", 'String'>
     readonly title: FieldRef<"Notification", 'String'>
     readonly description: FieldRef<"Notification", 'String'>
-    readonly type: FieldRef<"Notification", 'String'>
+    readonly type: FieldRef<"Notification", 'NotificationType'>
     readonly isRead: FieldRef<"Notification", 'Boolean'>
     readonly createdAt: FieldRef<"Notification", 'DateTime'>
     readonly updatedAt: FieldRef<"Notification", 'DateTime'>
@@ -31971,8 +32011,10 @@ export namespace Prisma {
     cvUrl: 'cvUrl',
     lastSeen: 'lastSeen',
     role: 'role',
+    isDeleted: 'isDeleted',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt',
     DivisionId: 'DivisionId',
     UserSettingId: 'UserSettingId',
     DivisionHeadID: 'DivisionHeadID',
@@ -32076,7 +32118,7 @@ export namespace Prisma {
     location: 'location',
     tags: 'tags',
     visibility: 'visibility',
-    state: 'state',
+    status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     creatorId: 'creatorId'
@@ -32093,7 +32135,7 @@ export namespace Prisma {
     endTMonth: 'endTMonth',
     location: 'location',
     tags: 'tags',
-    state: 'state',
+    status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     creatorId: 'creatorId'
@@ -32122,7 +32164,7 @@ export namespace Prisma {
 
   export const EventParticipationScalarFieldEnum: {
     id: 'id',
-    eventId: 'eventId',
+    EventId: 'EventId',
     userId: 'userId',
     role: 'role',
     score: 'score',
@@ -32391,6 +32433,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -32433,13 +32482,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'Tag[]'
    */
   export type ListEnumTagFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Tag[]'>
@@ -32468,16 +32510,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'state'
+   * Reference to a field of type 'Status'
    */
-  export type EnumstateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'state'>
+  export type EnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status'>
     
 
 
   /**
-   * Reference to a field of type 'state[]'
+   * Reference to a field of type 'Status[]'
    */
-  export type ListEnumstateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'state[]'>
+  export type ListEnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status[]'>
     
 
 
@@ -32552,6 +32594,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'NotificationType'
+   */
+  export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
+    
+
+
+  /**
+   * Reference to a field of type 'NotificationType[]'
+   */
+  export type ListEnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'AnnouncementVisibility'
    */
   export type EnumAnnouncementVisibilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AnnouncementVisibility'>
@@ -32617,8 +32673,10 @@ export namespace Prisma {
     cvUrl?: StringNullableFilter<"User"> | string | null
     lastSeen?: DateTimeFilter<"User"> | Date | string
     role?: EnumRoleTypeFilter<"User"> | $Enums.RoleType
+    isDeleted?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     DivisionId?: UuidNullableFilter<"User"> | string | null
     UserSettingId?: UuidNullableFilter<"User"> | string | null
     DivisionHeadID?: UuidNullableFilter<"User"> | string | null
@@ -32662,8 +32720,10 @@ export namespace Prisma {
     cvUrl?: SortOrderInput | SortOrder
     lastSeen?: SortOrder
     role?: SortOrder
+    isDeleted?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
     DivisionId?: SortOrderInput | SortOrder
     UserSettingId?: SortOrderInput | SortOrder
     DivisionHeadID?: SortOrderInput | SortOrder
@@ -32694,7 +32754,6 @@ export namespace Prisma {
     email?: string
     phone_number?: string
     telegramUserName?: string
-    DivisionId?: string
     UserSettingId?: string
     DivisionHeadID?: string
     AttendanceSummaryId?: string
@@ -32714,8 +32773,11 @@ export namespace Prisma {
     cvUrl?: StringNullableFilter<"User"> | string | null
     lastSeen?: DateTimeFilter<"User"> | Date | string
     role?: EnumRoleTypeFilter<"User"> | $Enums.RoleType
+    isDeleted?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    DivisionId?: UuidNullableFilter<"User"> | string | null
     universityInfo?: XOR<UniversityInfoNullableScalarRelationFilter, UniversityInfoWhereInput> | null
     Divisions?: XOR<DivisionsNullableScalarRelationFilter, DivisionsWhereInput> | null
     socialLinks?: SocialLinkListRelationFilter
@@ -32735,7 +32797,7 @@ export namespace Prisma {
     HeadsUp?: HeadsUpListRelationFilter
     Notification?: NotificationListRelationFilter
     Announcements?: AnnouncementListRelationFilter
-  }, "id" | "email" | "phone_number" | "telegramUserName" | "DivisionId" | "UserSettingId" | "DivisionHeadID" | "AttendanceSummaryId">
+  }, "id" | "email" | "phone_number" | "telegramUserName" | "UserSettingId" | "DivisionHeadID" | "AttendanceSummaryId">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -32755,8 +32817,10 @@ export namespace Prisma {
     cvUrl?: SortOrderInput | SortOrder
     lastSeen?: SortOrder
     role?: SortOrder
+    isDeleted?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
     DivisionId?: SortOrderInput | SortOrder
     UserSettingId?: SortOrderInput | SortOrder
     DivisionHeadID?: SortOrderInput | SortOrder
@@ -32787,8 +32851,10 @@ export namespace Prisma {
     cvUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
     lastSeen?: DateTimeWithAggregatesFilter<"User"> | Date | string
     role?: EnumRoleTypeWithAggregatesFilter<"User"> | $Enums.RoleType
+    isDeleted?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    deletedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     DivisionId?: UuidNullableWithAggregatesFilter<"User"> | string | null
     UserSettingId?: UuidNullableWithAggregatesFilter<"User"> | string | null
     DivisionHeadID?: UuidNullableWithAggregatesFilter<"User"> | string | null
@@ -32935,7 +33001,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Divisions"> | Date | string
     currentHeadID?: UuidNullableFilter<"Divisions"> | string | null
     currentHead?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    user?: UserListRelationFilter
     socialLinks?: SocialLinkListRelationFilter
     sessions?: SessionsListRelationFilter
     groups?: GroupsListRelationFilter
@@ -32951,7 +33017,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     currentHeadID?: SortOrderInput | SortOrder
     currentHead?: UserOrderByWithRelationInput
-    user?: UserOrderByWithRelationInput
+    user?: UserOrderByRelationAggregateInput
     socialLinks?: socialLinkOrderByRelationAggregateInput
     sessions?: SessionsOrderByRelationAggregateInput
     groups?: GroupsOrderByRelationAggregateInput
@@ -32970,7 +33036,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Divisions"> | Date | string
     updatedAt?: DateTimeFilter<"Divisions"> | Date | string
     currentHead?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    user?: UserListRelationFilter
     socialLinks?: SocialLinkListRelationFilter
     sessions?: SessionsListRelationFilter
     groups?: GroupsListRelationFilter
@@ -33254,7 +33320,7 @@ export namespace Prisma {
     location?: StringNullableFilter<"Events"> | string | null
     tags?: EnumTagNullableListFilter<"Events">
     visibility?: EnumEventVisibilityFilter<"Events"> | $Enums.EventVisibility
-    state?: EnumstateFilter<"Events"> | $Enums.state
+    status?: EnumStatusFilter<"Events"> | $Enums.Status
     createdAt?: DateTimeFilter<"Events"> | Date | string
     updatedAt?: DateTimeFilter<"Events"> | Date | string
     creatorId?: UuidFilter<"Events"> | string
@@ -33276,7 +33342,7 @@ export namespace Prisma {
     location?: SortOrderInput | SortOrder
     tags?: SortOrder
     visibility?: SortOrder
-    state?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creatorId?: SortOrder
@@ -33301,7 +33367,7 @@ export namespace Prisma {
     location?: StringNullableFilter<"Events"> | string | null
     tags?: EnumTagNullableListFilter<"Events">
     visibility?: EnumEventVisibilityFilter<"Events"> | $Enums.EventVisibility
-    state?: EnumstateFilter<"Events"> | $Enums.state
+    status?: EnumStatusFilter<"Events"> | $Enums.Status
     createdAt?: DateTimeFilter<"Events"> | Date | string
     updatedAt?: DateTimeFilter<"Events"> | Date | string
     creatorId?: UuidFilter<"Events"> | string
@@ -33323,7 +33389,7 @@ export namespace Prisma {
     location?: SortOrderInput | SortOrder
     tags?: SortOrder
     visibility?: SortOrder
-    state?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creatorId?: SortOrder
@@ -33345,7 +33411,7 @@ export namespace Prisma {
     location?: StringNullableWithAggregatesFilter<"Events"> | string | null
     tags?: EnumTagNullableListFilter<"Events">
     visibility?: EnumEventVisibilityWithAggregatesFilter<"Events"> | $Enums.EventVisibility
-    state?: EnumstateWithAggregatesFilter<"Events"> | $Enums.state
+    status?: EnumStatusWithAggregatesFilter<"Events"> | $Enums.Status
     createdAt?: DateTimeWithAggregatesFilter<"Events"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Events"> | Date | string
     creatorId?: UuidWithAggregatesFilter<"Events"> | string
@@ -33362,7 +33428,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFilter<"Sessions"> | Date | string
     location?: StringNullableFilter<"Sessions"> | string | null
     tags?: EnumTagNullableListFilter<"Sessions">
-    state?: EnumstateFilter<"Sessions"> | $Enums.state
+    status?: EnumStatusFilter<"Sessions"> | $Enums.Status
     createdAt?: DateTimeFilter<"Sessions"> | Date | string
     updatedAt?: DateTimeFilter<"Sessions"> | Date | string
     creatorId?: UuidFilter<"Sessions"> | string
@@ -33383,7 +33449,7 @@ export namespace Prisma {
     endTMonth?: SortOrder
     location?: SortOrderInput | SortOrder
     tags?: SortOrder
-    state?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creatorId?: SortOrder
@@ -33407,7 +33473,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFilter<"Sessions"> | Date | string
     location?: StringNullableFilter<"Sessions"> | string | null
     tags?: EnumTagNullableListFilter<"Sessions">
-    state?: EnumstateFilter<"Sessions"> | $Enums.state
+    status?: EnumStatusFilter<"Sessions"> | $Enums.Status
     createdAt?: DateTimeFilter<"Sessions"> | Date | string
     updatedAt?: DateTimeFilter<"Sessions"> | Date | string
     creatorId?: UuidFilter<"Sessions"> | string
@@ -33428,7 +33494,7 @@ export namespace Prisma {
     endTMonth?: SortOrder
     location?: SortOrderInput | SortOrder
     tags?: SortOrder
-    state?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creatorId?: SortOrder
@@ -33448,7 +33514,7 @@ export namespace Prisma {
     endTMonth?: DateTimeWithAggregatesFilter<"Sessions"> | Date | string
     location?: StringNullableWithAggregatesFilter<"Sessions"> | string | null
     tags?: EnumTagNullableListFilter<"Sessions">
-    state?: EnumstateWithAggregatesFilter<"Sessions"> | $Enums.state
+    status?: EnumStatusWithAggregatesFilter<"Sessions"> | $Enums.Status
     createdAt?: DateTimeWithAggregatesFilter<"Sessions"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Sessions"> | Date | string
     creatorId?: UuidWithAggregatesFilter<"Sessions"> | string
@@ -33561,7 +33627,7 @@ export namespace Prisma {
     OR?: EventParticipationWhereInput[]
     NOT?: EventParticipationWhereInput | EventParticipationWhereInput[]
     id?: UuidFilter<"EventParticipation"> | string
-    eventId?: UuidFilter<"EventParticipation"> | string
+    EventId?: UuidFilter<"EventParticipation"> | string
     userId?: UuidFilter<"EventParticipation"> | string
     role?: EnumEventRoleFilter<"EventParticipation"> | $Enums.EventRole
     score?: IntFilter<"EventParticipation"> | number
@@ -33574,7 +33640,7 @@ export namespace Prisma {
 
   export type EventParticipationOrderByWithRelationInput = {
     id?: SortOrder
-    eventId?: SortOrder
+    EventId?: SortOrder
     userId?: SortOrder
     role?: SortOrder
     score?: SortOrder
@@ -33590,7 +33656,7 @@ export namespace Prisma {
     AND?: EventParticipationWhereInput | EventParticipationWhereInput[]
     OR?: EventParticipationWhereInput[]
     NOT?: EventParticipationWhereInput | EventParticipationWhereInput[]
-    eventId?: UuidFilter<"EventParticipation"> | string
+    EventId?: UuidFilter<"EventParticipation"> | string
     userId?: UuidFilter<"EventParticipation"> | string
     role?: EnumEventRoleFilter<"EventParticipation"> | $Enums.EventRole
     score?: IntFilter<"EventParticipation"> | number
@@ -33603,7 +33669,7 @@ export namespace Prisma {
 
   export type EventParticipationOrderByWithAggregationInput = {
     id?: SortOrder
-    eventId?: SortOrder
+    EventId?: SortOrder
     userId?: SortOrder
     role?: SortOrder
     score?: SortOrder
@@ -33622,7 +33688,7 @@ export namespace Prisma {
     OR?: EventParticipationScalarWhereWithAggregatesInput[]
     NOT?: EventParticipationScalarWhereWithAggregatesInput | EventParticipationScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"EventParticipation"> | string
-    eventId?: UuidWithAggregatesFilter<"EventParticipation"> | string
+    EventId?: UuidWithAggregatesFilter<"EventParticipation"> | string
     userId?: UuidWithAggregatesFilter<"EventParticipation"> | string
     role?: EnumEventRoleWithAggregatesFilter<"EventParticipation"> | $Enums.EventRole
     score?: IntWithAggregatesFilter<"EventParticipation"> | number
@@ -33711,8 +33777,8 @@ export namespace Prisma {
     OR?: TaskParticipationWhereInput[]
     NOT?: TaskParticipationWhereInput | TaskParticipationWhereInput[]
     id?: UuidFilter<"TaskParticipation"> | string
-    taskId?: StringFilter<"TaskParticipation"> | string
-    userId?: StringFilter<"TaskParticipation"> | string
+    taskId?: UuidFilter<"TaskParticipation"> | string
+    userId?: UuidFilter<"TaskParticipation"> | string
     role?: StringFilter<"TaskParticipation"> | string
     score?: IntFilter<"TaskParticipation"> | number
     feedback?: StringNullableFilter<"TaskParticipation"> | string | null
@@ -33740,8 +33806,8 @@ export namespace Prisma {
     AND?: TaskParticipationWhereInput | TaskParticipationWhereInput[]
     OR?: TaskParticipationWhereInput[]
     NOT?: TaskParticipationWhereInput | TaskParticipationWhereInput[]
-    taskId?: StringFilter<"TaskParticipation"> | string
-    userId?: StringFilter<"TaskParticipation"> | string
+    taskId?: UuidFilter<"TaskParticipation"> | string
+    userId?: UuidFilter<"TaskParticipation"> | string
     role?: StringFilter<"TaskParticipation"> | string
     score?: IntFilter<"TaskParticipation"> | number
     feedback?: StringNullableFilter<"TaskParticipation"> | string | null
@@ -33772,8 +33838,8 @@ export namespace Prisma {
     OR?: TaskParticipationScalarWhereWithAggregatesInput[]
     NOT?: TaskParticipationScalarWhereWithAggregatesInput | TaskParticipationScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"TaskParticipation"> | string
-    taskId?: StringWithAggregatesFilter<"TaskParticipation"> | string
-    userId?: StringWithAggregatesFilter<"TaskParticipation"> | string
+    taskId?: UuidWithAggregatesFilter<"TaskParticipation"> | string
+    userId?: UuidWithAggregatesFilter<"TaskParticipation"> | string
     role?: StringWithAggregatesFilter<"TaskParticipation"> | string
     score?: IntWithAggregatesFilter<"TaskParticipation"> | number
     feedback?: StringNullableWithAggregatesFilter<"TaskParticipation"> | string | null
@@ -33872,7 +33938,7 @@ export namespace Prisma {
     OR?: AttendanceSummaryWhereInput[]
     NOT?: AttendanceSummaryWhereInput | AttendanceSummaryWhereInput[]
     id?: UuidFilter<"AttendanceSummary"> | string
-    userId?: StringFilter<"AttendanceSummary"> | string
+    userId?: UuidFilter<"AttendanceSummary"> | string
     totalEvents?: IntFilter<"AttendanceSummary"> | number
     totalSessions?: IntFilter<"AttendanceSummary"> | number
     totalTasks?: IntFilter<"AttendanceSummary"> | number
@@ -33938,7 +34004,7 @@ export namespace Prisma {
     OR?: AttendanceSummaryScalarWhereWithAggregatesInput[]
     NOT?: AttendanceSummaryScalarWhereWithAggregatesInput | AttendanceSummaryScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"AttendanceSummary"> | string
-    userId?: StringWithAggregatesFilter<"AttendanceSummary"> | string
+    userId?: UuidWithAggregatesFilter<"AttendanceSummary"> | string
     totalEvents?: IntWithAggregatesFilter<"AttendanceSummary"> | number
     totalSessions?: IntWithAggregatesFilter<"AttendanceSummary"> | number
     totalTasks?: IntWithAggregatesFilter<"AttendanceSummary"> | number
@@ -33954,7 +34020,7 @@ export namespace Prisma {
     OR?: HeadsUpWhereInput[]
     NOT?: HeadsUpWhereInput | HeadsUpWhereInput[]
     id?: UuidFilter<"HeadsUp"> | string
-    userId?: StringFilter<"HeadsUp"> | string
+    userId?: UuidFilter<"HeadsUp"> | string
     type?: EnumHeadsUpTypeFilter<"HeadsUp"> | $Enums.HeadsUpType
     body?: StringFilter<"HeadsUp"> | string
     sentAt?: DateTimeFilter<"HeadsUp"> | Date | string
@@ -33977,7 +34043,7 @@ export namespace Prisma {
     AND?: HeadsUpWhereInput | HeadsUpWhereInput[]
     OR?: HeadsUpWhereInput[]
     NOT?: HeadsUpWhereInput | HeadsUpWhereInput[]
-    userId?: StringFilter<"HeadsUp"> | string
+    userId?: UuidFilter<"HeadsUp"> | string
     type?: EnumHeadsUpTypeFilter<"HeadsUp"> | $Enums.HeadsUpType
     body?: StringFilter<"HeadsUp"> | string
     sentAt?: DateTimeFilter<"HeadsUp"> | Date | string
@@ -34001,7 +34067,7 @@ export namespace Prisma {
     OR?: HeadsUpScalarWhereWithAggregatesInput[]
     NOT?: HeadsUpScalarWhereWithAggregatesInput | HeadsUpScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"HeadsUp"> | string
-    userId?: StringWithAggregatesFilter<"HeadsUp"> | string
+    userId?: UuidWithAggregatesFilter<"HeadsUp"> | string
     type?: EnumHeadsUpTypeWithAggregatesFilter<"HeadsUp"> | $Enums.HeadsUpType
     body?: StringWithAggregatesFilter<"HeadsUp"> | string
     sentAt?: DateTimeWithAggregatesFilter<"HeadsUp"> | Date | string
@@ -34014,7 +34080,7 @@ export namespace Prisma {
     id?: UuidFilter<"Notification"> | string
     title?: StringFilter<"Notification"> | string
     description?: StringNullableFilter<"Notification"> | string | null
-    type?: StringFilter<"Notification"> | string
+    type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
     isRead?: BoolFilter<"Notification"> | boolean
     createdAt?: DateTimeFilter<"Notification"> | Date | string
     updatedAt?: DateTimeFilter<"Notification"> | Date | string
@@ -34039,7 +34105,7 @@ export namespace Prisma {
     NOT?: NotificationWhereInput | NotificationWhereInput[]
     title?: StringFilter<"Notification"> | string
     description?: StringNullableFilter<"Notification"> | string | null
-    type?: StringFilter<"Notification"> | string
+    type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
     isRead?: BoolFilter<"Notification"> | boolean
     createdAt?: DateTimeFilter<"Notification"> | Date | string
     updatedAt?: DateTimeFilter<"Notification"> | Date | string
@@ -34066,7 +34132,7 @@ export namespace Prisma {
     id?: UuidWithAggregatesFilter<"Notification"> | string
     title?: StringWithAggregatesFilter<"Notification"> | string
     description?: StringNullableWithAggregatesFilter<"Notification"> | string | null
-    type?: StringWithAggregatesFilter<"Notification"> | string
+    type?: EnumNotificationTypeWithAggregatesFilter<"Notification"> | $Enums.NotificationType
     isRead?: BoolWithAggregatesFilter<"Notification"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
@@ -34469,8 +34535,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -34513,8 +34581,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -34557,8 +34627,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34601,8 +34673,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34645,8 +34719,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -34671,8 +34747,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34696,8 +34774,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34844,7 +34924,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     currentHead?: UserCreateNestedOneWithoutDivisionHeadInput
-    user?: UserCreateNestedOneWithoutDivisionsInput
+    user?: UserCreateNestedManyWithoutDivisionsInput
     socialLinks?: socialLinkCreateNestedManyWithoutDivisionInput
     sessions?: SessionsCreateNestedManyWithoutDivisionInput
     groups?: GroupsCreateNestedManyWithoutDivisionInput
@@ -34859,7 +34939,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     currentHeadID?: string | null
-    user?: UserUncheckedCreateNestedOneWithoutDivisionsInput
+    user?: UserUncheckedCreateNestedManyWithoutDivisionsInput
     socialLinks?: socialLinkUncheckedCreateNestedManyWithoutDivisionInput
     sessions?: SessionsUncheckedCreateNestedManyWithoutDivisionInput
     groups?: GroupsUncheckedCreateNestedManyWithoutDivisionInput
@@ -34874,7 +34954,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     currentHead?: UserUpdateOneWithoutDivisionHeadNestedInput
-    user?: UserUpdateOneWithoutDivisionsNestedInput
+    user?: UserUpdateManyWithoutDivisionsNestedInput
     socialLinks?: socialLinkUpdateManyWithoutDivisionNestedInput
     sessions?: SessionsUpdateManyWithoutDivisionNestedInput
     groups?: GroupsUpdateManyWithoutDivisionNestedInput
@@ -34889,7 +34969,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     currentHeadID?: NullableStringFieldUpdateOperationsInput | string | null
-    user?: UserUncheckedUpdateOneWithoutDivisionsNestedInput
+    user?: UserUncheckedUpdateManyWithoutDivisionsNestedInput
     socialLinks?: socialLinkUncheckedUpdateManyWithoutDivisionNestedInput
     sessions?: SessionsUncheckedUpdateManyWithoutDivisionNestedInput
     groups?: GroupsUncheckedUpdateManyWithoutDivisionNestedInput
@@ -35175,7 +35255,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creator: UserCreateNestedOneWithoutEventsInput
@@ -35196,7 +35276,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -35217,7 +35297,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutEventsNestedInput
@@ -35238,7 +35318,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -35259,7 +35339,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -35275,7 +35355,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -35290,7 +35370,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -35304,7 +35384,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creator: UserCreateNestedOneWithoutSessionsInput
@@ -35324,7 +35404,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -35344,7 +35424,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutSessionsNestedInput
@@ -35364,7 +35444,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -35384,7 +35464,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -35398,7 +35478,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -35411,7 +35491,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -35540,7 +35620,7 @@ export namespace Prisma {
 
   export type EventParticipationUncheckedCreateInput = {
     id?: string
-    eventId: string
+    EventId: string
     userId: string
     role: $Enums.EventRole
     score?: number
@@ -35562,7 +35642,7 @@ export namespace Prisma {
 
   export type EventParticipationUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    eventId?: StringFieldUpdateOperationsInput | string
+    EventId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     role?: EnumEventRoleFieldUpdateOperationsInput | $Enums.EventRole
     score?: IntFieldUpdateOperationsInput | number
@@ -35573,7 +35653,7 @@ export namespace Prisma {
 
   export type EventParticipationCreateManyInput = {
     id?: string
-    eventId: string
+    EventId: string
     userId: string
     role: $Enums.EventRole
     score?: number
@@ -35593,7 +35673,7 @@ export namespace Prisma {
 
   export type EventParticipationUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    eventId?: StringFieldUpdateOperationsInput | string
+    EventId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     role?: EnumEventRoleFieldUpdateOperationsInput | $Enums.EventRole
     score?: IntFieldUpdateOperationsInput | number
@@ -35985,7 +36065,7 @@ export namespace Prisma {
     id?: string
     title: string
     description?: string | null
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -35996,7 +36076,7 @@ export namespace Prisma {
     id?: string
     title: string
     description?: string | null
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -36007,7 +36087,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36018,7 +36098,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36029,7 +36109,7 @@ export namespace Prisma {
     id?: string
     title: string
     description?: string | null
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -36039,7 +36119,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36049,7 +36129,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36525,6 +36605,11 @@ export namespace Prisma {
     not?: NestedEnumRoleTypeFilter<$PrismaModel> | $Enums.RoleType
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type UuidNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -36710,8 +36795,10 @@ export namespace Prisma {
     cvUrl?: SortOrder
     lastSeen?: SortOrder
     role?: SortOrder
+    isDeleted?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrder
     DivisionId?: SortOrder
     UserSettingId?: SortOrder
     DivisionHeadID?: SortOrder
@@ -36736,8 +36823,10 @@ export namespace Prisma {
     cvUrl?: SortOrder
     lastSeen?: SortOrder
     role?: SortOrder
+    isDeleted?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrder
     DivisionId?: SortOrder
     UserSettingId?: SortOrder
     DivisionHeadID?: SortOrder
@@ -36762,8 +36851,10 @@ export namespace Prisma {
     cvUrl?: SortOrder
     lastSeen?: SortOrder
     role?: SortOrder
+    isDeleted?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrder
     DivisionId?: SortOrder
     UserSettingId?: SortOrder
     DivisionHeadID?: SortOrder
@@ -36859,6 +36950,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleTypeFilter<$PrismaModel>
     _max?: NestedEnumRoleTypeFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type UuidNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -37008,11 +37107,6 @@ export namespace Prisma {
     not?: NestedEnumThemeFilter<$PrismaModel> | $Enums.Theme
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -37052,12 +37146,14 @@ export namespace Prisma {
     _max?: NestedEnumThemeFilter<$PrismaModel>
   }
 
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
+  }
+
+  export type UserOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type DivisionsCountOrderByAggregateInput = {
@@ -37091,16 +37187,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     currentHeadID?: SortOrder
-  }
-
-  export type UserListRelationFilter = {
-    every?: UserWhereInput
-    some?: UserWhereInput
-    none?: UserWhereInput
-  }
-
-  export type UserOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type GroupsCountOrderByAggregateInput = {
@@ -37227,11 +37313,11 @@ export namespace Prisma {
     not?: NestedEnumEventVisibilityFilter<$PrismaModel> | $Enums.EventVisibility
   }
 
-  export type EnumstateFilter<$PrismaModel = never> = {
-    equals?: $Enums.state | EnumstateFieldRefInput<$PrismaModel>
-    in?: $Enums.state[] | ListEnumstateFieldRefInput<$PrismaModel>
-    notIn?: $Enums.state[] | ListEnumstateFieldRefInput<$PrismaModel>
-    not?: NestedEnumstateFilter<$PrismaModel> | $Enums.state
+  export type EnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
   }
 
   export type EventTimeSlotListRelationFilter = {
@@ -37254,7 +37340,7 @@ export namespace Prisma {
     location?: SortOrder
     tags?: SortOrder
     visibility?: SortOrder
-    state?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creatorId?: SortOrder
@@ -37269,7 +37355,7 @@ export namespace Prisma {
     endTime?: SortOrder
     location?: SortOrder
     visibility?: SortOrder
-    state?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creatorId?: SortOrder
@@ -37284,7 +37370,7 @@ export namespace Prisma {
     endTime?: SortOrder
     location?: SortOrder
     visibility?: SortOrder
-    state?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creatorId?: SortOrder
@@ -37300,14 +37386,14 @@ export namespace Prisma {
     _max?: NestedEnumEventVisibilityFilter<$PrismaModel>
   }
 
-  export type EnumstateWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.state | EnumstateFieldRefInput<$PrismaModel>
-    in?: $Enums.state[] | ListEnumstateFieldRefInput<$PrismaModel>
-    notIn?: $Enums.state[] | ListEnumstateFieldRefInput<$PrismaModel>
-    not?: NestedEnumstateWithAggregatesFilter<$PrismaModel> | $Enums.state
+  export type EnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumstateFilter<$PrismaModel>
-    _max?: NestedEnumstateFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type DivisionsListRelationFilter = {
@@ -37338,7 +37424,7 @@ export namespace Prisma {
     endTMonth?: SortOrder
     location?: SortOrder
     tags?: SortOrder
-    state?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creatorId?: SortOrder
@@ -37351,7 +37437,7 @@ export namespace Prisma {
     startMonth?: SortOrder
     endTMonth?: SortOrder
     location?: SortOrder
-    state?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creatorId?: SortOrder
@@ -37364,7 +37450,7 @@ export namespace Prisma {
     startMonth?: SortOrder
     endTMonth?: SortOrder
     location?: SortOrder
-    state?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creatorId?: SortOrder
@@ -37457,7 +37543,7 @@ export namespace Prisma {
 
   export type EventParticipationCountOrderByAggregateInput = {
     id?: SortOrder
-    eventId?: SortOrder
+    EventId?: SortOrder
     userId?: SortOrder
     role?: SortOrder
     score?: SortOrder
@@ -37473,7 +37559,7 @@ export namespace Prisma {
 
   export type EventParticipationMaxOrderByAggregateInput = {
     id?: SortOrder
-    eventId?: SortOrder
+    EventId?: SortOrder
     userId?: SortOrder
     role?: SortOrder
     score?: SortOrder
@@ -37484,7 +37570,7 @@ export namespace Prisma {
 
   export type EventParticipationMinOrderByAggregateInput = {
     id?: SortOrder
-    eventId?: SortOrder
+    EventId?: SortOrder
     userId?: SortOrder
     role?: SortOrder
     score?: SortOrder
@@ -37808,6 +37894,13 @@ export namespace Prisma {
     _max?: NestedEnumHeadsUpTypeFilter<$PrismaModel>
   }
 
+  export type EnumNotificationTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeFilter<$PrismaModel> | $Enums.NotificationType
+  }
+
   export type NotificationCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
@@ -37836,6 +37929,16 @@ export namespace Prisma {
     isRead?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type EnumNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel> | $Enums.NotificationType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNotificationTypeFilter<$PrismaModel>
+    _max?: NestedEnumNotificationTypeFilter<$PrismaModel>
   }
 
   export type EnumAnnouncementVisibilityFilter<$PrismaModel = never> = {
@@ -38375,6 +38478,10 @@ export namespace Prisma {
     set?: $Enums.RoleType
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type UniversityInfoUpdateOneWithoutUserNestedInput = {
     create?: XOR<UniversityInfoCreateWithoutUserInput, UniversityInfoUncheckedCreateWithoutUserInput>
     connectOrCreate?: UniversityInfoCreateOrConnectWithoutUserInput
@@ -38885,10 +38992,6 @@ export namespace Prisma {
     set?: $Enums.Theme
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
   export type UserUpdateOneRequiredWithoutUserSettingNestedInput = {
     create?: XOR<UserCreateWithoutUserSettingInput, UserUncheckedCreateWithoutUserSettingInput>
     connectOrCreate?: UserCreateOrConnectWithoutUserSettingInput
@@ -38903,10 +39006,11 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type UserCreateNestedOneWithoutDivisionsInput = {
-    create?: XOR<UserCreateWithoutDivisionsInput, UserUncheckedCreateWithoutDivisionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutDivisionsInput
-    connect?: UserWhereUniqueInput
+  export type UserCreateNestedManyWithoutDivisionsInput = {
+    create?: XOR<UserCreateWithoutDivisionsInput, UserUncheckedCreateWithoutDivisionsInput> | UserCreateWithoutDivisionsInput[] | UserUncheckedCreateWithoutDivisionsInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutDivisionsInput | UserCreateOrConnectWithoutDivisionsInput[]
+    createMany?: UserCreateManyDivisionsInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
   export type socialLinkCreateNestedManyWithoutDivisionInput = {
@@ -38929,10 +39033,11 @@ export namespace Prisma {
     connect?: GroupsWhereUniqueInput | GroupsWhereUniqueInput[]
   }
 
-  export type UserUncheckedCreateNestedOneWithoutDivisionsInput = {
-    create?: XOR<UserCreateWithoutDivisionsInput, UserUncheckedCreateWithoutDivisionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutDivisionsInput
-    connect?: UserWhereUniqueInput
+  export type UserUncheckedCreateNestedManyWithoutDivisionsInput = {
+    create?: XOR<UserCreateWithoutDivisionsInput, UserUncheckedCreateWithoutDivisionsInput> | UserCreateWithoutDivisionsInput[] | UserUncheckedCreateWithoutDivisionsInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutDivisionsInput | UserCreateOrConnectWithoutDivisionsInput[]
+    createMany?: UserCreateManyDivisionsInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
   export type socialLinkUncheckedCreateNestedManyWithoutDivisionInput = {
@@ -38965,14 +39070,18 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDivisionHeadInput, UserUpdateWithoutDivisionHeadInput>, UserUncheckedUpdateWithoutDivisionHeadInput>
   }
 
-  export type UserUpdateOneWithoutDivisionsNestedInput = {
-    create?: XOR<UserCreateWithoutDivisionsInput, UserUncheckedCreateWithoutDivisionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutDivisionsInput
-    upsert?: UserUpsertWithoutDivisionsInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDivisionsInput, UserUpdateWithoutDivisionsInput>, UserUncheckedUpdateWithoutDivisionsInput>
+  export type UserUpdateManyWithoutDivisionsNestedInput = {
+    create?: XOR<UserCreateWithoutDivisionsInput, UserUncheckedCreateWithoutDivisionsInput> | UserCreateWithoutDivisionsInput[] | UserUncheckedCreateWithoutDivisionsInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutDivisionsInput | UserCreateOrConnectWithoutDivisionsInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutDivisionsInput | UserUpsertWithWhereUniqueWithoutDivisionsInput[]
+    createMany?: UserCreateManyDivisionsInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutDivisionsInput | UserUpdateWithWhereUniqueWithoutDivisionsInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutDivisionsInput | UserUpdateManyWithWhereWithoutDivisionsInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
   export type socialLinkUpdateManyWithoutDivisionNestedInput = {
@@ -39016,14 +39125,18 @@ export namespace Prisma {
     deleteMany?: GroupsScalarWhereInput | GroupsScalarWhereInput[]
   }
 
-  export type UserUncheckedUpdateOneWithoutDivisionsNestedInput = {
-    create?: XOR<UserCreateWithoutDivisionsInput, UserUncheckedCreateWithoutDivisionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutDivisionsInput
-    upsert?: UserUpsertWithoutDivisionsInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDivisionsInput, UserUpdateWithoutDivisionsInput>, UserUncheckedUpdateWithoutDivisionsInput>
+  export type UserUncheckedUpdateManyWithoutDivisionsNestedInput = {
+    create?: XOR<UserCreateWithoutDivisionsInput, UserUncheckedCreateWithoutDivisionsInput> | UserCreateWithoutDivisionsInput[] | UserUncheckedCreateWithoutDivisionsInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutDivisionsInput | UserCreateOrConnectWithoutDivisionsInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutDivisionsInput | UserUpsertWithWhereUniqueWithoutDivisionsInput[]
+    createMany?: UserCreateManyDivisionsInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutDivisionsInput | UserUpdateWithWhereUniqueWithoutDivisionsInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutDivisionsInput | UserUpdateManyWithWhereWithoutDivisionsInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
   export type socialLinkUncheckedUpdateManyWithoutDivisionNestedInput = {
@@ -39348,8 +39461,8 @@ export namespace Prisma {
     set?: $Enums.EventVisibility
   }
 
-  export type EnumstateFieldUpdateOperationsInput = {
-    set?: $Enums.state
+  export type EnumStatusFieldUpdateOperationsInput = {
+    set?: $Enums.Status
   }
 
   export type UserUpdateOneRequiredWithoutEventsNestedInput = {
@@ -40137,6 +40250,10 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
+  export type EnumNotificationTypeFieldUpdateOperationsInput = {
+    set?: $Enums.NotificationType
+  }
+
   export type UserUpdateManyWithoutNotificationNestedInput = {
     create?: XOR<UserCreateWithoutNotificationInput, UserUncheckedCreateWithoutNotificationInput> | UserCreateWithoutNotificationInput[] | UserUncheckedCreateWithoutNotificationInput[]
     connectOrCreate?: UserCreateOrConnectWithoutNotificationInput | UserCreateOrConnectWithoutNotificationInput[]
@@ -40438,6 +40555,11 @@ export namespace Prisma {
     not?: NestedEnumRoleTypeFilter<$PrismaModel> | $Enums.RoleType
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedUuidNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -40574,6 +40696,14 @@ export namespace Prisma {
     _max?: NestedEnumRoleTypeFilter<$PrismaModel>
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedUuidNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -40656,11 +40786,6 @@ export namespace Prisma {
     not?: NestedEnumThemeFilter<$PrismaModel> | $Enums.Theme
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type NestedEnumThemeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Theme | EnumThemeFieldRefInput<$PrismaModel>
     in?: $Enums.Theme[] | ListEnumThemeFieldRefInput<$PrismaModel>
@@ -40671,14 +40796,6 @@ export namespace Prisma {
     _max?: NestedEnumThemeFilter<$PrismaModel>
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type NestedEnumEventVisibilityFilter<$PrismaModel = never> = {
     equals?: $Enums.EventVisibility | EnumEventVisibilityFieldRefInput<$PrismaModel>
     in?: $Enums.EventVisibility[] | ListEnumEventVisibilityFieldRefInput<$PrismaModel>
@@ -40686,11 +40803,11 @@ export namespace Prisma {
     not?: NestedEnumEventVisibilityFilter<$PrismaModel> | $Enums.EventVisibility
   }
 
-  export type NestedEnumstateFilter<$PrismaModel = never> = {
-    equals?: $Enums.state | EnumstateFieldRefInput<$PrismaModel>
-    in?: $Enums.state[] | ListEnumstateFieldRefInput<$PrismaModel>
-    notIn?: $Enums.state[] | ListEnumstateFieldRefInput<$PrismaModel>
-    not?: NestedEnumstateFilter<$PrismaModel> | $Enums.state
+  export type NestedEnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
   }
 
   export type NestedEnumEventVisibilityWithAggregatesFilter<$PrismaModel = never> = {
@@ -40703,14 +40820,14 @@ export namespace Prisma {
     _max?: NestedEnumEventVisibilityFilter<$PrismaModel>
   }
 
-  export type NestedEnumstateWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.state | EnumstateFieldRefInput<$PrismaModel>
-    in?: $Enums.state[] | ListEnumstateFieldRefInput<$PrismaModel>
-    notIn?: $Enums.state[] | ListEnumstateFieldRefInput<$PrismaModel>
-    not?: NestedEnumstateWithAggregatesFilter<$PrismaModel> | $Enums.state
+  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumstateFilter<$PrismaModel>
-    _max?: NestedEnumstateFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type NestedEnumTaskStatusFilter<$PrismaModel = never> = {
@@ -40823,6 +40940,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumHeadsUpTypeFilter<$PrismaModel>
     _max?: NestedEnumHeadsUpTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumNotificationTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeFilter<$PrismaModel> | $Enums.NotificationType
+  }
+
+  export type NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel> | $Enums.NotificationType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNotificationTypeFilter<$PrismaModel>
+    _max?: NestedEnumNotificationTypeFilter<$PrismaModel>
   }
 
   export type NestedEnumAnnouncementVisibilityFilter<$PrismaModel = never> = {
@@ -41001,7 +41135,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     timeSlots?: EventTimeSlotCreateNestedManyWithoutEventInput
@@ -41021,7 +41155,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     timeSlots?: EventTimeSlotUncheckedCreateNestedManyWithoutEventInput
@@ -41049,7 +41183,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     division?: DivisionsCreateNestedManyWithoutSessionsInput
@@ -41068,7 +41202,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     division?: DivisionsUncheckedCreateNestedManyWithoutSessionsInput
@@ -41124,7 +41258,7 @@ export namespace Prisma {
     establishedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user?: UserCreateNestedOneWithoutDivisionsInput
+    user?: UserCreateNestedManyWithoutDivisionsInput
     socialLinks?: socialLinkCreateNestedManyWithoutDivisionInput
     sessions?: SessionsCreateNestedManyWithoutDivisionInput
     groups?: GroupsCreateNestedManyWithoutDivisionInput
@@ -41138,7 +41272,7 @@ export namespace Prisma {
     establishedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user?: UserUncheckedCreateNestedOneWithoutDivisionsInput
+    user?: UserUncheckedCreateNestedManyWithoutDivisionsInput
     socialLinks?: socialLinkUncheckedCreateNestedManyWithoutDivisionInput
     sessions?: SessionsUncheckedCreateNestedManyWithoutDivisionInput
     groups?: GroupsUncheckedCreateNestedManyWithoutDivisionInput
@@ -41240,7 +41374,7 @@ export namespace Prisma {
 
   export type EventParticipationUncheckedCreateWithoutUserInput = {
     id?: string
-    eventId: string
+    EventId: string
     role: $Enums.EventRole
     score?: number
     feedback?: string | null
@@ -41409,7 +41543,7 @@ export namespace Prisma {
     id?: string
     title: string
     description?: string | null
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -41419,7 +41553,7 @@ export namespace Prisma {
     id?: string
     title: string
     description?: string | null
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -41642,7 +41776,7 @@ export namespace Prisma {
     location?: StringNullableFilter<"Events"> | string | null
     tags?: EnumTagNullableListFilter<"Events">
     visibility?: EnumEventVisibilityFilter<"Events"> | $Enums.EventVisibility
-    state?: EnumstateFilter<"Events"> | $Enums.state
+    status?: EnumStatusFilter<"Events"> | $Enums.Status
     createdAt?: DateTimeFilter<"Events"> | Date | string
     updatedAt?: DateTimeFilter<"Events"> | Date | string
     creatorId?: UuidFilter<"Events"> | string
@@ -41675,7 +41809,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFilter<"Sessions"> | Date | string
     location?: StringNullableFilter<"Sessions"> | string | null
     tags?: EnumTagNullableListFilter<"Sessions">
-    state?: EnumstateFilter<"Sessions"> | $Enums.state
+    status?: EnumStatusFilter<"Sessions"> | $Enums.Status
     createdAt?: DateTimeFilter<"Sessions"> | Date | string
     updatedAt?: DateTimeFilter<"Sessions"> | Date | string
     creatorId?: UuidFilter<"Sessions"> | string
@@ -41728,7 +41862,7 @@ export namespace Prisma {
     establishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneWithoutDivisionsNestedInput
+    user?: UserUpdateManyWithoutDivisionsNestedInput
     socialLinks?: socialLinkUpdateManyWithoutDivisionNestedInput
     sessions?: SessionsUpdateManyWithoutDivisionNestedInput
     groups?: GroupsUpdateManyWithoutDivisionNestedInput
@@ -41742,7 +41876,7 @@ export namespace Prisma {
     establishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUncheckedUpdateOneWithoutDivisionsNestedInput
+    user?: UserUncheckedUpdateManyWithoutDivisionsNestedInput
     socialLinks?: socialLinkUncheckedUpdateManyWithoutDivisionNestedInput
     sessions?: SessionsUncheckedUpdateManyWithoutDivisionNestedInput
     groups?: GroupsUncheckedUpdateManyWithoutDivisionNestedInput
@@ -41819,7 +41953,7 @@ export namespace Prisma {
     OR?: EventParticipationScalarWhereInput[]
     NOT?: EventParticipationScalarWhereInput | EventParticipationScalarWhereInput[]
     id?: UuidFilter<"EventParticipation"> | string
-    eventId?: UuidFilter<"EventParticipation"> | string
+    EventId?: UuidFilter<"EventParticipation"> | string
     userId?: UuidFilter<"EventParticipation"> | string
     role?: EnumEventRoleFilter<"EventParticipation"> | $Enums.EventRole
     score?: IntFilter<"EventParticipation"> | number
@@ -41879,8 +42013,8 @@ export namespace Prisma {
     OR?: TaskParticipationScalarWhereInput[]
     NOT?: TaskParticipationScalarWhereInput | TaskParticipationScalarWhereInput[]
     id?: UuidFilter<"TaskParticipation"> | string
-    taskId?: StringFilter<"TaskParticipation"> | string
-    userId?: StringFilter<"TaskParticipation"> | string
+    taskId?: UuidFilter<"TaskParticipation"> | string
+    userId?: UuidFilter<"TaskParticipation"> | string
     role?: StringFilter<"TaskParticipation"> | string
     score?: IntFilter<"TaskParticipation"> | number
     feedback?: StringNullableFilter<"TaskParticipation"> | string | null
@@ -41975,7 +42109,7 @@ export namespace Prisma {
     OR?: HeadsUpScalarWhereInput[]
     NOT?: HeadsUpScalarWhereInput | HeadsUpScalarWhereInput[]
     id?: UuidFilter<"HeadsUp"> | string
-    userId?: StringFilter<"HeadsUp"> | string
+    userId?: UuidFilter<"HeadsUp"> | string
     type?: EnumHeadsUpTypeFilter<"HeadsUp"> | $Enums.HeadsUpType
     body?: StringFilter<"HeadsUp"> | string
     sentAt?: DateTimeFilter<"HeadsUp"> | Date | string
@@ -42004,7 +42138,7 @@ export namespace Prisma {
     id?: UuidFilter<"Notification"> | string
     title?: StringFilter<"Notification"> | string
     description?: StringNullableFilter<"Notification"> | string | null
-    type?: StringFilter<"Notification"> | string
+    type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
     isRead?: BoolFilter<"Notification"> | boolean
     createdAt?: DateTimeFilter<"Notification"> | Date | string
     updatedAt?: DateTimeFilter<"Notification"> | Date | string
@@ -42059,8 +42193,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -42102,8 +42238,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -42161,8 +42299,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42204,8 +42344,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42247,8 +42389,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -42290,8 +42434,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -42349,8 +42495,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42392,8 +42540,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42435,8 +42585,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -42478,8 +42630,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -42526,8 +42680,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -42569,8 +42725,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -42597,6 +42755,11 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutDivisionsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutDivisionsInput, UserUncheckedCreateWithoutDivisionsInput>
+  }
+
+  export type UserCreateManyDivisionsInputEnvelope = {
+    data: UserCreateManyDivisionsInput | UserCreateManyDivisionsInput[]
+    skipDuplicates?: boolean
   }
 
   export type socialLinkCreateWithoutDivisionInput = {
@@ -42635,7 +42798,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creator: UserCreateNestedOneWithoutSessionsInput
@@ -42654,7 +42817,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -42731,8 +42894,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42774,8 +42939,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42799,101 +42966,51 @@ export namespace Prisma {
     Announcements?: AnnouncementUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUpsertWithoutDivisionsInput = {
+  export type UserUpsertWithWhereUniqueWithoutDivisionsInput = {
+    where: UserWhereUniqueInput
     update: XOR<UserUpdateWithoutDivisionsInput, UserUncheckedUpdateWithoutDivisionsInput>
     create: XOR<UserCreateWithoutDivisionsInput, UserUncheckedCreateWithoutDivisionsInput>
-    where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutDivisionsInput = {
-    where?: UserWhereInput
+  export type UserUpdateWithWhereUniqueWithoutDivisionsInput = {
+    where: UserWhereUniqueInput
     data: XOR<UserUpdateWithoutDivisionsInput, UserUncheckedUpdateWithoutDivisionsInput>
   }
 
-  export type UserUpdateWithoutDivisionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    firstName?: NullableStringFieldUpdateOperationsInput | string | null
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
-    telegramUserName?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    berthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    clubStatus?: NullableEnumClubStatusFieldUpdateOperationsInput | $Enums.ClubStatus | null
-    specialty?: NullableStringFieldUpdateOperationsInput | string | null
-    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
-    DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
-    AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
-    universityInfo?: UniversityInfoUpdateOneWithoutUserNestedInput
-    socialLinks?: socialLinkUpdateManyWithoutUserNestedInput
-    UserSetting?: UserSettingUpdateOneWithoutUserNestedInput
-    Badges?: BadgesUpdateManyWithoutUserNestedInput
-    events?: EventsUpdateManyWithoutCreatorNestedInput
-    sessions?: SessionsUpdateManyWithoutCreatorNestedInput
-    groups?: GroupsUpdateManyWithoutUsersNestedInput
-    DivisionHead?: DivisionsUpdateOneWithoutCurrentHeadNestedInput
-    TasksCreated?: TasksUpdateManyWithoutCreatorNestedInput
-    AssignedTasks?: TasksUpdateManyWithoutAssignedToNestedInput
-    EventParticipation?: EventParticipationUpdateManyWithoutUserNestedInput
-    SessionParticipation?: SessionParticipationUpdateManyWithoutUserNestedInput
-    TaskParticipation?: TaskParticipationUpdateManyWithoutUserNestedInput
-    Attendance?: AttendanceUpdateManyWithoutUserNestedInput
-    AttendanceSummary?: AttendanceSummaryUpdateOneWithoutUserNestedInput
-    HeadsUp?: HeadsUpUpdateManyWithoutUserNestedInput
-    Notification?: NotificationUpdateManyWithoutUserNestedInput
-    Announcements?: AnnouncementUpdateManyWithoutUserNestedInput
+  export type UserUpdateManyWithWhereWithoutDivisionsInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutDivisionsInput>
   }
 
-  export type UserUncheckedUpdateWithoutDivisionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    firstName?: NullableStringFieldUpdateOperationsInput | string | null
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
-    telegramUserName?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    berthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    clubStatus?: NullableEnumClubStatusFieldUpdateOperationsInput | $Enums.ClubStatus | null
-    specialty?: NullableStringFieldUpdateOperationsInput | string | null
-    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
-    DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
-    AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
-    universityInfo?: UniversityInfoUncheckedUpdateOneWithoutUserNestedInput
-    socialLinks?: socialLinkUncheckedUpdateManyWithoutUserNestedInput
-    UserSetting?: UserSettingUncheckedUpdateOneWithoutUserNestedInput
-    Badges?: BadgesUncheckedUpdateManyWithoutUserNestedInput
-    events?: EventsUncheckedUpdateManyWithoutCreatorNestedInput
-    sessions?: SessionsUncheckedUpdateManyWithoutCreatorNestedInput
-    groups?: GroupsUncheckedUpdateManyWithoutUsersNestedInput
-    DivisionHead?: DivisionsUncheckedUpdateOneWithoutCurrentHeadNestedInput
-    TasksCreated?: TasksUncheckedUpdateManyWithoutCreatorNestedInput
-    AssignedTasks?: TasksUncheckedUpdateManyWithoutAssignedToNestedInput
-    EventParticipation?: EventParticipationUncheckedUpdateManyWithoutUserNestedInput
-    SessionParticipation?: SessionParticipationUncheckedUpdateManyWithoutUserNestedInput
-    TaskParticipation?: TaskParticipationUncheckedUpdateManyWithoutUserNestedInput
-    Attendance?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
-    AttendanceSummary?: AttendanceSummaryUncheckedUpdateOneWithoutUserNestedInput
-    HeadsUp?: HeadsUpUncheckedUpdateManyWithoutUserNestedInput
-    Notification?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    Announcements?: AnnouncementUncheckedUpdateManyWithoutUserNestedInput
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    id?: UuidFilter<"User"> | string
+    firstName?: StringNullableFilter<"User"> | string | null
+    middleName?: StringNullableFilter<"User"> | string | null
+    lastName?: StringNullableFilter<"User"> | string | null
+    gender?: EnumGenderFilter<"User"> | $Enums.Gender
+    email?: StringNullableFilter<"User"> | string | null
+    password?: StringNullableFilter<"User"> | string | null
+    phone_number?: StringNullableFilter<"User"> | string | null
+    telegramUserName?: StringNullableFilter<"User"> | string | null
+    bio?: StringNullableFilter<"User"> | string | null
+    berthDate?: DateTimeNullableFilter<"User"> | Date | string | null
+    profileImageUrl?: StringNullableFilter<"User"> | string | null
+    clubStatus?: EnumClubStatusNullableFilter<"User"> | $Enums.ClubStatus | null
+    specialty?: StringNullableFilter<"User"> | string | null
+    cvUrl?: StringNullableFilter<"User"> | string | null
+    lastSeen?: DateTimeFilter<"User"> | Date | string
+    role?: EnumRoleTypeFilter<"User"> | $Enums.RoleType
+    isDeleted?: BoolFilter<"User"> | boolean
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    DivisionId?: UuidNullableFilter<"User"> | string | null
+    UserSettingId?: UuidNullableFilter<"User"> | string | null
+    DivisionHeadID?: UuidNullableFilter<"User"> | string | null
+    AttendanceSummaryId?: UuidNullableFilter<"User"> | string | null
   }
 
   export type socialLinkUpsertWithWhereUniqueWithoutDivisionInput = {
@@ -42962,8 +43079,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -43005,8 +43124,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -43044,7 +43165,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     currentHead?: UserCreateNestedOneWithoutDivisionHeadInput
-    user?: UserCreateNestedOneWithoutDivisionsInput
+    user?: UserCreateNestedManyWithoutDivisionsInput
     socialLinks?: socialLinkCreateNestedManyWithoutDivisionInput
     sessions?: SessionsCreateNestedManyWithoutDivisionInput
   }
@@ -43058,7 +43179,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     currentHeadID?: string | null
-    user?: UserUncheckedCreateNestedOneWithoutDivisionsInput
+    user?: UserUncheckedCreateNestedManyWithoutDivisionsInput
     socialLinks?: socialLinkUncheckedCreateNestedManyWithoutDivisionInput
     sessions?: SessionsUncheckedCreateNestedManyWithoutDivisionInput
   }
@@ -43076,7 +43197,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creator: UserCreateNestedOneWithoutSessionsInput
@@ -43095,7 +43216,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -43121,7 +43242,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creator: UserCreateNestedOneWithoutEventsInput
@@ -43141,7 +43262,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -43172,35 +43293,6 @@ export namespace Prisma {
     data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutGroupsInput>
   }
 
-  export type UserScalarWhereInput = {
-    AND?: UserScalarWhereInput | UserScalarWhereInput[]
-    OR?: UserScalarWhereInput[]
-    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
-    id?: UuidFilter<"User"> | string
-    firstName?: StringNullableFilter<"User"> | string | null
-    middleName?: StringNullableFilter<"User"> | string | null
-    lastName?: StringNullableFilter<"User"> | string | null
-    gender?: EnumGenderFilter<"User"> | $Enums.Gender
-    email?: StringNullableFilter<"User"> | string | null
-    password?: StringNullableFilter<"User"> | string | null
-    phone_number?: StringNullableFilter<"User"> | string | null
-    telegramUserName?: StringNullableFilter<"User"> | string | null
-    bio?: StringNullableFilter<"User"> | string | null
-    berthDate?: DateTimeNullableFilter<"User"> | Date | string | null
-    profileImageUrl?: StringNullableFilter<"User"> | string | null
-    clubStatus?: EnumClubStatusNullableFilter<"User"> | $Enums.ClubStatus | null
-    specialty?: StringNullableFilter<"User"> | string | null
-    cvUrl?: StringNullableFilter<"User"> | string | null
-    lastSeen?: DateTimeFilter<"User"> | Date | string
-    role?: EnumRoleTypeFilter<"User"> | $Enums.RoleType
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
-    DivisionId?: UuidNullableFilter<"User"> | string | null
-    UserSettingId?: UuidNullableFilter<"User"> | string | null
-    DivisionHeadID?: UuidNullableFilter<"User"> | string | null
-    AttendanceSummaryId?: UuidNullableFilter<"User"> | string | null
-  }
-
   export type DivisionsUpsertWithoutGroupsInput = {
     update: XOR<DivisionsUpdateWithoutGroupsInput, DivisionsUncheckedUpdateWithoutGroupsInput>
     create: XOR<DivisionsCreateWithoutGroupsInput, DivisionsUncheckedCreateWithoutGroupsInput>
@@ -43221,7 +43313,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     currentHead?: UserUpdateOneWithoutDivisionHeadNestedInput
-    user?: UserUpdateOneWithoutDivisionsNestedInput
+    user?: UserUpdateManyWithoutDivisionsNestedInput
     socialLinks?: socialLinkUpdateManyWithoutDivisionNestedInput
     sessions?: SessionsUpdateManyWithoutDivisionNestedInput
   }
@@ -43235,7 +43327,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     currentHeadID?: NullableStringFieldUpdateOperationsInput | string | null
-    user?: UserUncheckedUpdateOneWithoutDivisionsNestedInput
+    user?: UserUncheckedUpdateManyWithoutDivisionsNestedInput
     socialLinks?: socialLinkUncheckedUpdateManyWithoutDivisionNestedInput
     sessions?: SessionsUncheckedUpdateManyWithoutDivisionNestedInput
   }
@@ -43290,8 +43382,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -43333,8 +43427,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -43372,7 +43468,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     currentHead?: UserCreateNestedOneWithoutDivisionHeadInput
-    user?: UserCreateNestedOneWithoutDivisionsInput
+    user?: UserCreateNestedManyWithoutDivisionsInput
     sessions?: SessionsCreateNestedManyWithoutDivisionInput
     groups?: GroupsCreateNestedManyWithoutDivisionInput
   }
@@ -43386,7 +43482,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     currentHeadID?: string | null
-    user?: UserUncheckedCreateNestedOneWithoutDivisionsInput
+    user?: UserUncheckedCreateNestedManyWithoutDivisionsInput
     sessions?: SessionsUncheckedCreateNestedManyWithoutDivisionInput
     groups?: GroupsUncheckedCreateNestedManyWithoutDivisionInput
   }
@@ -43425,8 +43521,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43468,8 +43566,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43513,7 +43613,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     currentHead?: UserUpdateOneWithoutDivisionHeadNestedInput
-    user?: UserUpdateOneWithoutDivisionsNestedInput
+    user?: UserUpdateManyWithoutDivisionsNestedInput
     sessions?: SessionsUpdateManyWithoutDivisionNestedInput
     groups?: GroupsUpdateManyWithoutDivisionNestedInput
   }
@@ -43527,7 +43627,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     currentHeadID?: NullableStringFieldUpdateOperationsInput | string | null
-    user?: UserUncheckedUpdateOneWithoutDivisionsNestedInput
+    user?: UserUncheckedUpdateManyWithoutDivisionsNestedInput
     sessions?: SessionsUncheckedUpdateManyWithoutDivisionNestedInput
     groups?: GroupsUncheckedUpdateManyWithoutDivisionNestedInput
   }
@@ -43542,7 +43642,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creator: UserCreateNestedOneWithoutEventsInput
@@ -43562,7 +43662,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -43598,7 +43698,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutEventsNestedInput
@@ -43618,7 +43718,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -43636,7 +43736,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creator: UserCreateNestedOneWithoutSessionsInput
@@ -43655,7 +43755,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -43690,7 +43790,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutSessionsNestedInput
@@ -43709,7 +43809,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -43738,8 +43838,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -43781,8 +43883,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -43993,8 +44097,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44036,8 +44142,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44169,8 +44277,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -44212,8 +44322,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -44251,7 +44363,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     currentHead?: UserCreateNestedOneWithoutDivisionHeadInput
-    user?: UserCreateNestedOneWithoutDivisionsInput
+    user?: UserCreateNestedManyWithoutDivisionsInput
     socialLinks?: socialLinkCreateNestedManyWithoutDivisionInput
     groups?: GroupsCreateNestedManyWithoutDivisionInput
   }
@@ -44265,7 +44377,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     currentHeadID?: string | null
-    user?: UserUncheckedCreateNestedOneWithoutDivisionsInput
+    user?: UserUncheckedCreateNestedManyWithoutDivisionsInput
     socialLinks?: socialLinkUncheckedCreateNestedManyWithoutDivisionInput
     groups?: GroupsUncheckedCreateNestedManyWithoutDivisionInput
   }
@@ -44457,8 +44569,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44500,8 +44614,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44663,8 +44779,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -44706,8 +44824,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -44754,8 +44874,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -44797,8 +44919,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -44837,7 +44961,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creator: UserCreateNestedOneWithoutEventsInput
@@ -44857,7 +44981,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -44880,7 +45004,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creator: UserCreateNestedOneWithoutSessionsInput
@@ -44899,7 +45023,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -44974,8 +45098,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45017,8 +45143,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45079,7 +45207,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutEventsNestedInput
@@ -45099,7 +45227,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -45128,7 +45256,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutSessionsNestedInput
@@ -45147,7 +45275,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -45184,7 +45312,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creator: UserCreateNestedOneWithoutEventsInput
@@ -45204,7 +45332,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -45237,8 +45365,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -45280,8 +45410,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -45331,7 +45463,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutEventsNestedInput
@@ -45351,7 +45483,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -45390,8 +45522,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45433,8 +45567,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45466,7 +45602,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creator: UserCreateNestedOneWithoutSessionsInput
@@ -45485,7 +45621,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -45519,8 +45655,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -45562,8 +45700,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -45611,7 +45751,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutSessionsNestedInput
@@ -45630,7 +45770,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -45670,8 +45810,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45713,8 +45855,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45793,8 +45937,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -45836,8 +45982,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -45938,8 +46086,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45981,8 +46131,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46024,8 +46176,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -46067,8 +46221,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -46105,7 +46261,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creator: UserCreateNestedOneWithoutSessionsInput
@@ -46124,7 +46280,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -46150,7 +46306,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creator: UserCreateNestedOneWithoutEventsInput
@@ -46170,7 +46326,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     creatorId: string
@@ -46235,8 +46391,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46278,8 +46436,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46322,7 +46482,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutSessionsNestedInput
@@ -46341,7 +46501,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -46373,7 +46533,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutEventsNestedInput
@@ -46393,7 +46553,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -46448,8 +46608,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -46491,8 +46653,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -46550,8 +46714,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46593,8 +46759,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46636,8 +46804,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -46679,8 +46849,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -46765,8 +46937,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46808,8 +46982,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46884,8 +47060,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -46927,8 +47105,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -46991,8 +47171,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -47034,8 +47216,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -47212,8 +47396,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
     AttendanceSummaryId?: string | null
@@ -47255,8 +47441,10 @@ export namespace Prisma {
     cvUrl?: string | null
     lastSeen: Date | string
     role?: $Enums.RoleType
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
     DivisionId?: string | null
     UserSettingId?: string | null
     DivisionHeadID?: string | null
@@ -47402,7 +47590,7 @@ export namespace Prisma {
     location?: string | null
     tags?: EventsCreatetagsInput | $Enums.Tag[]
     visibility: $Enums.EventVisibility
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47415,7 +47603,7 @@ export namespace Prisma {
     endTMonth: Date | string
     location?: string | null
     tags?: SessionsCreatetagsInput | $Enums.Tag[]
-    state: $Enums.state
+    status: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47436,7 +47624,7 @@ export namespace Prisma {
 
   export type EventParticipationCreateManyUserInput = {
     id?: string
-    eventId: string
+    EventId: string
     role: $Enums.EventRole
     score?: number
     feedback?: string | null
@@ -47552,7 +47740,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     timeSlots?: EventTimeSlotUpdateManyWithoutEventNestedInput
@@ -47572,7 +47760,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     timeSlots?: EventTimeSlotUncheckedUpdateManyWithoutEventNestedInput
@@ -47592,7 +47780,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -47605,7 +47793,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     division?: DivisionsUpdateManyWithoutSessionsNestedInput
@@ -47624,7 +47812,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     division?: DivisionsUncheckedUpdateManyWithoutSessionsNestedInput
@@ -47643,7 +47831,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -47784,7 +47972,7 @@ export namespace Prisma {
 
   export type EventParticipationUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    eventId?: StringFieldUpdateOperationsInput | string
+    EventId?: StringFieldUpdateOperationsInput | string
     role?: EnumEventRoleFieldUpdateOperationsInput | $Enums.EventRole
     score?: IntFieldUpdateOperationsInput | number
     feedback?: NullableStringFieldUpdateOperationsInput | string | null
@@ -47794,7 +47982,7 @@ export namespace Prisma {
 
   export type EventParticipationUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    eventId?: StringFieldUpdateOperationsInput | string
+    EventId?: StringFieldUpdateOperationsInput | string
     role?: EnumEventRoleFieldUpdateOperationsInput | $Enums.EventRole
     score?: IntFieldUpdateOperationsInput | number
     feedback?: NullableStringFieldUpdateOperationsInput | string | null
@@ -47922,7 +48110,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47932,7 +48120,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47942,7 +48130,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47984,6 +48172,33 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserCreateManyDivisionsInput = {
+    id?: string
+    firstName?: string | null
+    middleName?: string | null
+    lastName?: string | null
+    gender?: $Enums.Gender
+    email?: string | null
+    password?: string | null
+    phone_number?: string | null
+    telegramUserName?: string | null
+    bio?: string | null
+    berthDate?: Date | string | null
+    profileImageUrl?: string | null
+    clubStatus?: $Enums.ClubStatus | null
+    specialty?: string | null
+    cvUrl?: string | null
+    lastSeen: Date | string
+    role?: $Enums.RoleType
+    isDeleted?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    UserSettingId?: string | null
+    DivisionHeadID?: string | null
+    AttendanceSummaryId?: string | null
+  }
+
   export type socialLinkCreateManyDivisionInput = {
     id?: string
     socialLinkName: string
@@ -47999,6 +48214,123 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type UserUpdateWithoutDivisionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramUserName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    berthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    clubStatus?: NullableEnumClubStatusFieldUpdateOperationsInput | $Enums.ClubStatus | null
+    specialty?: NullableStringFieldUpdateOperationsInput | string | null
+    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
+    DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
+    AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
+    universityInfo?: UniversityInfoUpdateOneWithoutUserNestedInput
+    socialLinks?: socialLinkUpdateManyWithoutUserNestedInput
+    UserSetting?: UserSettingUpdateOneWithoutUserNestedInput
+    Badges?: BadgesUpdateManyWithoutUserNestedInput
+    events?: EventsUpdateManyWithoutCreatorNestedInput
+    sessions?: SessionsUpdateManyWithoutCreatorNestedInput
+    groups?: GroupsUpdateManyWithoutUsersNestedInput
+    DivisionHead?: DivisionsUpdateOneWithoutCurrentHeadNestedInput
+    TasksCreated?: TasksUpdateManyWithoutCreatorNestedInput
+    AssignedTasks?: TasksUpdateManyWithoutAssignedToNestedInput
+    EventParticipation?: EventParticipationUpdateManyWithoutUserNestedInput
+    SessionParticipation?: SessionParticipationUpdateManyWithoutUserNestedInput
+    TaskParticipation?: TaskParticipationUpdateManyWithoutUserNestedInput
+    Attendance?: AttendanceUpdateManyWithoutUserNestedInput
+    AttendanceSummary?: AttendanceSummaryUpdateOneWithoutUserNestedInput
+    HeadsUp?: HeadsUpUpdateManyWithoutUserNestedInput
+    Notification?: NotificationUpdateManyWithoutUserNestedInput
+    Announcements?: AnnouncementUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDivisionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramUserName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    berthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    clubStatus?: NullableEnumClubStatusFieldUpdateOperationsInput | $Enums.ClubStatus | null
+    specialty?: NullableStringFieldUpdateOperationsInput | string | null
+    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
+    DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
+    AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
+    universityInfo?: UniversityInfoUncheckedUpdateOneWithoutUserNestedInput
+    socialLinks?: socialLinkUncheckedUpdateManyWithoutUserNestedInput
+    UserSetting?: UserSettingUncheckedUpdateOneWithoutUserNestedInput
+    Badges?: BadgesUncheckedUpdateManyWithoutUserNestedInput
+    events?: EventsUncheckedUpdateManyWithoutCreatorNestedInput
+    sessions?: SessionsUncheckedUpdateManyWithoutCreatorNestedInput
+    groups?: GroupsUncheckedUpdateManyWithoutUsersNestedInput
+    DivisionHead?: DivisionsUncheckedUpdateOneWithoutCurrentHeadNestedInput
+    TasksCreated?: TasksUncheckedUpdateManyWithoutCreatorNestedInput
+    AssignedTasks?: TasksUncheckedUpdateManyWithoutAssignedToNestedInput
+    EventParticipation?: EventParticipationUncheckedUpdateManyWithoutUserNestedInput
+    SessionParticipation?: SessionParticipationUncheckedUpdateManyWithoutUserNestedInput
+    TaskParticipation?: TaskParticipationUncheckedUpdateManyWithoutUserNestedInput
+    Attendance?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
+    AttendanceSummary?: AttendanceSummaryUncheckedUpdateOneWithoutUserNestedInput
+    HeadsUp?: HeadsUpUncheckedUpdateManyWithoutUserNestedInput
+    Notification?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    Announcements?: AnnouncementUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutDivisionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    telegramUserName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    berthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    clubStatus?: NullableEnumClubStatusFieldUpdateOperationsInput | $Enums.ClubStatus | null
+    specialty?: NullableStringFieldUpdateOperationsInput | string | null
+    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
+    DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
+    AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type socialLinkUpdateWithoutDivisionInput = {
@@ -48036,7 +48368,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutSessionsNestedInput
@@ -48055,7 +48387,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -48074,7 +48406,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -48128,8 +48460,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48171,8 +48505,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48214,8 +48550,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48230,7 +48568,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutSessionsNestedInput
@@ -48249,7 +48587,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -48268,7 +48606,7 @@ export namespace Prisma {
     endTMonth?: DateTimeFieldUpdateOperationsInput | Date | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: SessionsUpdatetagsInput | $Enums.Tag[]
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -48284,7 +48622,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutEventsNestedInput
@@ -48304,7 +48642,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -48324,7 +48662,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EventsUpdatetagsInput | $Enums.Tag[]
     visibility?: EnumEventVisibilityFieldUpdateOperationsInput | $Enums.EventVisibility
-    state?: EnumstateFieldUpdateOperationsInput | $Enums.state
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creatorId?: StringFieldUpdateOperationsInput | string
@@ -48579,7 +48917,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     currentHead?: UserUpdateOneWithoutDivisionHeadNestedInput
-    user?: UserUpdateOneWithoutDivisionsNestedInput
+    user?: UserUpdateManyWithoutDivisionsNestedInput
     socialLinks?: socialLinkUpdateManyWithoutDivisionNestedInput
     groups?: GroupsUpdateManyWithoutDivisionNestedInput
   }
@@ -48593,7 +48931,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     currentHeadID?: NullableStringFieldUpdateOperationsInput | string | null
-    user?: UserUncheckedUpdateOneWithoutDivisionsNestedInput
+    user?: UserUncheckedUpdateManyWithoutDivisionsNestedInput
     socialLinks?: socialLinkUncheckedUpdateManyWithoutDivisionNestedInput
     groups?: GroupsUncheckedUpdateManyWithoutDivisionNestedInput
   }
@@ -48795,8 +49133,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48838,8 +49178,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48881,8 +49223,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48937,8 +49281,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48980,8 +49326,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49023,8 +49371,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49049,8 +49399,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49092,8 +49444,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49135,8 +49489,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49209,8 +49565,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
     AttendanceSummaryId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49252,8 +49610,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49295,8 +49655,10 @@ export namespace Prisma {
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleTypeFieldUpdateOperationsInput | $Enums.RoleType
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DivisionId?: NullableStringFieldUpdateOperationsInput | string | null
     UserSettingId?: NullableStringFieldUpdateOperationsInput | string | null
     DivisionHeadID?: NullableStringFieldUpdateOperationsInput | string | null

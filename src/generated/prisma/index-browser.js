@@ -135,8 +135,10 @@ exports.Prisma.UserScalarFieldEnum = {
   cvUrl: 'cvUrl',
   lastSeen: 'lastSeen',
   role: 'role',
+  isDeleted: 'isDeleted',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
   DivisionId: 'DivisionId',
   UserSettingId: 'UserSettingId',
   DivisionHeadID: 'DivisionHeadID',
@@ -216,7 +218,7 @@ exports.Prisma.EventsScalarFieldEnum = {
   location: 'location',
   tags: 'tags',
   visibility: 'visibility',
-  state: 'state',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   creatorId: 'creatorId'
@@ -230,7 +232,7 @@ exports.Prisma.SessionsScalarFieldEnum = {
   endTMonth: 'endTMonth',
   location: 'location',
   tags: 'tags',
-  state: 'state',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   creatorId: 'creatorId'
@@ -253,7 +255,7 @@ exports.Prisma.TasksScalarFieldEnum = {
 
 exports.Prisma.EventParticipationScalarFieldEnum = {
   id: 'id',
-  eventId: 'eventId',
+  EventId: 'EventId',
   userId: 'userId',
   role: 'role',
   score: 'score',
@@ -435,7 +437,7 @@ exports.EventVisibility = exports.$Enums.EventVisibility = {
   MEMBERS_ONLY: 'MEMBERS_ONLY'
 };
 
-exports.state = exports.$Enums.state = {
+exports.Status = exports.$Enums.Status = {
   Planned: 'Planned',
   Ongoing: 'Ongoing',
   Completed: 'Completed',
@@ -489,6 +491,16 @@ exports.HeadsUpType = exports.$Enums.HeadsUpType = {
   TRAVEL: 'TRAVEL',
   PERSONAL: 'PERSONAL',
   OTHER: 'OTHER'
+};
+
+exports.NotificationType = exports.$Enums.NotificationType = {
+  Announcement: 'Announcement',
+  Task: 'Task',
+  Session: 'Session',
+  Event: 'Event',
+  Reminder: 'Reminder',
+  Alert: 'Alert',
+  Update: 'Update'
 };
 
 exports.AnnouncementVisibility = exports.$Enums.AnnouncementVisibility = {

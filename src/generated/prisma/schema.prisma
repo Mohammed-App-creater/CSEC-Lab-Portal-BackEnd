@@ -52,14 +52,16 @@ model User {
   cvUrl            String?
   lastSeen         DateTime
   role             RoleType    @default(Member)
+  isDeleted        Boolean     @default(false)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   // Relations
   universityInfo UniversityInfo?
   Divisions      Divisions?      @relation("UserDivision", fields: [DivisionId], references: [id], onDelete: SetNull)
-  DivisionId     String?         @unique @db.Uuid
+  DivisionId     String?         @db.Uuid
   socialLinks    socialLink[]    @relation("UserSocialLink")
   UserSetting    UserSetting?    @relation("UserSetting")
   UserSettingId  String?         @unique @db.Uuid
@@ -146,7 +148,7 @@ model Divisions {
   // Relations
   currentHeadID String?      @unique @db.Uuid
   currentHead   User?        @relation("DivisionHead", fields: [currentHeadID], references: [id], onDelete: SetNull)
-  user          User?        @relation("UserDivision")
+  user          User[]       @relation("UserDivision")
   socialLinks   socialLink[] @relation("DivisionSocialLink")
   sessions      Sessions[]   @relation("SessionDivision")
   groups        Groups[]     @relation("DivisionGroups")
@@ -227,7 +229,7 @@ enum Tag {
   ENTIRE
 }
 
-enum state {
+enum Status {
   Planned
   Ongoing
   Completed
@@ -253,7 +255,7 @@ model Events {
   location    String?
   tags        Tag[]
   visibility  EventVisibility
-  state       state
+  status      Status
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
 
@@ -267,7 +269,7 @@ model Events {
   attendance   Attendance[]         @relation("EventAttendance")
 
   // indexes
-  @@index([state])
+  @@index([status])
   @@index([visibility])
   @@index([startDate])
 }
@@ -280,7 +282,7 @@ model Sessions {
   endTMonth   DateTime
   location    String?
   tags        Tag[]
-  state       state
+  status      Status
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -295,7 +297,7 @@ model Sessions {
   attendance   Attendance[]           @relation("SessionAttendance")
 
   // indexes
-  @@index([state])
+  @@index([status])
   @@index([startMonth])
 }
 
@@ -348,8 +350,8 @@ enum EventRole {
 
 model EventParticipation {
   id            String    @id @default(uuid()) @db.Uuid
-  event         Events    @relation("SessionParticipants", fields: [eventId], references: [id])
-  eventId       String    @db.Uuid
+  EventId       String    @db.Uuid
+  event         Events    @relation("SessionParticipants", fields: [EventId], references: [id])
   user          User      @relation("EventParticipants", fields: [userId], references: [id])
   userId        String    @db.Uuid
   role          EventRole
@@ -360,8 +362,8 @@ model EventParticipation {
 
   // indexes
   @@index([userId]) // might help for dedup checks or fast access
-  @@index([eventId]) // might help for dedup checks or fast access
-  @@index([eventId, userId]) // might help for dedup checks or fast access
+  @@index([EventId]) // might help for dedup checks or fast access
+  @@index([EventId, userId]) // might help for dedup checks or fast access
 }
 
 model SessionParticipation {
@@ -386,9 +388,9 @@ model SessionParticipation {
 model TaskParticipation {
   id            String   @id @default(uuid()) @db.Uuid
   task          Tasks    @relation("TaskParticipants", fields: [taskId], references: [id])
-  taskId        String
+  taskId        String   @db.Uuid
   user          User     @relation("TaskParticipants", fields: [userId], references: [id])
-  userId        String
+  userId        String   @db.Uuid
   role          String
   score         Int      @default(0)
   feedback      String?
@@ -446,7 +448,7 @@ model Attendance {
 model AttendanceSummary {
   id     String @id @default(uuid()) @db.Uuid
   user   User   @relation("AttendanceSummary", fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique
+  userId String @unique @db.Uuid
 
   totalEvents     Int
   totalSessions   Int
@@ -464,7 +466,7 @@ model AttendanceSummary {
 model HeadsUp {
   id     String      @id @default(uuid()) @db.Uuid
   user   User        @relation("HeadsUp", fields: [userId], references: [id])
-  userId String
+  userId String      @db.Uuid
   type   HeadsUpType
   body   String
   sentAt DateTime    @default(now())
@@ -487,13 +489,13 @@ enum NotificationType {
 }
 
 model Notification {
-  id          String   @id @default(uuid()) @db.Uuid
+  id          String           @id @default(uuid()) @db.Uuid
   title       String
   description String?
-  type        String
-  isRead      Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  type        NotificationType
+  isRead      Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 
   // Relations
   user User[] @relation("UserNotification")

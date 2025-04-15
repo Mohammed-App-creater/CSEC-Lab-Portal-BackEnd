@@ -1,15 +1,14 @@
-/*
-  Warnings:
-
-  - The `gender` column on the `User` table would be dropped and recreated. This will lead to data loss if there is data in the column.
-  - A unique constraint covering the columns `[phone_number]` on the table `User` will be added. If there are existing duplicate values, this will fail.
-  - A unique constraint covering the columns `[telegramUserName]` on the table `User` will be added. If there are existing duplicate values, this will fail.
-  - A unique constraint covering the columns `[UserSettingId]` on the table `User` will be added. If there are existing duplicate values, this will fail.
-  - A unique constraint covering the columns `[AttendanceSummaryId]` on the table `User` will be added. If there are existing duplicate values, this will fail.
-
-*/
 -- CreateEnum
 CREATE TYPE "Gender" AS ENUM ('Male', 'Female');
+
+-- CreateEnum
+CREATE TYPE "ClubStatus" AS ENUM ('Active', 'Alumni', 'Banned');
+
+-- CreateEnum
+CREATE TYPE "RoleType" AS ENUM ('SuperAdmin', 'President', 'VicePresident', 'DivisionHead', 'Coordinator', 'Member');
+
+-- CreateEnum
+CREATE TYPE "UniversityStatus" AS ENUM ('onCampus', 'offCampus', 'withdraw', 'dropOut');
 
 -- CreateEnum
 CREATE TYPE "Theme" AS ENUM ('Light', 'Dark', 'System');
@@ -21,7 +20,7 @@ CREATE TYPE "EventVisibility" AS ENUM ('PUBLIC', 'MEMBERS_ONLY');
 CREATE TYPE "Tag" AS ENUM ('CPD', 'CBD', 'SEC', 'DEV', 'DS', 'ENTIRE');
 
 -- CreateEnum
-CREATE TYPE "state" AS ENUM ('Planned', 'Ongoing', 'Completed', 'Canceled', 'Postponed');
+CREATE TYPE "Status" AS ENUM ('Planned', 'Ongoing', 'Completed', 'Canceled', 'Postponed');
 
 -- CreateEnum
 CREATE TYPE "TaskStatus" AS ENUM ('Pending', 'InProgress', 'Completed', 'Rejected', 'CANCELED');
@@ -47,11 +46,50 @@ CREATE TYPE "AnnouncementVisibility" AS ENUM ('PUBLIC', 'Division_ONLY', 'GROUP_
 -- CreateEnum
 CREATE TYPE "AnnouncementType" AS ENUM ('EVENT', 'SESSION', 'TASK', 'GENERAL');
 
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "AttendanceSummaryId" UUID,
-ADD COLUMN     "UserSettingId" UUID,
-DROP COLUMN "gender",
-ADD COLUMN     "gender" "Gender" NOT NULL DEFAULT 'Male';
+-- CreateTable
+CREATE TABLE "User" (
+    "id" UUID NOT NULL,
+    "firstName" TEXT,
+    "middleName" TEXT,
+    "lastName" TEXT,
+    "gender" "Gender" NOT NULL DEFAULT 'Male',
+    "email" TEXT,
+    "password" TEXT,
+    "phone_number" TEXT,
+    "telegramUserName" TEXT,
+    "bio" TEXT,
+    "berthDate" TIMESTAMP(3),
+    "profileImageUrl" TEXT,
+    "clubStatus" "ClubStatus",
+    "specialty" TEXT,
+    "cvUrl" TEXT,
+    "lastSeen" TIMESTAMP(3) NOT NULL,
+    "role" "RoleType" NOT NULL DEFAULT 'Member',
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "deletedAt" TIMESTAMP(3),
+    "DivisionId" UUID,
+    "UserSettingId" UUID,
+    "DivisionHeadID" UUID,
+    "AttendanceSummaryId" UUID,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "UniversityInfo" (
+    "id" TEXT NOT NULL,
+    "currentYear" INTEGER,
+    "expectedGraduationYear" INTEGER,
+    "major" TEXT,
+    "universityId" TEXT,
+    "status" "UniversityStatus" NOT NULL,
+    "department" TEXT,
+    "userId" UUID,
+
+    CONSTRAINT "UniversityInfo_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "UserSetting" (
@@ -62,6 +100,20 @@ CREATE TABLE "UserSetting" (
     "userId" UUID NOT NULL,
 
     CONSTRAINT "UserSetting_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Divisions" (
+    "id" UUID NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "imageUrl" TEXT,
+    "establishedAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "currentHeadID" UUID,
+
+    CONSTRAINT "Divisions_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -120,7 +172,7 @@ CREATE TABLE "Events" (
     "location" TEXT,
     "tags" "Tag"[],
     "visibility" "EventVisibility" NOT NULL,
-    "state" "state" NOT NULL,
+    "status" "Status" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "creatorId" UUID NOT NULL,
@@ -137,7 +189,7 @@ CREATE TABLE "Sessions" (
     "endTMonth" TIMESTAMP(3) NOT NULL,
     "location" TEXT,
     "tags" "Tag"[],
-    "state" "state" NOT NULL,
+    "status" "Status" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "creatorId" UUID NOT NULL,
@@ -165,9 +217,9 @@ CREATE TABLE "Tasks" (
 
 -- CreateTable
 CREATE TABLE "EventParticipation" (
-    "id" TEXT NOT NULL,
-    "eventId" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "id" UUID NOT NULL,
+    "EventId" UUID NOT NULL,
+    "userId" UUID NOT NULL,
     "role" "EventRole" NOT NULL,
     "score" INTEGER NOT NULL DEFAULT 0,
     "feedback" TEXT,
@@ -179,9 +231,9 @@ CREATE TABLE "EventParticipation" (
 
 -- CreateTable
 CREATE TABLE "SessionParticipation" (
-    "id" TEXT NOT NULL,
-    "sessionId" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "id" UUID NOT NULL,
+    "sessionId" UUID NOT NULL,
+    "userId" UUID NOT NULL,
     "role" "SessionRole" NOT NULL,
     "score" INTEGER NOT NULL DEFAULT 0,
     "feedback" TEXT,
@@ -193,9 +245,9 @@ CREATE TABLE "SessionParticipation" (
 
 -- CreateTable
 CREATE TABLE "TaskParticipation" (
-    "id" TEXT NOT NULL,
-    "taskId" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "id" UUID NOT NULL,
+    "taskId" UUID NOT NULL,
+    "userId" UUID NOT NULL,
     "role" TEXT NOT NULL,
     "score" INTEGER NOT NULL DEFAULT 0,
     "feedback" TEXT,
@@ -207,10 +259,10 @@ CREATE TABLE "TaskParticipation" (
 
 -- CreateTable
 CREATE TABLE "Attendance" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "sessionId" TEXT,
-    "eventId" TEXT,
+    "id" UUID NOT NULL,
+    "userId" UUID NOT NULL,
+    "sessionId" UUID,
+    "eventId" UUID,
     "status" "AttendanceStatus" NOT NULL DEFAULT 'UNMARKED',
     "timestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "headsUpId" UUID,
@@ -222,8 +274,8 @@ CREATE TABLE "Attendance" (
 
 -- CreateTable
 CREATE TABLE "AttendanceSummary" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "id" UUID NOT NULL,
+    "userId" UUID NOT NULL,
     "totalEvents" INTEGER NOT NULL,
     "totalSessions" INTEGER NOT NULL,
     "totalTasks" INTEGER NOT NULL,
@@ -238,8 +290,8 @@ CREATE TABLE "AttendanceSummary" (
 
 -- CreateTable
 CREATE TABLE "HeadsUp" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "id" UUID NOT NULL,
+    "userId" UUID NOT NULL,
     "type" "HeadsUpType" NOT NULL,
     "body" TEXT NOT NULL,
     "sentAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -252,7 +304,7 @@ CREATE TABLE "Notification" (
     "id" UUID NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
-    "type" TEXT NOT NULL,
+    "type" "NotificationType" NOT NULL,
     "isRead" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -399,7 +451,67 @@ CREATE TABLE "_UserBadges" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_phone_number_key" ON "User"("phone_number");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_telegramUserName_key" ON "User"("telegramUserName");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_DivisionId_key" ON "User"("DivisionId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_UserSettingId_key" ON "User"("UserSettingId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_DivisionHeadID_key" ON "User"("DivisionHeadID");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_AttendanceSummaryId_key" ON "User"("AttendanceSummaryId");
+
+-- CreateIndex
+CREATE INDEX "User_role_idx" ON "User"("role");
+
+-- CreateIndex
+CREATE INDEX "User_clubStatus_idx" ON "User"("clubStatus");
+
+-- CreateIndex
+CREATE INDEX "User_DivisionId_idx" ON "User"("DivisionId");
+
+-- CreateIndex
+CREATE INDEX "User_DivisionHeadID_idx" ON "User"("DivisionHeadID");
+
+-- CreateIndex
+CREATE INDEX "User_email_idx" ON "User"("email");
+
+-- CreateIndex
+CREATE INDEX "User_phone_number_idx" ON "User"("phone_number");
+
+-- CreateIndex
+CREATE INDEX "User_telegramUserName_idx" ON "User"("telegramUserName");
+
+-- CreateIndex
+CREATE INDEX "User_lastSeen_idx" ON "User"("lastSeen");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "UniversityInfo_universityId_key" ON "UniversityInfo"("universityId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "UniversityInfo_userId_key" ON "UniversityInfo"("userId");
+
+-- CreateIndex
+CREATE INDEX "UniversityInfo_status_idx" ON "UniversityInfo"("status");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "UserSetting_userId_key" ON "UserSetting"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Divisions_currentHeadID_key" ON "Divisions"("currentHeadID");
+
+-- CreateIndex
+CREATE INDEX "Divisions_name_idx" ON "Divisions"("name");
 
 -- CreateIndex
 CREATE INDEX "Groups_divisionId_idx" ON "Groups"("divisionId");
@@ -417,7 +529,7 @@ CREATE INDEX "EventTimeSlot_eventId_idx" ON "EventTimeSlot"("eventId");
 CREATE INDEX "SessionTimeSlot_sessionId_idx" ON "SessionTimeSlot"("sessionId");
 
 -- CreateIndex
-CREATE INDEX "Events_state_idx" ON "Events"("state");
+CREATE INDEX "Events_status_idx" ON "Events"("status");
 
 -- CreateIndex
 CREATE INDEX "Events_visibility_idx" ON "Events"("visibility");
@@ -426,7 +538,7 @@ CREATE INDEX "Events_visibility_idx" ON "Events"("visibility");
 CREATE INDEX "Events_startDate_idx" ON "Events"("startDate");
 
 -- CreateIndex
-CREATE INDEX "Sessions_state_idx" ON "Sessions"("state");
+CREATE INDEX "Sessions_status_idx" ON "Sessions"("status");
 
 -- CreateIndex
 CREATE INDEX "Sessions_startMonth_idx" ON "Sessions"("startMonth");
@@ -441,10 +553,10 @@ CREATE INDEX "Tasks_dueDate_idx" ON "Tasks"("dueDate");
 CREATE INDEX "EventParticipation_userId_idx" ON "EventParticipation"("userId");
 
 -- CreateIndex
-CREATE INDEX "EventParticipation_eventId_idx" ON "EventParticipation"("eventId");
+CREATE INDEX "EventParticipation_EventId_idx" ON "EventParticipation"("EventId");
 
 -- CreateIndex
-CREATE INDEX "EventParticipation_eventId_userId_idx" ON "EventParticipation"("eventId", "userId");
+CREATE INDEX "EventParticipation_EventId_userId_idx" ON "EventParticipation"("EventId", "userId");
 
 -- CreateIndex
 CREATE INDEX "SessionParticipation_role_idx" ON "SessionParticipation"("role");
@@ -563,50 +675,17 @@ CREATE INDEX "_UserAnnouncement_B_index" ON "_UserAnnouncement"("B");
 -- CreateIndex
 CREATE INDEX "_UserBadges_B_index" ON "_UserBadges"("B");
 
--- CreateIndex
-CREATE INDEX "Divisions_name_idx" ON "Divisions"("name");
+-- AddForeignKey
+ALTER TABLE "User" ADD CONSTRAINT "User_DivisionId_fkey" FOREIGN KEY ("DivisionId") REFERENCES "Divisions"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
--- CreateIndex
-CREATE INDEX "UniversityInfo_status_idx" ON "UniversityInfo"("status");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_phone_number_key" ON "User"("phone_number");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_telegramUserName_key" ON "User"("telegramUserName");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_UserSettingId_key" ON "User"("UserSettingId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_AttendanceSummaryId_key" ON "User"("AttendanceSummaryId");
-
--- CreateIndex
-CREATE INDEX "User_role_idx" ON "User"("role");
-
--- CreateIndex
-CREATE INDEX "User_clubStatus_idx" ON "User"("clubStatus");
-
--- CreateIndex
-CREATE INDEX "User_DivisionId_idx" ON "User"("DivisionId");
-
--- CreateIndex
-CREATE INDEX "User_DivisionHeadID_idx" ON "User"("DivisionHeadID");
-
--- CreateIndex
-CREATE INDEX "User_email_idx" ON "User"("email");
-
--- CreateIndex
-CREATE INDEX "User_phone_number_idx" ON "User"("phone_number");
-
--- CreateIndex
-CREATE INDEX "User_telegramUserName_idx" ON "User"("telegramUserName");
-
--- CreateIndex
-CREATE INDEX "User_lastSeen_idx" ON "User"("lastSeen");
+-- AddForeignKey
+ALTER TABLE "UniversityInfo" ADD CONSTRAINT "UniversityInfo_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "UserSetting" ADD CONSTRAINT "UserSetting_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Divisions" ADD CONSTRAINT "Divisions_currentHeadID_fkey" FOREIGN KEY ("currentHeadID") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Groups" ADD CONSTRAINT "Groups_divisionId_fkey" FOREIGN KEY ("divisionId") REFERENCES "Divisions"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -639,7 +718,7 @@ ALTER TABLE "Tasks" ADD CONSTRAINT "Tasks_eventId_fkey" FOREIGN KEY ("eventId") 
 ALTER TABLE "Tasks" ADD CONSTRAINT "Tasks_sessionId_fkey" FOREIGN KEY ("sessionId") REFERENCES "Sessions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "EventParticipation" ADD CONSTRAINT "EventParticipation_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Events"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "EventParticipation" ADD CONSTRAINT "EventParticipation_EventId_fkey" FOREIGN KEY ("EventId") REFERENCES "Events"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "EventParticipation" ADD CONSTRAINT "EventParticipation_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
