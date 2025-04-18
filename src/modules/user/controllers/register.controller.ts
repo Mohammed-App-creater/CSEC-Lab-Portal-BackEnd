@@ -4,9 +4,9 @@ import { Request, Response } from 'express';
 
 export const registerController = async (req: Request, res: Response) => {
     try {
-        const {  email, password } = req.body;
+        const {  email, password, DivisionId, groupId } = req.body;
 
-        const result = await registerUserUseCase({  email, password });
+        const result = await registerUserUseCase({  DivisionId, groupId, email, password });
 
         res.status(200).json(result);
     } catch (err) {

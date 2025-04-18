@@ -1,3 +1,5 @@
+import { Gender } from "@prisma/client";
+
 export type LoginUserDTO = {
     email: string;
     password: string;
@@ -15,4 +17,7 @@ export type LoginUserResponseDTO = {
   export type RegisterUserDTO = {
     email: string;
     password: string;
+    DivisionId: string;
+    gender?: Gender; // use your actual Gender enum type here
+    groupId?: string;
   }

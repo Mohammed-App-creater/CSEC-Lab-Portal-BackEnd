@@ -1,4 +1,4 @@
-import { PrismaClient, RoleType, Theme, Tag, ClubStatus, UniversityStatus, Gender, Status, SessionRole } from '../src/core/generated/prisma/client';
+import { PrismaClient, RoleType, Theme, Tag, ClubStatus, UniversityStatus, Gender, Status, SessionRole } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 
 const prisma = new PrismaClient();
@@ -65,6 +65,7 @@ async function seedSessions() {
         data: {
             id: uuidv4(),
             sessionId: session1.id,
+            date: new Date('2025-04-05'),
             startTime: new Date('2025-04-05T10:00:00'),
             endTime: new Date('2025-04-05T12:00:00'),
         },
@@ -114,6 +115,7 @@ async function seedSessions() {
         data: {
             id: uuidv4(),
             sessionId: session2.id,
+            date: new Date('2025-05-10'),
             startTime: new Date('2025-05-10T14:00:00'),
             endTime: new Date('2025-05-10T17:00:00'),
         },

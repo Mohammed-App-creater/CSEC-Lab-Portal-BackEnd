@@ -1,4 +1,4 @@
-import { PrismaClient, RoleType, ClubStatus, UniversityStatus, Gender } from '../src/core/generated/prisma/client';
+import { PrismaClient, RoleType } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 
 const prisma = new PrismaClient();
@@ -77,7 +77,7 @@ async function seedRolePermissions() {
         console.error('❌ No permissions found. Run seedPermissions() first.');
         process.exit(1);
     }
-    const mappings = [];
+    const mappings: { role: RoleType; permissionId: number }[] = [];
     for (const permission of permissions) {
         mappings.push({ role: RoleType.SuperAdmin, permissionId: permission.id });
     }
