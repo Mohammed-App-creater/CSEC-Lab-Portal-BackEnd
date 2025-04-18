@@ -11,6 +11,7 @@ import sessionRoutes from './modules/session/routes';
 import attendanceRoutes from './modules/attendance/routes';
 import dashboardRoutes from './modules/dashboard/routes';
 import announcementRouter from './modules/announcement/routes';
+import groupRouter from './modules/group/routes';
 
 
 dotenv.config();
@@ -31,6 +32,7 @@ app.use('/api/session', sessionRoutes);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/announcement', announcementRouter);
+app.use('/api/group', groupRouter);
 
 
 

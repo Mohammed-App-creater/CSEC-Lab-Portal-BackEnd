@@ -1,6 +1,7 @@
 import { PrismaClient, User } from '@prisma/client';
 import { hashPassword } from '@shared/utils/hashPassword'; 
 import { RegisterUserDTO } from '../dto/auth-user.dto';
+import { AllUserDTOWithGroup, UserDTO } from '../dto/user.dto';
 const prisma = new PrismaClient();
 
 
@@ -117,6 +118,70 @@ export const FindAllUsers = {
       totalPages: Math.ceil(total / limit),
     };
   },
+
+  findAllUsersByGroupId: async (groupId: string, page: number, limit: number) => {
+    const Users: UserDTO[] = (await prisma.user.findMany({
+      where: {
+        deletedAt: null,
+        groups: {
+          some: {
+            id: groupId,
+          },
+        },
+      },
+      select: {
+        id: true,
+        firstName: true,
+        middleName: true,
+        lastName: true,
+        gender: true,
+        email: true,
+        phone_number: true,
+        telegramUserName: true,
+        bio: true,
+        berthDate: true,
+        profileImageUrl: true,
+        clubStatus: true,
+        specialty: true,
+        cvUrl: true,
+        lastSeen: true,
+        role: true,
+      },
+      skip: (page - 1) * limit,
+      take: limit,
+    })).map(user => ({
+      ...user,
+      clubStatus: user.clubStatus ?? undefined,
+      email: user.email ?? undefined,
+      phone_number: user.phone_number ?? undefined,
+      telegramUserName: user.telegramUserName ?? undefined,
+      bio: user.bio ?? undefined,
+      berthDate: user.berthDate ?? undefined,
+      profileImageUrl: user.profileImageUrl ?? undefined,
+      specialty: user.specialty ?? undefined,
+      cvUrl: user.cvUrl ?? undefined,
+      lastSeen: user.lastSeen ?? undefined,
+    }));
+
+    const total = await prisma.user.count({
+      where: {
+        deletedAt: null,
+        groups: {
+          some: {
+            id: groupId,
+          },
+        },
+      },
+    });
+
+    return {
+      data: Users,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
+  }
 };
 
 
