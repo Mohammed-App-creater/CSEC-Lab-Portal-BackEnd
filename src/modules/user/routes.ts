@@ -3,7 +3,10 @@ import { loginController } from './controllers/login.controller';
 import { registerController } from './controllers/register.controller';
 import { countUserController } from './controllers/count-user.controller';
 import { findAllUsersController } from './controllers/all-users.controller';
+import { getUserProfileController } from './controllers/user-profile.controller'; 
 
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 const userRouter = Router();
 
 /**
@@ -211,5 +214,7 @@ userRouter.get('/count-user', countUserController);
  */
 
 userRouter.get('/all-users', findAllUsersController);
+
+userRouter.post('/userProfile', getUserProfileController );
 
 export default userRouter;

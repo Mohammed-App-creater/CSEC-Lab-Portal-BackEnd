@@ -1,26 +1,10 @@
-import { G } from "@faker-js/faker/dist/airline-BUL6NtOJ";
+import { SocialLinkDTO } from '@modules/social-link/dto/social-link.dto';
 import { ClubStatus, Gender, RoleType } from "@prisma/client";
+import { User } from "@prisma/client";
 
-export type UserDTO = {
-    id: string;
-    firstName?: string | null;
-    middleName?: string | null;
-    lastName?: string | null;
-    gender?: Gender;
-    email?: string | null;
-    password?: string;
-    phone_number?: string | null;
-    telegramUserName?: string | null;
-    bio?: string | null;
-    berthDate?: Date | null;
-    profileImageUrl?: string | null;
-    clubStatus?: ClubStatus;
-    specialty?: string | null;
-    cvUrl?: string | null;
-    lastSeen?: Date | null;
-    role?: RoleType;
-    isDeleted?: boolean;
-  };
+export type UserDTO = Omit<User, 'createdAt' | 'updatedAt' | 'deletedAt' | 'isDeleted' | 'password' | 'DivisionId' |  'UserSettingId' |  'DivisionHeadID'| 'AttendanceSummaryId' >
+
+
   
 
 export type AllUserDTO  = {
@@ -38,3 +22,6 @@ export type AllUserDTOWithGroup  = {
     limit: number;
     totalPages: number;
 };
+
+
+export type UserProfileDTO = UserDTO & { socialLinks: SocialLinkDTO[] };

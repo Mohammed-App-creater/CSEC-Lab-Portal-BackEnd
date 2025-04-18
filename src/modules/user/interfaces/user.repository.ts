@@ -1,7 +1,10 @@
 import { PrismaClient, User } from '@prisma/client';
-import { hashPassword } from '@shared/utils/hashPassword'; 
+import { hashPassword } from '@shared/utils/hashPassword';
 import { RegisterUserDTO } from '../dto/auth-user.dto';
 import { AllUserDTOWithGroup, UserDTO } from '../dto/user.dto';
+import { normalizeUndefinedToNull } from '@shared/utils/normalizeUndefinedToNull'; // adjust path as needed
+
+
 const prisma = new PrismaClient();
 
 
@@ -19,6 +22,12 @@ export const existingUser = {
     return user;
   }
 }
+
+export const findById = {
+  findById: (id: string) => {
+    return prisma.user.findUnique({ where: { id }});
+  }
+};
 
 export const CreateUser = {
   createUser: async (userData: RegisterUserDTO & { groupId?: string }) => {
@@ -39,8 +48,8 @@ export const CreateUser = {
         lastSeen: new Date(),
         groups: groupId
           ? {
-              connect: { id: groupId },  // Connect the user to the group by ID
-            }
+            connect: { id: groupId },  // Connect the user to the group by ID
+          }
           : undefined,
       },
     });
@@ -59,7 +68,7 @@ export const UpdateUser = {
 };
 
 export const FindAllUsers = {
-  findAllUsers: async (page = 1, limit = 10): Promise<{ data: any[]; total: number; page: number; limit: number; totalPages: number }> => {
+  findAllUsers: async (page = 1, limit = 10): Promise<{ data: UserDTO[]; total: number; page: number; limit: number; totalPages: number }> => {
     const skip = (page - 1) * limit;
 
     const users = await prisma.user.findMany({
@@ -89,20 +98,6 @@ export const FindAllUsers = {
     });
 
     // Map nulls to undefined where necessary
-    const formattedUsers = users.map(user => ({
-      ...user,
-      email: user.email ?? undefined,
-      phone_number: user.phone_number ?? undefined,
-      telegramUserName: user.telegramUserName ?? undefined,
-      bio: user.bio ?? undefined,
-      berthDate: user.berthDate ?? undefined,
-      profileImageUrl: user.profileImageUrl ?? undefined,
-      clubStatus: user.clubStatus ?? undefined,
-      specialty: user.specialty ?? undefined,
-      cvUrl: user.cvUrl ?? undefined,
-      lastSeen: user.lastSeen ?? undefined,
-      role: user.role ?? undefined,
-    }));
 
     const total = await prisma.user.count({
       where: {
@@ -111,7 +106,7 @@ export const FindAllUsers = {
     });
 
     return {
-      data: formattedUsers,
+      data: users,
       total,
       page,
       limit,
@@ -149,19 +144,7 @@ export const FindAllUsers = {
       },
       skip: (page - 1) * limit,
       take: limit,
-    })).map(user => ({
-      ...user,
-      clubStatus: user.clubStatus ?? undefined,
-      email: user.email ?? undefined,
-      phone_number: user.phone_number ?? undefined,
-      telegramUserName: user.telegramUserName ?? undefined,
-      bio: user.bio ?? undefined,
-      berthDate: user.berthDate ?? undefined,
-      profileImageUrl: user.profileImageUrl ?? undefined,
-      specialty: user.specialty ?? undefined,
-      cvUrl: user.cvUrl ?? undefined,
-      lastSeen: user.lastSeen ?? undefined,
-    }));
+    })).map(normalizeUndefinedToNull);
 
     const total = await prisma.user.count({
       where: {
