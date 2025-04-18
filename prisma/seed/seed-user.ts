@@ -1,4 +1,4 @@
-import { PrismaClient, RoleType, Theme, ClubStatus, UniversityStatus, Gender } from '../src/core/generated/prisma/client';
+import { PrismaClient, RoleType, Theme, ClubStatus, UniversityStatus, Gender } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 
 const prisma = new PrismaClient();

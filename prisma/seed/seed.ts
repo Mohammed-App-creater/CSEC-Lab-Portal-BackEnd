@@ -1,7 +1,4 @@
-import { PrismaClient } from '../src/core/generated/prisma/client';
-
-
-
+import { PrismaClient } from '@prisma/client';
 
 // 👇 import all the seed modules
 import seedConstants from './seed-constants';
@@ -19,16 +16,16 @@ const prisma = new PrismaClient();
 
 async function main() {
   console.log('🌱 Starting master seeding...');
-  await seedConstants();
-  await seedRolePermissions();
-  await seedUser();
-  await SeedUserDetails();
-  await SeedGroups();
-  await SeedSessions();
-  await SeedEvents();
-  await SeedTasks();
-  await SeedAttendance();
-  await SeedAnnouncementsAndNotifications();
+  //await seedConstants();
+  //await seedRolePermissions();
+  //await seedUser();
+  //await SeedUserDetails();
+  //await SeedGroups();
+  //await SeedSessions();
+  //await SeedEvents();
+  //await SeedTasks();
+  //await SeedAttendance();
+  //await SeedAnnouncementsAndNotifications();
   console.log('✅ Master seed complete.');
 }
 

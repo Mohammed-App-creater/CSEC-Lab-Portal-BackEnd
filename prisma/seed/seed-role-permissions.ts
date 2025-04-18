@@ -1,4 +1,4 @@
-import { PrismaClient, RoleType } from '../src/core/generated/prisma';
+import { PrismaClient, RoleType } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -14,7 +14,7 @@ async function seedRolePermissions() {
     return;
   }
 
-  const mappings = [];
+  const mappings: { role: RoleType; permissionId: number }[] = [];
 
   // SuperAdmin → all permissions
   for (const permission of permissions) {

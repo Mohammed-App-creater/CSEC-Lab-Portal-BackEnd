@@ -11,7 +11,8 @@
     "paths": {
       "@/*": ["*"],
       "@shared/*": ["./shared/*"],
+      "@modules/*": ["./modules/*"],
     }
   },
-  "include": ["src"]
+  "include": ["src", "prisma"]
 }

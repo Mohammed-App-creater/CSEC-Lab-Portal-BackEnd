@@ -1,36 +1,58 @@
-// controllers/authController.ts
-import { Gender, PrismaClient } from '@prisma/client';
 import { RegisterUserDTO } from '../dto/auth-user.dto';
 import { hashPassword } from '@shared/utils/hashPassword';
 import jwt from 'jsonwebtoken'; // optional
 import dotenv from 'dotenv';
-import { ne } from '@faker-js/faker/.';
-
-
-dotenv.config();
+import { sendRegistrationEmail } from '@shared/exceptions/emailService';
+import { CreateUser, existingUser } from '../interfaces/user.repository';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 
-export const registerUserUseCase = async ({ email, password }: RegisterUserDTO) => {
+dotenv.config();
 
-  const existingUser = await prisma.user.findUnique({ where: { email } });
-  if (existingUser) {
-    return { message: 'Email already registered' }
+
+
+
+export const registerUserUseCase = async ({
+  email,
+  password,
+  DivisionId,
+  groupId,
+  gender
+}: RegisterUserDTO) => {
+
+  const ExistingUser = await existingUser.existingUser(email);
+  if (ExistingUser) {
+    return { message: 'Email already registered' };
   }
 
-  const hashedPassword = await hashPassword(password);
-  const user = await prisma.user.create({
-    data: {
-      email,
-      password: hashedPassword,
-      gender: 'Male' as Gender,
-      lastSeen: new Date(),
-      DivisionId: '98a0c0d1-92ba-4d07-bb61-fc8264c2341a',
-    },
+  const HashedPassword = await hashPassword(password);
+
+  const user = await CreateUser.createUser({
+    email,
+    password: HashedPassword,
+    DivisionId,
+    groupId,
+    gender
   });
-  const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET!, {
-    expiresIn: '1d',
+
+  const token = jwt.sign(
+    { userId: user.id, role: user.role },
+    process.env.JWT_SECRET!,
+    { expiresIn: '1d' }
+  );
+
+  // Send registration email
+  const groupName = await prisma.groups.findUnique({
+    where: { id: groupId },
+    select: { name: true },
+  });
+  await sendRegistrationEmail({
+    to: email,
+    division: user.DivisionId ?? '',
+    group: groupName?.name ?? '',
+    password,
   });
 
   return {
@@ -41,6 +63,6 @@ export const registerUserUseCase = async ({ email, password }: RegisterUserDTO) 
       role: user.role,
     },
     message: 'User registered',
-  }
+  };
+};
 
-}
