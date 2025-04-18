@@ -68,6 +68,7 @@ model User {
   events         Events[]        @relation("UserEvents")
   sessions       Sessions[]      @relation("UserSessions")
   groups         Groups[]        @relation("UserGroups")
+  resourceLinks  ResourceLink[] @relation("UserResourceLink")
 
   //optional relation
   DivisionHeadID       String?                @unique @db.Uuid
@@ -190,6 +191,18 @@ model socialLink {
   @@index([userId])
 }
 
+
+model ResourceLink {
+  id             String     @id @default(uuid()) @db.Uuid
+  resourceLinkName String
+  resourceLinkUrl  String
+  userId         String?    @db.Uuid
+  user           User?      @relation("UserResourceLink", fields: [userId], references: [id], onDelete: Cascade)
+  CreatedAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  // indexes
+  @@index([userId])
+}
 model EventTimeSlot {
   id        String   @id @default(uuid()) @db.Uuid
   eventId   String?  @db.Uuid

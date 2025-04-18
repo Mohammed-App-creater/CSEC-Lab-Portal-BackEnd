@@ -215,6 +215,40 @@ userRouter.get('/count-user', countUserController);
 
 userRouter.get('/all-users', findAllUsersController);
 
-userRouter.post('/userProfile', getUserProfileController );
+/**
+ * @swagger
+ * /api/user/userProfile:
+ *   post:
+ *     summary: Get user profile
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 format: uuid
+ *                 description: ID of the user
+ *                 example: "b9f3c5e7-4b5a-44df-99e0-65a6f8f1474a"
+ *     responses:
+ *       200:
+ *         description: Successfully fetched user profile
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserProfileDTO'
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+
+userRouter.post('/userProfile', getUserProfileController);
+
+
 
 export default userRouter;

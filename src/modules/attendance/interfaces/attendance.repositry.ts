@@ -11,6 +11,13 @@ export const AttendanceRepository = {
                     status: 'PRESENT'
                }
           })
-     }
+     },
+     getAllAttendanceByUserId: (userId: string) => {
+          return prisma.attendance.findMany({
+               where: {
+                    userId: userId
+               }
+          })
+     },
      
 }
