@@ -11,6 +11,7 @@ import SeedEvents from './seed-events';
 import SeedTasks from './seed-tasks';
 import SeedAttendance from './seed-attendance';
 import SeedAnnouncementsAndNotifications from './seed-announcements-notifications';
+import SeedResourceLinks from './seed-resourceLinke';
 
 const prisma = new PrismaClient();
 
@@ -20,6 +21,7 @@ async function main() {
   //await seedRolePermissions();
   //await seedUser();
   //await SeedUserDetails();
+  //await SeedResourceLinks();
   //await SeedGroups();
   //await SeedSessions();
   //await SeedEvents();

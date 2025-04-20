@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import { createDivisionController } from './controllers/create-division.controller';
 import { countDivisionController } from './controllers/count-division.controller';
-import { DivisionGroupsController } from './controllers/division-groups.controler'
+import { DivisionGroupsController } from './controllers/division-groups.controler';
+import { getDivisionGroupMembersController } from './controllers/get-division-groupsAndMember.controller'
 const divisionRouter = Router();
 
 
@@ -48,7 +49,7 @@ const divisionRouter = Router();
  *                   example: Division not found
  */
 
-divisionRouter.use('/:divisionId/groups', DivisionGroupsController);
+divisionRouter.post('/groups', DivisionGroupsController);
 
 /**
  * @swagger
@@ -105,6 +106,39 @@ divisionRouter.post('/create-division', createDivisionController);
 
 divisionRouter.get('/count-division', countDivisionController);
 
+/**
+ * @swagger
+ * /api/division/groups-and-members:
+ *   post:
+ *     summary: Get groups and their members by division ID
+ *     tags:
+ *       - Division
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               divisionId:
+ *                 type: string
+ *                 format: uuid
+ *                 example: "d5b0c3f2-9d12-4b1d-8d0f-1a4d2e3f1c90"
+ *                 description: The UUID of the division
+ *     responses:
+ *       200:
+ *         description: A list of groups and their members for the specified division
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/DivisionGroupMemberDto'
+ *       400:
+ *         description: Bad request (invalid division ID)
+ *       500:
+ *         description: Internal server error
+ */
+
+divisionRouter.post('/groups-and-members', getDivisionGroupMembersController );
 
 
 

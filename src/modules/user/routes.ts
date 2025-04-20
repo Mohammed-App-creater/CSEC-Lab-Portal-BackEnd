@@ -3,7 +3,13 @@ import { loginController } from './controllers/login.controller';
 import { registerController } from './controllers/register.controller';
 import { countUserController } from './controllers/count-user.controller';
 import { findAllUsersController } from './controllers/all-users.controller';
+import { getUserProfileController } from './controllers/user-profile.controller';
+import { getUserRoleController } from './controllers/get-user-role';
+import { getUsersByRoleController } from './controllers/get-users-by-role.controller';
 
+import { PrismaClient } from '@prisma/client';
+import { get } from 'http';
+const prisma = new PrismaClient();
 const userRouter = Router();
 
 /**
@@ -211,5 +217,150 @@ userRouter.get('/count-user', countUserController);
  */
 
 userRouter.get('/all-users', findAllUsersController);
+
+/**
+ * @swagger
+ * /api/user/userProfile:
+ *   post:
+ *     summary: Get user profile
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 format: uuid
+ *                 description: ID of the user
+ *                 example: "b9f3c5e7-4b5a-44df-99e0-65a6f8f1474a"
+ *     responses:
+ *       200:
+ *         description: Successfully fetched user profile
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserProfileDTO'
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     ResourceLinkDTO:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *         userId:
+ *           type: string
+ *           format: uuid
+ *         resourceLinkName:
+ *           type: string
+ *         resourceLinkUrl:
+ *           type: string
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *
+ *     UserProfileDTO:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *         name:
+ *           type: string
+ *         email:
+ *           type: string
+ *           format: email
+ *         socialLinks:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               platform:
+ *                 type: string
+ *               url:
+ *                 type: string
+ *         resourceLinks:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/ResourceLinkDTO'
+ */
+
+userRouter.post('/userProfile', getUserProfileController);
+
+/**
+ * @swagger
+ * /api/user/get-user-role/:
+ *   post:
+ *     summary: Get user role by ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: User ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: User role successfully retrieved.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 role:
+ *                   type: string
+ *                   enum: [ADMIN, MEMBER, GUEST] # Adjust based on your RoleType enum
+ *       404:
+ *         description: User not found.
+ */
+
+userRouter.post('/get-user-role', getUserRoleController);
+
+/**
+ * @swagger
+ * /api/user/get-users-by-role:
+ *   get:
+ *     summary: Get users by role
+ *     tags: [Users]
+ *     parameters:
+ *       - in: query
+ *         name: role
+ *         required: true
+ *         schema:
+ *           type: string
+ *           enum: [Member, SuperAdmin, President, VicePresident, DivisionHead, Coordinator]
+ *         description: User role
+ *     responses:
+ *       200:
+ *         description: Users successfully retrieved.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   firstName:
+ *                     type: string
+ */
+
+userRouter.get('/get-users-by-role', getUsersByRoleController);
+
+
 
 export default userRouter;

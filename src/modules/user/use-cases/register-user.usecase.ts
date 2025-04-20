@@ -48,9 +48,14 @@ export const registerUserUseCase = async ({
     where: { id: groupId },
     select: { name: true },
   });
+
+  const divisionName = await prisma.divisions.findUnique({
+    where: { id: DivisionId },
+    select: { name: true },
+  });
   await sendRegistrationEmail({
     to: email,
-    division: user.DivisionId ?? '',
+    division: divisionName?.name ?? '',
     group: groupName?.name ?? '',
     password,
   });

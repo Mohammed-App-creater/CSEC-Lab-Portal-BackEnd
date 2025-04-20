@@ -1,6 +1,7 @@
 import { Router } from 'express';
 const groupRouter = Router();
-import { GroupMemberController } from './controllers/all-group-member';
+import { GroupMemberController } from './controllers/all-group-member.controller';
+import { createGroupController } from './controllers/create-group.controller';
 
 /**
  * @swagger
@@ -50,5 +51,30 @@ import { GroupMemberController } from './controllers/all-group-member';
 
 
 groupRouter.get('/group-member/:groupId/members/:page/limit/:limit', GroupMemberController.allGroupMembers);
+
+/**
+ * @swagger
+ * /group/create:
+ *   post:
+ *     summary: Create a new group
+ *     tags: [Group]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/GroupCreateDto'
+ *     responses:
+ *       201:
+ *         description: Group created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GroupDto'
+ *       500:
+ *         description: Internal Server Error
+ */
+
+groupRouter.post('/create', createGroupController);
 
 export default groupRouter;

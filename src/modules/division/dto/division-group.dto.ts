@@ -25,9 +25,37 @@ export type DivisionGroupDto = {
     groups: GroupDto[];
 };
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     DivisionGroupMemberDto:
+ *       type: object
+ *       required:
+ *         - id
+ *         - name
+ *         - groupsAndMembers
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *           description: Unique identifier of the division
+ *           example: d5b0c3f2-9d12-4b1d-8d0f-1a4d2e3f1c90
+ *         name:
+ *           type: string
+ *           description: Name of the division
+ *           example: Technology Division
+ *         groupsAndMembers:
+ *           type: array
+ *           description: List of groups in the division with their members
+ *           items:
+ *             $ref: '#/components/schemas/AllGroupMemberDTO'
+ */
+
+
 export type DivisionGroupMemberDto = {
     id: string;
     name: string;
-    groups: AllGroupMemberDTO[];
+    groupsAndMembers: AllGroupMemberDTO[];
     
 };
