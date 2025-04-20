@@ -1,4 +1,4 @@
-import { PrismaClient, User } from '@prisma/client';
+import { PrismaClient, RoleType, User } from '@prisma/client';
 import { hashPassword } from '@shared/utils/hashPassword';
 import { RegisterUserDTO } from '../dto/auth-user.dto';
 import { AllUserDTOWithGroup, UserDTO } from '../dto/user.dto';
@@ -14,6 +14,44 @@ export const findByEmail = {
   }
 };
 
+export const getUserRole = {
+  getUserRole: async (userId: string): Promise<RoleType> => {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { role: true },
+    });
+
+    return user?.role || 'Member';
+  }
+};
+
+export const getUsersByRole = {
+  getUsersByRole: async (role: RoleType) => {
+    const users = await prisma.user.findMany({
+      where: {
+        role: role,
+        deletedAt: null,
+        isDeleted: false,
+      },
+      select: {
+        firstName: true,
+        middleName: true,
+        lastName: true,
+        role: true,
+        Divisions: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+
+    return users;
+  },
+};
+
+
 export const existingUser = {
   existingUser: async (email: string) => {
     const user = await prisma.user.findUnique({
@@ -25,7 +63,7 @@ export const existingUser = {
 
 export const findById = {
   findById: (id: string) => {
-    return prisma.user.findUnique({ where: { id }});
+    return prisma.user.findUnique({ where: { id } });
   }
 };
 

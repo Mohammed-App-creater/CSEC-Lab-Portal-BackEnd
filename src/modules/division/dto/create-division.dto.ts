@@ -1,7 +1,3 @@
+import { Divisions } from '@prisma/client'
 
-export type CreateDivisionDTO = {
-    name: string;
-    description: string;
-    establishedYear: Date;
-    imageUrl?: string;
-};
+export type CreateDivisionDTO = Partial<Divisions>

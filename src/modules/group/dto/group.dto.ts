@@ -21,12 +21,26 @@ import { AllUserDTOWithGroup } from '@modules/user/dto/user.dto';
 export type GroupDto = {
     id: string;
     name: string;
-    description: string;
+    description: string | null;
     updatedAt: Date;
 };
 
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     GroupCreateDto:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           example: "Backend Group"
+ */
+
 export type GroupCreateDto = {
     name: string;
+    divisionId: string;
 };
 
 export type GroupUpdateDto = {

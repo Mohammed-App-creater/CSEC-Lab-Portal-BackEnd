@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { AttendanceRateController } from './controllers/attendance-rate.controller';
 import { AllAttendanceController } from './controllers/all-attendance.controller';
+import { userAttendanceSummaryController } from './controllers/user-attendaance-summary.controller';
+
 
 const attendanceRoutes = Router();
 
@@ -135,5 +137,58 @@ attendanceRoutes.get('/attendance-rate', AttendanceRateController);
  */
 
 attendanceRoutes.post('/user-all-attendance', AllAttendanceController);
+
+/**
+ * @swagger
+ * /api/user/attendance-summary:
+ *   post:
+ *     summary: Get user attendance summary
+ *     tags: [Attendance]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: User ID
+ *     responses:
+ *       200:
+ *         description: Attendance summary retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     attendanceRate:
+ *                       type: number
+ *                     lastWeekAttendanceRate:
+ *                       type: number
+ *                     lastMonthAttendanceRate:
+ *                       type: number
+ *                     headsUp:
+ *                       type: number
+ *                     present:
+ *                       type: number
+ *                     absent:
+ *                       type: number
+ *                     updateAt:
+ *                       type: string
+ *                       format: date-time
+ *       400:
+ *         description: Missing user ID
+ *       500:
+ *         description: Internal server error
+ */
+
+attendanceRoutes.post('/user-attendance-summary', userAttendanceSummaryController);
 
 export default attendanceRoutes;

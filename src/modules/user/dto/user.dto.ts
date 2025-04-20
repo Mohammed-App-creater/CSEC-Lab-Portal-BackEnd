@@ -111,5 +111,9 @@ export type AllUserDTOWithGroup  = {
     totalPages: number;
 };
 
+export type UserRoleDTO = {
+    role: RoleType;
+};
+
 
 export type UserProfileDTO = UserDTO & { socialLinks: SocialLinkDTO[] } & { resourceLinks: ResourceLinkDTO[] };

@@ -19,5 +19,65 @@ export const AttendanceRepository = {
                }
           })
      },
+
+     getPresntAttendanceByUserId: (userId: string) => {
+          return prisma.attendance.findMany({
+               where: {
+                    userId: userId,
+                    status: 'PRESENT'
+               }
+          })
+     },
+     getAbsentAttendanceByUserId: (userId: string) => {
+          return prisma.attendance.findMany({
+               where: {
+                    userId: userId,
+                    status: 'ABSENT'
+               }
+          })
+     },
+     getLastWeekAttendanceByUserId: (userId: string) => {
+          return prisma.attendance.findMany({
+               where: {
+                    userId: userId,
+                    createdAt: {
+                         gte: new Date(new Date().setDate(new Date().getDate() - 7))
+                    }
+               }
+          })
+     },
+     getLastWeekPresentAttendanceByUserId: (userId: string) => {
+          return prisma.attendance.findMany({
+               where: {
+                    userId: userId,
+                    status: 'PRESENT',
+                    createdAt: {
+                         gte: new Date(new Date().setDate(new Date().getDate() - 7))
+                    }
+               }
+          })
+     },
+     getLastMonthAttendanceByUserId: (userId: string) => {
+          return prisma.attendance.findMany({
+               where: {
+                    userId: userId,
+                    createdAt: {
+                         gte: new Date(new Date().setDate(new Date().getDate() - 30))
+                    }
+               }
+          })
+     },
+     getLastMonthPresentAttendanceByUserId: (userId: string) => {
+          return prisma.attendance.findMany({
+               where: {
+                    userId: userId,
+                    status: 'PRESENT',
+                    createdAt: {
+                         gte: new Date(new Date().setDate(new Date().getDate() - 30))
+                    }
+               }
+          })
+     },
+
      
 }

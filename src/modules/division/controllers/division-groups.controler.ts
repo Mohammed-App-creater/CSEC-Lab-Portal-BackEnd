@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { DivisionGroupsUseCase } from '../use-cases/division-groups.use-case';
 
 export const DivisionGroupsController = async (req: Request, res: Response) => {
-    const { divisionId } = req.params;
+    const { divisionId } = req.body;
     if (!divisionId) {
         res.status(400).json({ message: 'Division ID is required' });
         return;

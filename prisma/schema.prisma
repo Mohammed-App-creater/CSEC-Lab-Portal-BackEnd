@@ -88,6 +88,7 @@ model User {
 
   //indexes
 
+  @@index([id])
   @@index([role])
   @@index([clubStatus])
   @@index([DivisionId])
@@ -117,6 +118,8 @@ model UniversityInfo {
   user                   User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // indexes
+  @@index([id])
+  @@index([userId])
   @@index([status])
 }
 
@@ -128,6 +131,10 @@ model UserSetting {
 
   user   User   @relation("UserSetting", fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique @db.Uuid
+
+  //indexes
+  @@index([userId])
+  @@index([id])
 }
 
 enum Theme {
@@ -155,6 +162,7 @@ model Divisions {
 
   // indexes
   @@index([name])
+  @@index([id])
 }
 
 model Groups {
@@ -173,6 +181,7 @@ model Groups {
 
   // indexes
   @@index([divisionId])
+  @@index([id])
 }
 
 model socialLink {
@@ -202,6 +211,7 @@ model ResourceLink {
   updatedAt      DateTime   @updatedAt
   // indexes
   @@index([userId])
+  @@index([id])
 }
 model EventTimeSlot {
   id        String   @id @default(uuid()) @db.Uuid
@@ -213,6 +223,7 @@ model EventTimeSlot {
 
   // indexes
   @@index([eventId]) // EventTimeSlot
+  @@index([id])
 }
 
 model SessionTimeSlot {
@@ -225,6 +236,7 @@ model SessionTimeSlot {
   session Sessions? @relation("SessionTimeSlot", fields: [sessionId], references: [id])
 
   // indexes
+  @@index([id])
   @@index([sessionId])
 }
 
@@ -282,6 +294,7 @@ model Events {
   attendance   Attendance[]         @relation("EventAttendance")
 
   // indexes
+  @@index([id])
   @@index([status])
   @@index([visibility])
   @@index([startDate])
@@ -310,6 +323,7 @@ model Sessions {
   attendance   Attendance[]           @relation("SessionAttendance")
 
   // indexes
+  @@index([id])
   @@index([status])
   @@index([startMonth])
 }
@@ -340,6 +354,7 @@ model Tasks {
   participants TaskParticipation[] @relation("TaskParticipants")
 
   // indexes
+  @@index([id])
   @@index([status])
   @@index([dueDate])
 }

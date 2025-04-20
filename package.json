@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "ts-node-dev --respawn  src/app.ts",
+    "n": "nodemon src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

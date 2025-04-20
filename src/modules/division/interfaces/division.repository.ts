@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const DivisionRepository = {
-  create: (data: { name: string }) => {
+  create: (data: { name: string, currentHeadID: string }) => {
     return prisma.divisions.create({ data });
   },
   findAll: () => {
@@ -15,6 +15,16 @@ export const DivisionRepository = {
   findById: (id: string) => {
     return prisma.divisions.findUnique({ where: { id } });
   },
+  addGroup: (divisionId: string, groupId: string) => {
+    return prisma.divisions.update({
+      where: { id: divisionId },
+      data: {
+        groups: {
+          connect: { id: groupId },
+        },
+      },
+    });
+  }
   
 };
 
