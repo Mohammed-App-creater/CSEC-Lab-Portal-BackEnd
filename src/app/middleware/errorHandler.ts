@@ -7,7 +7,7 @@ export function errorHandler(
   res: Response,
   next: NextFunction
 ) {
-  console.error('Operational Error:', err)
+
   if (err instanceof BaseError) {
     res.status(err.statusCode).json({
       message: err.message,
