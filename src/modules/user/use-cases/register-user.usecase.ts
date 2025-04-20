@@ -6,6 +6,9 @@ import { sendRegistrationEmail } from '@shared/exceptions/emailService';
 import { CreateUser, existingUser } from '../interfaces/user.repository';
 import { PrismaClient } from '@prisma/client';
 import { getRoleByIdUseCase } from '@/modules/role/use-cases/get-role-by-id.use-case';
+import { BaseError } from '@/shared/errors/BaseError';
+import { validate as isUUID } from 'uuid';
+
 
 const prisma = new PrismaClient();
 
@@ -22,6 +25,36 @@ export const registerUserUseCase = async ({
   groupId,
   gender
 }: RegisterUserDTO) => {
+
+  if (!email || !password || !DivisionId || !groupId) {
+    throw new Error('Missing required fields');
+  }
+
+  if (!isUUID(DivisionId)) {
+    throw new Error(`Invalid UUID: ${DivisionId}`);
+  }
+
+  if (!isUUID(groupId)) {
+    throw new Error(`Invalid UUID: ${groupId}`);
+  }
+
+  const groupName = await prisma.groups.findUnique({
+    where: { id: groupId },
+    select: { name: true },
+  });
+
+  if (!groupName) {
+    throw new BaseError('Group not found', 404);
+  }
+
+  const divisionName = await prisma.divisions.findUnique({
+    where: { id: DivisionId },
+    select: { name: true },
+  });
+
+  if (!divisionName) {
+    throw new BaseError('Division not found', 404);
+  }
 
   const ExistingUser = await existingUser.existingUser(email);
   if (ExistingUser) {
@@ -47,15 +80,8 @@ export const registerUserUseCase = async ({
   );
 
   // Send registration email
-  const groupName = await prisma.groups.findUnique({
-    where: { id: groupId },
-    select: { name: true },
-  });
 
-  const divisionName = await prisma.divisions.findUnique({
-    where: { id: DivisionId },
-    select: { name: true },
-  });
+
   await sendRegistrationEmail({
     to: email,
     division: divisionName?.name ?? '',
@@ -73,4 +99,6 @@ export const registerUserUseCase = async ({
     message: 'User registered',
   };
 };
+
+
 

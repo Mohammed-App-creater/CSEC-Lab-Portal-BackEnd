@@ -12,6 +12,10 @@ export const DivisionRepository = {
     return  prisma.divisions.count();
   },
 
+  findByName: (name: string) => {
+    return prisma.divisions.findFirst({ where: { name } });
+  },
+
   findById: (id: string) => {
     return prisma.divisions.findUnique({ where: { id } });
   },

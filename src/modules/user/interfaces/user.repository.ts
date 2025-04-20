@@ -13,7 +13,7 @@ const roleMember = getRoleByNameUseCase('Member');
 
 export const findByEmail = {
   findByEmail: (email: string) => {
-    return prisma.user.findUnique({ where: { email }, include: { role: true } });
+    return prisma.user.findUnique({ where: { email }, include: { Role: true } });
   }
 };
 
@@ -22,13 +22,13 @@ export const getUserRole = {
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: {
-        role: {
+        Role: {
           select: { name: true }
         }
       },
     });
 
-    return user?.role.name || 'Unknown'; // default fallback
+    return user?.Role.name || 'Unknown'; // default fallback
   }
 };
 
@@ -36,7 +36,7 @@ export const getUsersByRole = {
   getUsersByRole: async (role: string) => {
     const users = await prisma.user.findMany({
       where: {
-        role: { name: role },
+        Role: { name: role },
         deletedAt: null,
         isDeleted: false,
       },
@@ -50,7 +50,7 @@ export const getUsersByRole = {
             name: true,
           },
         },
-        role: {
+        Role: {
           select: {
             id: true,
             name: true,
@@ -144,7 +144,7 @@ export const FindAllUsers = {
         specialty: true,
         cvUrl: true,
         lastSeen: true,
-        role: {
+        Role: {
           select: {
             id: true,
             name: true,
@@ -164,7 +164,7 @@ export const FindAllUsers = {
     return {
       data: users.map(user => ({
         ...user,
-        roleId: user.role?.id || '', 
+        roleId: user.Role?.id || '', 
       })),
       total,
       page,
@@ -200,7 +200,7 @@ export const FindAllUsers = {
         cvUrl: true,
         lastSeen: true,
         roleId: true,
-        role: {
+        Role: {
           select: {
             id: true,
             name: true,

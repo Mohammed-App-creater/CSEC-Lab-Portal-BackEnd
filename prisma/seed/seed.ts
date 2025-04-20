@@ -37,7 +37,7 @@ async function main() {
 
   // await SeedGroups();                     // 7. Create user groups (depends on divisions + users)
   // await SeedResourceLinks();              // 8. Optional: static or useful links
-  // await SeedSessions(25);                   // 9. Create sessions (groups + users)
+  // await SeedSessions(125);                   // 9. Create sessions (groups + users)
   // await SeedEvents();                     // 10. Create events (groups + users + divisions)
 
   // await SeedAttendance();                 // 11. Attendance (needs events and sessions)

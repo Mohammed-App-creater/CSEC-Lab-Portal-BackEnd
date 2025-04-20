@@ -79,8 +79,8 @@ model User {
 
   //optional relation
   DivisionHeadID       String?                @unique @db.Uuid
-  DivisionHead         Divisions?             @relation("DivisionHead")
-  Role                 Role                  @relation("UserRoles",fields: [roleId], references: [id])
+  DivisionHead         Divisions[]            @relation("DivisionHead")
+  Role                 Role                   @relation("UserRoles", fields: [roleId], references: [id])
   TasksCreated         Tasks[]                @relation("UserTasks")
   AssignedTasks        Tasks[]                @relation("AssignedTasks")
   EventParticipation   EventParticipation[]   @relation("EventParticipants")
@@ -160,7 +160,7 @@ model Divisions {
   updatedAt     DateTime  @updatedAt
 
   // Relations
-  currentHeadID String?      @unique @db.Uuid
+  currentHeadID String?      @db.Uuid
   currentHead   User?        @relation("DivisionHead", fields: [currentHeadID], references: [id], onDelete: SetNull)
   user          User[]       @relation("UserDivision")
   socialLinks   socialLink[] @relation("DivisionSocialLink")
@@ -223,13 +223,13 @@ model ResourceLink {
 }
 
 model SessionTimeSlot {
-  id        String   @id @default(uuid()) @db.Uuid
-  sessionId String?  @db.Uuid
+  id        String    @id @default(uuid()) @db.Uuid
+  sessionId String?   @db.Uuid
   date      DateTime
   startTime DateTime
   endTime   DateTime
-
-  session Sessions? @relation("SessionTimeSlot", fields: [sessionId], references: [id])
+  status    Status    @default(Planned)
+  session   Sessions? @relation("SessionTimeSlot", fields: [sessionId], references: [id])
 
   // indexes
   @@index([id])

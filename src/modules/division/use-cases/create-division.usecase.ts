@@ -9,5 +9,9 @@ export const createDivision = async (name: string, currentHeadID: string): Promi
     if (role.role === 'DivisionHead') {
         throw new BaseError('User is already a division head. Please choose another user.', 400);
     }
+    const existingDivision = await DivisionRepository.findByName(name);
+    if (existingDivision) {
+        throw new BaseError('Division with this name already exists.', 400);
+    }
     return await DivisionRepository.create({ name, currentHeadID });
 };

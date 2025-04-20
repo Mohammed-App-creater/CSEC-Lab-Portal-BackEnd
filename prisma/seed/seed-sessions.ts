@@ -133,6 +133,7 @@ async function SeedSessions(count: number) {
     try {
         await seedSessions(count);
         console.log('✅ All sessions seeded');
+        process.exit(0);
     } catch (e) {
         console.error('Error initializing app:', e);
         process.exit(1);
