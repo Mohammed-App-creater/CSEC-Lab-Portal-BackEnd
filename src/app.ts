@@ -14,6 +14,7 @@ import announcementRouter from './modules/announcement/routes';
 import groupRouter from './modules/group/routes';
 import headsUpRoutes from './modules/headsup/routes';
 import { errorHandler } from './app/middleware/errorHandler';
+import roleRouter from './modules/role/routes';
 
 
 
@@ -35,6 +36,7 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/announcement', announcementRouter);
 app.use('/api/group', groupRouter);
 app.use('/api/headsup', headsUpRoutes);
+app.use('api/role', roleRouter);
 
 
 // Error handling middleware

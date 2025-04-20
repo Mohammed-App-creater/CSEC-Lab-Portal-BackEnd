@@ -1,6 +1,5 @@
 import { getUsersByRole } from "../interfaces/user.repository";
 import { Request, Response } from "express";
-import { RoleType } from "@prisma/client";
 
 
 export const getUsersByRoleController = async (req: Request, res: Response): Promise<void> => {
@@ -17,7 +16,7 @@ export const getUsersByRoleController = async (req: Request, res: Response): Pro
     }
 
     try {
-        const users = await getUsersByRole.getUsersByRole(role as RoleType);
+        const users = await getUsersByRole.getUsersByRole(role);
         res.status(200).json(users);
         return
     } catch (error) {

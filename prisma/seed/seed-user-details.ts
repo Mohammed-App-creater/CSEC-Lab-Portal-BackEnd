@@ -1,24 +1,29 @@
-import { PrismaClient, RoleType, Theme, ClubStatus, UniversityStatus, Gender } from '@prisma/client';
+import { PrismaClient,  Theme, UniversityStatus } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 
 const prisma = new PrismaClient();
 
-
 async function seedUserDetails() {
+  const SuperAdmin = await prisma.role.findFirst({
+    where: { name: 'SuperAdmin' },
+  });
+  // Get users that are NOT SuperAdmin
   const users = await prisma.user.findMany({
-    where: { role: { not: 'SuperAdmin' } },
+    where: {
+      roleId: { not: SuperAdmin?.id }
+    },
+    
   });
 
   if (users.length === 0) {
-    console.error('❌ No users found. Run seed-users.ts first.');
+    console.error('❌ No non-SuperAdmin users found. Run seed-users.ts first.');
     process.exit(1);
   }
 
-  // Clear existing UserSettings, UniversityInfo, socialLinks
+  // Clear related details
   await prisma.userSetting.deleteMany({});
   await prisma.universityInfo.deleteMany({});
   await prisma.socialLink.deleteMany({});
-
   console.log('✅ Cleared old user details');
 
   for (const user of users) {
@@ -63,13 +68,12 @@ async function seedUserDetails() {
     });
   }
 
-  console.log('✅ UserSettings, UniversityInfo, and socialLinks seeded');
+  console.log('✅ UserSettings, UniversityInfo, and SocialLinks seeded');
 }
 
 async function main() {
   await seedUserDetails();
-
-  console.log('✅ Users seeding Done!');
+  console.log('✅ User detail seeding complete!');
 }
 
 async function SeedUserDetails() {
@@ -81,7 +85,6 @@ async function SeedUserDetails() {
     .finally(async () => {
       await prisma.$disconnect();
     });
-
 }
 
 export default SeedUserDetails;

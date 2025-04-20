@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import { sendRegistrationEmail } from '@shared/exceptions/emailService';
 import { CreateUser, existingUser } from '../interfaces/user.repository';
 import { PrismaClient } from '@prisma/client';
+import { getRoleByIdUseCase } from '@/modules/role/use-cases/get-role-by-id.use-case';
 
 const prisma = new PrismaClient();
 
@@ -37,8 +38,10 @@ export const registerUserUseCase = async ({
     gender
   });
 
+  const role = await getRoleByIdUseCase(user.roleId);
+
   const token = jwt.sign(
-    { userId: user.id, role: user.role },
+    { userId: user.id, role: role },
     process.env.JWT_SECRET!,
     { expiresIn: '1d' }
   );
@@ -65,7 +68,7 @@ export const registerUserUseCase = async ({
     user: {
       id: user.id,
       name: [user.firstName, user.middleName, user.lastName].filter(Boolean).join(' '),
-      role: user.role,
+      role: role.name,
     },
     message: 'User registered',
   };

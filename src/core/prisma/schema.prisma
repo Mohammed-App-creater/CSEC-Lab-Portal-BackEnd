@@ -159,6 +159,7 @@ model Divisions {
   socialLinks   socialLink[] @relation("DivisionSocialLink")
   sessions      Sessions[]   @relation("SessionDivision")
   groups        Groups[]     @relation("DivisionGroups")
+  events        Events[]     @relation("EventDivision")
 
   // indexes
   @@index([name])
@@ -214,19 +215,6 @@ model ResourceLink {
   @@index([id])
 }
 
-model EventTimeSlot {
-  id        String   @id @default(uuid()) @db.Uuid
-  eventId   String?  @db.Uuid
-  startTime DateTime
-  endTime   DateTime
-
-  event Events? @relation("EventTimeSlot", fields: [eventId], references: [id])
-
-  // indexes
-  @@index([eventId]) // EventTimeSlot
-  @@index([id])
-}
-
 model SessionTimeSlot {
   id        String   @id @default(uuid()) @db.Uuid
   sessionId String?  @db.Uuid
@@ -239,6 +227,7 @@ model SessionTimeSlot {
 
   // indexes
   @@index([id])
+  @@index([status])
   @@index([sessionId])
 }
 
@@ -283,13 +272,14 @@ model Events {
   tags        Tag[]
   visibility  EventVisibility
   status      Status
+  divisionId  String? @db.Uuid
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
 
   // Relations
+  division     Divisions?            @relation("EventDivision", fields: [divisionId], references: [id], onDelete: SetNull)
   creatorId    String               @db.Uuid
   creator      User                 @relation("UserEvents", fields: [creatorId], references: [id])
-  timeSlots    EventTimeSlot[]      @relation("EventTimeSlot")
   groups       Groups[]             @relation("EventTargetGroups")
   tasks        Tasks[]              @relation("EventTasks")
   participants EventParticipation[] @relation("SessionParticipants")
@@ -325,7 +315,6 @@ model Sessions {
 
   // indexes
   @@index([id])
-  @@index([status])
   @@index([startMonth])
 }
 

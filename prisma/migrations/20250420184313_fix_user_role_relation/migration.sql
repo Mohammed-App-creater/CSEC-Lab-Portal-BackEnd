@@ -5,7 +5,7 @@ CREATE TYPE "Gender" AS ENUM ('Male', 'Female');
 CREATE TYPE "ClubStatus" AS ENUM ('Active', 'Alumni', 'Banned');
 
 -- CreateEnum
-CREATE TYPE "RoleType" AS ENUM ('SuperAdmin', 'President', 'VicePresident', 'DivisionHead', 'Coordinator', 'Member');
+CREATE TYPE "RoleStatus" AS ENUM ('Active', 'Inactive');
 
 -- CreateEnum
 CREATE TYPE "UniversityStatus" AS ENUM ('onCampus', 'offCampus', 'withdraw', 'dropOut');
@@ -47,6 +47,17 @@ CREATE TYPE "AnnouncementVisibility" AS ENUM ('PUBLIC', 'Division_ONLY', 'GROUP_
 CREATE TYPE "AnnouncementType" AS ENUM ('EVENT', 'SESSION', 'TASK', 'GENERAL');
 
 -- CreateTable
+CREATE TABLE "Role" (
+    "id" UUID NOT NULL,
+    "name" TEXT NOT NULL,
+    "status" "RoleStatus" NOT NULL DEFAULT 'Active',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Role_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "User" (
     "id" UUID NOT NULL,
     "firstName" TEXT,
@@ -64,7 +75,7 @@ CREATE TABLE "User" (
     "specialty" TEXT,
     "cvUrl" TEXT,
     "lastSeen" TIMESTAMP(3) NOT NULL,
-    "role" "RoleType" NOT NULL DEFAULT 'Member',
+    "roleId" UUID NOT NULL,
     "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -142,19 +153,22 @@ CREATE TABLE "socialLink" (
 );
 
 -- CreateTable
-CREATE TABLE "EventTimeSlot" (
+CREATE TABLE "ResourceLink" (
     "id" UUID NOT NULL,
-    "eventId" UUID,
-    "startTime" TIMESTAMP(3) NOT NULL,
-    "endTime" TIMESTAMP(3) NOT NULL,
+    "resourceLinkName" TEXT NOT NULL,
+    "resourceLinkUrl" TEXT NOT NULL,
+    "userId" UUID,
+    "CreatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "EventTimeSlot_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "ResourceLink_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "SessionTimeSlot" (
     "id" UUID NOT NULL,
     "sessionId" UUID,
+    "date" TIMESTAMP(3) NOT NULL,
     "startTime" TIMESTAMP(3) NOT NULL,
     "endTime" TIMESTAMP(3) NOT NULL,
 
@@ -173,6 +187,7 @@ CREATE TABLE "Events" (
     "tags" "Tag"[],
     "visibility" "EventVisibility" NOT NULL,
     "status" "Status" NOT NULL,
+    "divisionId" UUID,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "creatorId" UUID NOT NULL,
@@ -189,7 +204,6 @@ CREATE TABLE "Sessions" (
     "endTMonth" TIMESTAMP(3) NOT NULL,
     "location" TEXT,
     "tags" "Tag"[],
-    "status" "Status" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "creatorId" UUID NOT NULL,
@@ -255,6 +269,20 @@ CREATE TABLE "TaskParticipation" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "TaskParticipation_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "DashboardSnapshot" (
+    "id" SERIAL NOT NULL,
+    "totalUsers" INTEGER NOT NULL,
+    "totalDivisions" INTEGER NOT NULL,
+    "attendanceRate" DOUBLE PRECISION NOT NULL,
+    "upcomingSessions" INTEGER NOT NULL,
+    "totalEvents" INTEGER NOT NULL,
+    "snapshotDate" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "DashboardSnapshot_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -380,7 +408,7 @@ CREATE TABLE "Permission" (
 -- CreateTable
 CREATE TABLE "RolePermission" (
     "id" SERIAL NOT NULL,
-    "role" "RoleType" NOT NULL,
+    "roleId" UUID NOT NULL,
     "permissionId" INTEGER NOT NULL,
 
     CONSTRAINT "RolePermission_pkey" PRIMARY KEY ("id")
@@ -451,6 +479,9 @@ CREATE TABLE "_UserBadges" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Role_name_key" ON "Role"("name");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
@@ -458,9 +489,6 @@ CREATE UNIQUE INDEX "User_phone_number_key" ON "User"("phone_number");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_telegramUserName_key" ON "User"("telegramUserName");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_DivisionId_key" ON "User"("DivisionId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_UserSettingId_key" ON "User"("UserSettingId");
@@ -472,7 +500,7 @@ CREATE UNIQUE INDEX "User_DivisionHeadID_key" ON "User"("DivisionHeadID");
 CREATE UNIQUE INDEX "User_AttendanceSummaryId_key" ON "User"("AttendanceSummaryId");
 
 -- CreateIndex
-CREATE INDEX "User_role_idx" ON "User"("role");
+CREATE INDEX "User_id_idx" ON "User"("id");
 
 -- CreateIndex
 CREATE INDEX "User_clubStatus_idx" ON "User"("clubStatus");
@@ -502,10 +530,22 @@ CREATE UNIQUE INDEX "UniversityInfo_universityId_key" ON "UniversityInfo"("unive
 CREATE UNIQUE INDEX "UniversityInfo_userId_key" ON "UniversityInfo"("userId");
 
 -- CreateIndex
+CREATE INDEX "UniversityInfo_id_idx" ON "UniversityInfo"("id");
+
+-- CreateIndex
+CREATE INDEX "UniversityInfo_userId_idx" ON "UniversityInfo"("userId");
+
+-- CreateIndex
 CREATE INDEX "UniversityInfo_status_idx" ON "UniversityInfo"("status");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "UserSetting_userId_key" ON "UserSetting"("userId");
+
+-- CreateIndex
+CREATE INDEX "UserSetting_userId_idx" ON "UserSetting"("userId");
+
+-- CreateIndex
+CREATE INDEX "UserSetting_id_idx" ON "UserSetting"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Divisions_currentHeadID_key" ON "Divisions"("currentHeadID");
@@ -514,7 +554,13 @@ CREATE UNIQUE INDEX "Divisions_currentHeadID_key" ON "Divisions"("currentHeadID"
 CREATE INDEX "Divisions_name_idx" ON "Divisions"("name");
 
 -- CreateIndex
+CREATE INDEX "Divisions_id_idx" ON "Divisions"("id");
+
+-- CreateIndex
 CREATE INDEX "Groups_divisionId_idx" ON "Groups"("divisionId");
+
+-- CreateIndex
+CREATE INDEX "Groups_id_idx" ON "Groups"("id");
 
 -- CreateIndex
 CREATE INDEX "socialLink_DivisionId_idx" ON "socialLink"("DivisionId");
@@ -523,10 +569,19 @@ CREATE INDEX "socialLink_DivisionId_idx" ON "socialLink"("DivisionId");
 CREATE INDEX "socialLink_userId_idx" ON "socialLink"("userId");
 
 -- CreateIndex
-CREATE INDEX "EventTimeSlot_eventId_idx" ON "EventTimeSlot"("eventId");
+CREATE INDEX "ResourceLink_userId_idx" ON "ResourceLink"("userId");
+
+-- CreateIndex
+CREATE INDEX "ResourceLink_id_idx" ON "ResourceLink"("id");
+
+-- CreateIndex
+CREATE INDEX "SessionTimeSlot_id_idx" ON "SessionTimeSlot"("id");
 
 -- CreateIndex
 CREATE INDEX "SessionTimeSlot_sessionId_idx" ON "SessionTimeSlot"("sessionId");
+
+-- CreateIndex
+CREATE INDEX "Events_id_idx" ON "Events"("id");
 
 -- CreateIndex
 CREATE INDEX "Events_status_idx" ON "Events"("status");
@@ -538,16 +593,22 @@ CREATE INDEX "Events_visibility_idx" ON "Events"("visibility");
 CREATE INDEX "Events_startDate_idx" ON "Events"("startDate");
 
 -- CreateIndex
-CREATE INDEX "Sessions_status_idx" ON "Sessions"("status");
+CREATE INDEX "Sessions_id_idx" ON "Sessions"("id");
 
 -- CreateIndex
 CREATE INDEX "Sessions_startMonth_idx" ON "Sessions"("startMonth");
+
+-- CreateIndex
+CREATE INDEX "Tasks_id_idx" ON "Tasks"("id");
 
 -- CreateIndex
 CREATE INDEX "Tasks_status_idx" ON "Tasks"("status");
 
 -- CreateIndex
 CREATE INDEX "Tasks_dueDate_idx" ON "Tasks"("dueDate");
+
+-- CreateIndex
+CREATE INDEX "EventParticipation_id_idx" ON "EventParticipation"("id");
 
 -- CreateIndex
 CREATE INDEX "EventParticipation_userId_idx" ON "EventParticipation"("userId");
@@ -557,6 +618,9 @@ CREATE INDEX "EventParticipation_EventId_idx" ON "EventParticipation"("EventId")
 
 -- CreateIndex
 CREATE INDEX "EventParticipation_EventId_userId_idx" ON "EventParticipation"("EventId", "userId");
+
+-- CreateIndex
+CREATE INDEX "SessionParticipation_id_idx" ON "SessionParticipation"("id");
 
 -- CreateIndex
 CREATE INDEX "SessionParticipation_role_idx" ON "SessionParticipation"("role");
@@ -571,6 +635,9 @@ CREATE INDEX "SessionParticipation_sessionId_idx" ON "SessionParticipation"("ses
 CREATE INDEX "SessionParticipation_sessionId_userId_idx" ON "SessionParticipation"("sessionId", "userId");
 
 -- CreateIndex
+CREATE INDEX "TaskParticipation_id_idx" ON "TaskParticipation"("id");
+
+-- CreateIndex
 CREATE INDEX "TaskParticipation_userId_idx" ON "TaskParticipation"("userId");
 
 -- CreateIndex
@@ -578,6 +645,12 @@ CREATE INDEX "TaskParticipation_taskId_idx" ON "TaskParticipation"("taskId");
 
 -- CreateIndex
 CREATE INDEX "TaskParticipation_userId_taskId_idx" ON "TaskParticipation"("userId", "taskId");
+
+-- CreateIndex
+CREATE INDEX "DashboardSnapshot_snapshotDate_idx" ON "DashboardSnapshot"("snapshotDate");
+
+-- CreateIndex
+CREATE INDEX "DashboardSnapshot_id_idx" ON "DashboardSnapshot"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Attendance_headsUpId_key" ON "Attendance"("headsUpId");
@@ -607,13 +680,28 @@ CREATE UNIQUE INDEX "AttendanceSummary_userId_key" ON "AttendanceSummary"("userI
 CREATE INDEX "AttendanceSummary_userId_idx" ON "AttendanceSummary"("userId");
 
 -- CreateIndex
+CREATE INDEX "HeadsUp_id_idx" ON "HeadsUp"("id");
+
+-- CreateIndex
 CREATE INDEX "HeadsUp_type_idx" ON "HeadsUp"("type");
 
 -- CreateIndex
 CREATE INDEX "HeadsUp_userId_idx" ON "HeadsUp"("userId");
 
 -- CreateIndex
+CREATE INDEX "Notification_id_idx" ON "Notification"("id");
+
+-- CreateIndex
 CREATE INDEX "Notification_type_idx" ON "Notification"("type");
+
+-- CreateIndex
+CREATE INDEX "Notification_isRead_idx" ON "Notification"("isRead");
+
+-- CreateIndex
+CREATE INDEX "Notification_createdAt_idx" ON "Notification"("createdAt");
+
+-- CreateIndex
+CREATE INDEX "Announcement_id_idx" ON "Announcement"("id");
 
 -- CreateIndex
 CREATE INDEX "Announcement_visibility_idx" ON "Announcement"("visibility");
@@ -625,7 +713,13 @@ CREATE INDEX "Announcement_announcementType_idx" ON "Announcement"("announcement
 CREATE INDEX "Announcement_sourceId_idx" ON "Announcement"("sourceId");
 
 -- CreateIndex
+CREATE INDEX "FileCategories_id_idx" ON "FileCategories"("id");
+
+-- CreateIndex
 CREATE INDEX "FileCategories_name_idx" ON "FileCategories"("name");
+
+-- CreateIndex
+CREATE INDEX "File_id_idx" ON "File"("id");
 
 -- CreateIndex
 CREATE INDEX "File_type_idx" ON "File"("type");
@@ -637,6 +731,9 @@ CREATE INDEX "File_tag_idx" ON "File"("tag");
 CREATE INDEX "File_categoryId_idx" ON "File"("categoryId");
 
 -- CreateIndex
+CREATE INDEX "Badges_id_idx" ON "Badges"("id");
+
+-- CreateIndex
 CREATE INDEX "Badges_name_idx" ON "Badges"("name");
 
 -- CreateIndex
@@ -646,10 +743,22 @@ CREATE INDEX "Badges_points_idx" ON "Badges"("points");
 CREATE UNIQUE INDEX "Permission_key_key" ON "Permission"("key");
 
 -- CreateIndex
+CREATE INDEX "Permission_id_idx" ON "Permission"("id");
+
+-- CreateIndex
 CREATE INDEX "Permission_key_idx" ON "Permission"("key");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "RolePermission_role_permissionId_key" ON "RolePermission"("role", "permissionId");
+CREATE INDEX "RolePermission_id_idx" ON "RolePermission"("id");
+
+-- CreateIndex
+CREATE INDEX "RolePermission_roleId_idx" ON "RolePermission"("roleId");
+
+-- CreateIndex
+CREATE INDEX "RolePermission_permissionId_idx" ON "RolePermission"("permissionId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "RolePermission_roleId_permissionId_key" ON "RolePermission"("roleId", "permissionId");
 
 -- CreateIndex
 CREATE INDEX "_SessionDivision_B_index" ON "_SessionDivision"("B");
@@ -679,6 +788,9 @@ CREATE INDEX "_UserBadges_B_index" ON "_UserBadges"("B");
 ALTER TABLE "User" ADD CONSTRAINT "User_DivisionId_fkey" FOREIGN KEY ("DivisionId") REFERENCES "Divisions"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "UniversityInfo" ADD CONSTRAINT "UniversityInfo_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -697,10 +809,13 @@ ALTER TABLE "socialLink" ADD CONSTRAINT "socialLink_userId_fkey" FOREIGN KEY ("u
 ALTER TABLE "socialLink" ADD CONSTRAINT "socialLink_DivisionId_fkey" FOREIGN KEY ("DivisionId") REFERENCES "Divisions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "EventTimeSlot" ADD CONSTRAINT "EventTimeSlot_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Events"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "ResourceLink" ADD CONSTRAINT "ResourceLink_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "SessionTimeSlot" ADD CONSTRAINT "SessionTimeSlot_sessionId_fkey" FOREIGN KEY ("sessionId") REFERENCES "Sessions"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Events" ADD CONSTRAINT "Events_divisionId_fkey" FOREIGN KEY ("divisionId") REFERENCES "Divisions"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Events" ADD CONSTRAINT "Events_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -755,6 +870,9 @@ ALTER TABLE "HeadsUp" ADD CONSTRAINT "HeadsUp_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "File" ADD CONSTRAINT "File_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "FileCategories"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "RolePermission" ADD CONSTRAINT "RolePermission_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "RolePermission" ADD CONSTRAINT "RolePermission_permissionId_fkey" FOREIGN KEY ("permissionId") REFERENCES "Permission"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

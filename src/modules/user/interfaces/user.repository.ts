@@ -1,35 +1,42 @@
-import { PrismaClient, RoleType, User } from '@prisma/client';
+import { PrismaClient, Role, User } from '@prisma/client';
 import { hashPassword } from '@shared/utils/hashPassword';
 import { RegisterUserDTO } from '../dto/auth-user.dto';
 import { AllUserDTOWithGroup, UserDTO } from '../dto/user.dto';
 import { normalizeUndefinedToNull } from '@shared/utils/normalizeUndefinedToNull'; // adjust path as needed
+import { getRoleByNameUseCase } from '@modules/role/use-cases/get-role-by-name.use-case';
+import { getRoleByIdUseCase } from '@modules/role/use-cases/get-role-by-id.use-case';
 
 
 const prisma = new PrismaClient();
 
+const roleMember = getRoleByNameUseCase('Member');
 
 export const findByEmail = {
   findByEmail: (email: string) => {
-    return prisma.user.findUnique({ where: { email } });
+    return prisma.user.findUnique({ where: { email }, include: { role: true } });
   }
 };
 
 export const getUserRole = {
-  getUserRole: async (userId: string): Promise<RoleType> => {
+  getUserRole: async (userId: string): Promise<Role['name']> => {
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { role: true },
+      select: {
+        role: {
+          select: { name: true }
+        }
+      },
     });
 
-    return user?.role || 'Member';
+    return user?.role.name || 'Unknown'; // default fallback
   }
 };
 
 export const getUsersByRole = {
-  getUsersByRole: async (role: RoleType) => {
+  getUsersByRole: async (role: string) => {
     const users = await prisma.user.findMany({
       where: {
-        role: role,
+        role: { name: role },
         deletedAt: null,
         isDeleted: false,
       },
@@ -37,8 +44,13 @@ export const getUsersByRole = {
         firstName: true,
         middleName: true,
         lastName: true,
-        role: true,
         Divisions: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        role: {
           select: {
             id: true,
             name: true,
@@ -84,6 +96,7 @@ export const CreateUser = {
         gender,
         DivisionId,
         lastSeen: new Date(),
+        roleId: (await roleMember).id,  
         groups: groupId
           ? {
             connect: { id: groupId },  // Connect the user to the group by ID
@@ -131,7 +144,12 @@ export const FindAllUsers = {
         specialty: true,
         cvUrl: true,
         lastSeen: true,
-        role: true,
+        role: {
+          select: {
+            id: true,
+            name: true,
+          },
+        }
       },
     });
 
@@ -144,7 +162,10 @@ export const FindAllUsers = {
     });
 
     return {
-      data: users,
+      data: users.map(user => ({
+        ...user,
+        roleId: user.role?.id || '', 
+      })),
       total,
       page,
       limit,
@@ -178,11 +199,29 @@ export const FindAllUsers = {
         specialty: true,
         cvUrl: true,
         lastSeen: true,
-        role: true,
+        roleId: true,
+        role: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    })).map(normalizeUndefinedToNull);
+
+
+    const paginatedUsers = await prisma.user.findMany({
+      where: {
+        deletedAt: null,
+        groups: {
+          some: {
+            id: groupId,
+          },
+        },
       },
       skip: (page - 1) * limit,
       take: limit,
-    })).map(normalizeUndefinedToNull);
+    });
 
     const total = await prisma.user.count({
       where: {

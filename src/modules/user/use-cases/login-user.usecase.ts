@@ -1,5 +1,6 @@
 import { LoginUserDTO } from '../dto/auth-user.dto';
 import { findByEmail } from '../interfaces/user.repository';
+import { getRoleByIdUseCase } from '@/modules/role/use-cases/get-role-by-id.use-case';
 import bcrypt from 'bcryptjs'; // or argon2
 import jwt from 'jsonwebtoken'; // optional
 import dotenv from 'dotenv';
@@ -13,7 +14,9 @@ export const loginUserUseCase = async ({ email, password }: LoginUserDTO) => {
   const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) throw new Error('Invalid credentials');
 
-  const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET!, {
+  const role = await getRoleByIdUseCase(user.roleId);
+
+  const token = jwt.sign({ userId: user.id, roleId: role.id }, process.env.JWT_SECRET!, {
     expiresIn: '1d',
   });
 
@@ -22,7 +25,7 @@ export const loginUserUseCase = async ({ email, password }: LoginUserDTO) => {
     user: {
       id: user.id,
       name: [user.firstName, user.middleName, user.lastName].filter(Boolean).join(' '),
-      role: user.role,
+      role: role.name,
     },
   };
 };
