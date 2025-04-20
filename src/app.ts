@@ -1,6 +1,6 @@
 import 'tsconfig-paths/register';
 import express from 'express';
-import dotenv from 'dotenv';
+
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './core/config/swaggerConfig';
@@ -12,10 +12,10 @@ import attendanceRoutes from './modules/attendance/routes';
 import dashboardRoutes from './modules/dashboard/routes';
 import announcementRouter from './modules/announcement/routes';
 import groupRouter from './modules/group/routes';
-import headsUpRoutes from './modules/headsup/routes'; 
+import headsUpRoutes from './modules/headsup/routes';
+import { errorHandler } from './app/middleware/errorHandler';
 
 
-dotenv.config();
 
 const app = express();
 
@@ -37,8 +37,8 @@ app.use('/api/group', groupRouter);
 app.use('/api/headsup', headsUpRoutes);
 
 
+// Error handling middleware
+app.use(errorHandler);
 
 
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+export default app;
