@@ -389,6 +389,7 @@ model EventParticipation {
   createdAt     DateTime  @default(now())
 
   // indexes
+  @@index([id])
   @@index([userId]) // might help for dedup checks or fast access
   @@index([EventId]) // might help for dedup checks or fast access
   @@index([EventId, userId]) // might help for dedup checks or fast access
@@ -407,6 +408,7 @@ model SessionParticipation {
   createdAt     DateTime    @default(now())
 
   // indexes
+  @@index([id])
   @@index([role])
   @@index([userId]) // might help for dedup checks or fast access
   @@index([sessionId]) // might help for dedup checks or fast access
@@ -426,6 +428,7 @@ model TaskParticipation {
   createdAt     DateTime @default(now())
 
   // indexes
+  @@index([id])
   @@index([userId])
   @@index([taskId])
   @@index([userId, taskId]) // might help for dedup checks or fast access
@@ -502,6 +505,7 @@ model HeadsUp {
   attendance Attendance?
 
   // indexes
+  @@index([id])
   @@index([type])
   @@index([userId])
 }
@@ -529,7 +533,10 @@ model Notification {
   user User[] @relation("UserNotification")
 
   // indexes
+  @@index([id])
   @@index([type])
+  @@index([isRead])
+  @@index([createdAt])
 }
 
 enum AnnouncementVisibility {
@@ -560,6 +567,7 @@ model Announcement {
   user User[] @relation("UserAnnouncement")
 
   // indexes
+  @@index([id])
   @@index([visibility])
   @@index([announcementType])
   @@index([sourceId])
@@ -575,7 +583,8 @@ model FileCategories {
   // Relations
   files File[] @relation("FileCategories")
 
-  // indexes
+  // 
+  @@index([id])
   @@index([name])
 }
 
@@ -595,6 +604,7 @@ model File {
   categoryId String?         @db.Uuid
 
   // indexes
+  @@index([id])
   @@index([type])
   @@index([tag])
   @@index([categoryId])
@@ -614,6 +624,7 @@ model Badges {
   user User[] @relation("UserBadges")
 
   // indexes
+  @@index([id])
   @@index([name])
   @@index([points])
 }
@@ -627,6 +638,7 @@ model Permission {
   roles RolePermission[]
 
   // indexes
+  @@index([id])
   @@index([key])
 }
 
@@ -636,5 +648,6 @@ model RolePermission {
   permission   Permission @relation(fields: [permissionId], references: [id])
   permissionId Int
 
+  @@index([id])
   @@unique([role, permissionId]) // Avoid duplicate role-permission mappings
 }
