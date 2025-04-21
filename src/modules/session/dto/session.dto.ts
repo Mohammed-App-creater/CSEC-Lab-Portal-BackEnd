@@ -18,3 +18,8 @@ export type SessionGroupsAndTimeSlotDto = SessionDetails & {
 export type SessionWithTimeSlotsDto = SessionDetails & {
     timeSlots: TimeSlotDetails[];
 };
+
+export type SessionWithTimeSlotsAndGroupsDto = SessionDetails & {
+    timeSlots: TimeSlotDetails[];
+    groupIds: string[];
+};

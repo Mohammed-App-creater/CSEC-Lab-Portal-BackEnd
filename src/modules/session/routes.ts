@@ -2,6 +2,8 @@ import { Router } from 'express';
 import { CountUpcomingSessionController } from './controllers/count-upcoming-session';
 import { getAllSessionsController } from './controllers/get-all-sessions.controller';
 import { getSessionsByGroupIdController } from './controllers/get-session-by-groupId.controller';
+import { CreateEventController } from '../_event/controllers/create-event.controller';
+import { createSessionController } from './controllers/create-session.controller';
 const sessionRoutes = Router();
 
 
@@ -139,6 +141,140 @@ sessionRoutes.get('/groupId/:groupId/sessions', getSessionsByGroupIdController);
 
 
 sessionRoutes.get('/sessions', getAllSessionsController);
+
+
+
+/**
+ * @swagger
+ * /api/sessions/create:
+ *   post:
+ *     summary: Create a new session
+ *     tags:
+ *       - Sessions
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - startMonth
+ *               - endTMonth
+ *               - creatorId
+ *               - divisionId
+ *               - tags
+ *               - timeSlotAndGroup
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: "Frontend Masterclass"
+ *               description:
+ *                 type: string
+ *                 example: "Deep dive into advanced React and Next.js"
+ *               startMonth:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2025-05-01T00:00:00.000Z"
+ *               endTMonth:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2025-05-05T00:00:00.000Z"
+ *               location:
+ *                 type: string
+ *                 example: "ASTU Tech Hall"
+ *               creatorId:
+ *                 type: string
+ *                 format: uuid
+ *                 example: "9b4f4a60-2d60-4c4d-888f-40e2d7c3e4f9"
+ *               divisionId:
+ *                 type: string
+ *                 format: uuid
+ *                 example: "8ac93b24-3bfa-43d6-a2a9-c4b9871f0fc3"
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   enum: [CPD, CBD, SEC, DEV, DS, ENTIRE]
+ *                 example: ["DEV", "CPD"]
+ *               timeSlotAndGroup:
+ *                 type: object
+ *                 required:
+ *                   - groupIds
+ *                   - timeSlots
+ *                 properties:
+ *                   groupIds:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                       format: uuid
+ *                     example: [
+ *                       "1e43728d-12e1-42f3-a263-2de4fda44410",
+ *                       "7cd90e93-933b-4af9-8859-5d48e1fa8c5f"
+ *                     ]
+ *                   timeSlots:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       required:
+ *                         - date
+ *                         - startTime
+ *                         - endTime
+ *                       properties:
+ *                         date:
+ *                           type: string
+ *                           format: date-time
+ *                           example: "2025-05-01T00:00:00.000Z"
+ *                         startTime:
+ *                           type: string
+ *                           format: date-time
+ *                           example: "2025-05-01T10:00:00.000Z"
+ *                         endTime:
+ *                           type: string
+ *                           format: date-time
+ *                           example: "2025-05-01T12:00:00.000Z"
+ *     responses:
+ *       '201':
+ *         description: Session created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   format: uuid
+ *                 title:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *                 startMonth:
+ *                   type: string
+ *                   format: date-time
+ *                 endTMonth:
+ *                   type: string
+ *                   format: date-time
+ *                 location:
+ *                   type: string
+ *                 tags:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *       '400':
+ *         description: Invalid input or validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
+
+sessionRoutes.post('/create', createSessionController)
 
 
 

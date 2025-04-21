@@ -1,4 +1,5 @@
 import { PrismaClient, Status, Tag } from "@prisma/client";
+import { SessionWithTimeSlotsAndGroupsDto } from "../dto/session.dto";
 
 const prisma = new PrismaClient();
 
@@ -28,9 +29,42 @@ export const sessionRepository = {
         });
         return session;
     },
-    createSession: async (sessionData: any) => {
+    getSessionByTitle: async (title: string) => {
+        const session = await prisma.sessions.findFirst({
+            where: { title },
+            include: {
+                timeSlot: true,
+            },
+        });
+        return session;
+    },
+    createSession: async (title: string, description: string, startMonth: Date, endTMonth: Date, location: string, createId: string, divisionId: string, Tag: Tag[], timeSlotAndGroup: SessionWithTimeSlotsAndGroupsDto) => {
         const session = await prisma.sessions.create({
-            data: sessionData,
+            data: {
+                title: title,
+                description: description,
+                startMonth: startMonth,
+                endTMonth: endTMonth,
+                location: location,
+                creatorId: createId,
+
+                // Relations
+                tags: Tag,
+                division: {
+                    connect: [{ id: divisionId }],
+                },
+                targetGroups: {
+                    connect: timeSlotAndGroup.groupIds.map((group) => ({ id: group })),
+                },
+                timeSlot: {
+                    create: timeSlotAndGroup.timeSlots.map((timeSlot) => ({
+                        startTime: timeSlot.startTime,
+                        endTime: timeSlot.endTime,
+                        date: timeSlot.date,
+                        status: Status.Planned,
+                    })),
+                },
+            },
         });
         return session;
     },
@@ -111,6 +145,6 @@ export const sessionRepository = {
         return sessions;
     }
 
-    
+
 
 }

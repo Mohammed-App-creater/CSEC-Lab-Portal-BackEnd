@@ -3,9 +3,9 @@ import { validate as uuidValidate } from 'uuid';
 import { BaseError } from '../errors/BaseError';
 
 
-export const validateUUID = (id: string): boolean => {
+export const validateUUID = (id: string, message?: string): boolean => {
     if (!uuidValidate(id)) {
-        throw new BaseError('Invalid UUID format', 400);
+        throw new BaseError('Invalid UUID format for ' + message, 400);
     }
     return true;
 };
