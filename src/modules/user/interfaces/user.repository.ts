@@ -1,10 +1,9 @@
 import { PrismaClient, Role, User } from '@prisma/client';
 import { hashPassword } from '@shared/utils/hashPassword';
 import { RegisterUserDTO } from '../dto/auth-user.dto';
-import { AllUserDTOWithGroup, UserDTO } from '../dto/user.dto';
+import { UserDTO } from '../dto/user.dto';
 import { normalizeUndefinedToNull } from '@shared/utils/normalizeUndefinedToNull'; // adjust path as needed
 import { getRoleByNameUseCase } from '@modules/role/use-cases/get-role-by-name.use-case';
-import { getRoleByIdUseCase } from '@modules/role/use-cases/get-role-by-id.use-case';
 
 
 const prisma = new PrismaClient();
@@ -96,7 +95,7 @@ export const CreateUser = {
         gender,
         DivisionId,
         lastSeen: new Date(),
-        roleId: (await roleMember).id,  
+        roleId: (await roleMember).id,
         groups: groupId
           ? {
             connect: { id: groupId },  // Connect the user to the group by ID
@@ -114,6 +113,15 @@ export const UpdateUser = {
     return prisma.user.update({
       where: { id: userId },
       data: userData,
+    });
+  }
+};
+
+export const UpdateUserRole = {
+  updateRole: async (userId: string, roleId: string) => {
+    return prisma.user.update({
+      where: { id: userId },
+      data: { roleId: roleId },
     });
   }
 };
@@ -164,7 +172,7 @@ export const FindAllUsers = {
     return {
       data: users.map(user => ({
         ...user,
-        roleId: user.Role?.id || '', 
+        roleId: user.Role?.id || '',
       })),
       total,
       page,

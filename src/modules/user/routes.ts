@@ -9,6 +9,7 @@ import { getUsersByRoleController } from './controllers/get-users-by-role.contro
 
 import { PrismaClient } from '@prisma/client';
 import { get } from 'http';
+import { updateUserRoleController } from './controllers/update-user-role.controller';
 const prisma = new PrismaClient();
 const userRouter = Router();
 
@@ -360,6 +361,34 @@ userRouter.post('/get-user-role', getUserRoleController);
  */
 
 userRouter.get('/get-users-by-role', getUsersByRoleController);
+
+
+/**
+ * @swagger
+ * /api/user/update-user-role:
+ *   patch:
+ *     summary: Update user role
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 format: uuid
+ *               roleId:
+ *                 type: string
+ *                 format: uuid
+ *     responses:
+ *       200:
+ *         description: User role successfully updated.
+ *       400:
+ *         description: Invalid input.
+ */
+userRouter.patch('/update-user-role', updateUserRoleController)
 
 
 

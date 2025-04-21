@@ -9,15 +9,30 @@ export const RoleRepository = {
             select: {
                 id: true,
                 name: true,
+                status: true,
+                permissions: {
+                    select: {
+                        permission: {
+                            select: {
+                                id: true,
+                                key: true,
+                                label: true,
+                            },
+                        },
+                    },
+                },
             },
         });
-        return roles;
+
+        // Flatten the permissions from RolePermission
+        return roles
     },
+
     findById: async (id: string) => {
         const role = await prisma.role.findUnique({
             where: {
                 id,
-            },select: {
+            }, select: {
                 id: true,
                 name: true,
             },
@@ -28,7 +43,7 @@ export const RoleRepository = {
         const role = await prisma.role.findUnique({
             where: {
                 name,
-            },select: {
+            }, select: {
                 id: true,
                 name: true,
             },

@@ -1,6 +1,6 @@
 import { SocialLinkDTO } from '@modules/social-link/dto/social-link.dto';
 import { ResourceLinkDTO } from '@modules/resource-link/dto/resource-link.dto'
-import { ClubStatus, Gender, RoleType } from "@prisma/client";
+import { ClubStatus, Gender } from "@prisma/client";
 import { User } from "@prisma/client";
 
 /**
@@ -93,9 +93,9 @@ import { User } from "@prisma/client";
  */
 
 
-export type UserDTO = Omit<User, 'createdAt' | 'updatedAt' | 'deletedAt' | 'isDeleted' | 'password' | 'DivisionId' |  'UserSettingId' |  'DivisionHeadID'| 'AttendanceSummaryId' >
+export type UserDTO = Omit<User, 'createdAt' | 'updatedAt' | 'deletedAt' | 'isDeleted' | 'password' | 'DivisionId' | 'UserSettingId' | 'DivisionHeadID' | 'AttendanceSummaryId'>
 
-export type AllUserDTO  = {
+export type AllUserDTO = {
     data: Omit<UserDTO, 'isDeleted' | 'deletedAt' | 'password'>[];
     total: number;
     page: number;
@@ -103,7 +103,7 @@ export type AllUserDTO  = {
     totalPages: number;
 };
 
-export type AllUserDTOWithGroup  = {
+export type AllUserDTOWithGroup = {
     data: UserDTO[];
     total: number;
     page: number;
@@ -112,8 +112,10 @@ export type AllUserDTOWithGroup  = {
 };
 
 export type UserRoleDTO = {
-    role: RoleType;
-};
+    role: string;
+}
 
 
 export type UserProfileDTO = UserDTO & { socialLinks: SocialLinkDTO[] } & { resourceLinks: ResourceLinkDTO[] };
+
+export type UpdateUserRoleDTO = Pick<UserDTO, 'roleId'> & { userId: string };

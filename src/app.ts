@@ -38,7 +38,7 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/announcement', announcementRouter);
 app.use('/api/group', groupRouter);
 app.use('/api/headsup', headsUpRoutes);
-app.use('api/role', roleRouter);
+app.use('/api/role', roleRouter);
 
 
 // Error handling middleware
