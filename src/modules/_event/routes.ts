@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { GetAllEventController } from './controllers/get-all-events.controller';
+import { CreateEventController } from './controllers/create-event.controller';
 
 const eventRouter = Router();
 
@@ -112,6 +113,124 @@ const eventRouter = Router();
 
 
 eventRouter.get('/events', GetAllEventController);
+
+/**
+ * @swagger
+ * /api/event/create:
+ *   post:
+ *     summary: Create a new event
+ *     tags:
+ *       - Events
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - startDate
+ *               - startTime
+ *               - endTime
+ *               - creatorId
+ *               - visibility
+ *               - tag
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: Title of the event
+ *               startDate:
+ *                 type: string
+ *                 format: date
+ *                 description: Date the event starts
+ *               startTime:
+ *                 type: string
+ *                 format: time
+ *                 description: Start time of the event
+ *               endTime:
+ *                 type: string
+ *                 format: time
+ *                 description: End time of the event
+ *               creatorId:
+ *                 type: string
+ *                 format: uuid
+ *                 description: UUID of the event creator
+ *               visibility:
+ *                 type: string
+ *                 enum: [PUBLIC, PRIVATE]
+ *                 description: Visibility of the event
+ *               tag:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Tags associated with the event
+ *               divisionId:
+ *                 type: string
+ *                 format: uuid
+ *                 nullable: true
+ *                 description: ID of the associated division (nullable if public)
+ *               groups:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: uuid
+ *                 description: Group IDs associated with the event (ignored if public)
+ *     responses:
+ *       201:
+ *         description: Event created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   format: uuid
+ *                   description: ID of the created event
+ *                 title:
+ *                   type: string
+ *                   description: Event title
+ *                 description:
+ *                   type: string
+ *                   description: Event description
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Last update timestamp
+ *       400:
+ *         description: Bad request (invalid input)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Invalid visibility type
+ *       409:
+ *         description: Conflict (event already exists)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Event already exists
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
+
+
+eventRouter.post('/create', CreateEventController);
 
 
 

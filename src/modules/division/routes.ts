@@ -140,6 +140,72 @@ divisionRouter.get('/count-division', countDivisionController);
 
 divisionRouter.post('/groups-and-members', getDivisionGroupMembersController );
 
+/**
+ * @swagger
+ * /api/division/{divisionId}/groups:
+ *   get:
+ *     summary: Get all groups under a specific division
+ *     tags: [Division]
+ *     parameters:
+ *       - in: path
+ *         name: divisionId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the division
+ *     responses:
+ *       200:
+ *         description: List of groups under the division
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: b7f2b0a0-39d3-4f82-8c89-8f814cc13f2f
+ *                 name:
+ *                   type: string
+ *                   example: Tech Division
+ *                 groups:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/GroupDto'
+ *       404:
+ *         description: Division not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Division not found
+ *       403:
+ *         description: You don't have permission
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: You don't have permission
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
+
+
+divisionRouter.get('/:divisionId/groups', DivisionGroupsController);
+
 
 
 export default divisionRouter;

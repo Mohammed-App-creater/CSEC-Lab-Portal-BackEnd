@@ -1,4 +1,4 @@
-import { PrismaClient, Status } from "@prisma/client";
+import { PrismaClient, Status, EventVisibility, Tag } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
@@ -32,16 +32,39 @@ export const EventRepository = {
             },
         });
     },
-    create: (title: string, startDate: Date, startTime: Date, endTime: Date, creatorId: string ) => {
+    create: (
+        title: string,
+        startDate: Date,
+        startTime: Date,
+        endTime: Date,
+        creatorId: string,
+        visibility: EventVisibility,
+        tag: Tag[],
+        divisionId: string | null,
+        groups: string[]
+    ) => {
+        const isPublic = visibility === EventVisibility.PUBLIC;
+
         return prisma.events.create({
             data: {
-                title: title,
-                startDate: startDate,
-                startTime: startTime,
-                endTime: endTime,
-                visibility: "PUBLIC",
+                title,
+                startDate,
+                startTime,
+                endTime,
+                visibility,
+                tags: tag,
+                location: "Lab 1",
                 status: Status.Planned,
-                creatorId: creatorId, 
+                divisionId: isPublic ? null : divisionId,
+                // Skip connecting groups if it's public
+                ...(isPublic
+                    ? {}
+                    : {
+                        groups: {
+                            connect: groups.map((groupId) => ({ id: groupId })),
+                        },
+                    }),
+                creatorId,
                 createdAt: new Date(),
                 updatedAt: new Date(),
             },
@@ -49,10 +72,21 @@ export const EventRepository = {
                 id: true,
                 title: true,
                 description: true,
+                startDate: true,
+                startTime: true,
+                endTime: true,
+                visibility: true,
+                tags: true,
+                location: true,
+                divisionId: true,
+                mandatoryAttendance: true,
+                status: true,
+                creatorId: true,
                 updatedAt: true,
             },
         });
     },
+
     update: (eventUpdateDto: any) => {
         return {
             ...eventUpdateDto,
@@ -85,6 +119,7 @@ export const EventRepository = {
                 tags: true,
                 location: true,
                 divisionId: true,
+                mandatoryAttendance: true,
                 status: true,
                 creatorId: true,
                 updatedAt: true,

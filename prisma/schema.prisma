@@ -267,19 +267,20 @@ enum TaskStatus {
 }
 
 model Events {
-  id          String          @id @default(uuid()) @db.Uuid
-  title       String
-  description String?
-  startDate   DateTime
-  startTime   DateTime
-  endTime     DateTime
-  location    String?
-  tags        Tag[]
-  visibility  EventVisibility
-  status      Status
-  divisionId  String?         @db.Uuid
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  id                  String          @id @default(uuid()) @db.Uuid
+  title               String
+  description         String?
+  startDate           DateTime
+  startTime           DateTime
+  endTime             DateTime
+  location            String?
+  tags                Tag[]
+  visibility          EventVisibility
+  status              Status
+  divisionId          String?         @db.Uuid
+  mandatoryAttendance Boolean         @default(false)
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
 
   // Relations
   division     Divisions?           @relation("EventDivision", fields: [divisionId], references: [id], onDelete: SetNull)
@@ -385,9 +386,9 @@ model EventParticipation {
 
   // indexes
   @@index([id])
-  @@index([userId]) 
-  @@index([EventId]) 
-  @@index([EventId, userId]) 
+  @@index([userId])
+  @@index([EventId])
+  @@index([EventId, userId])
 }
 
 model SessionParticipation {
@@ -405,9 +406,9 @@ model SessionParticipation {
   // indexes
   @@index([id])
   @@index([role])
-  @@index([userId]) 
-  @@index([sessionId]) 
-  @@index([sessionId, userId]) 
+  @@index([userId])
+  @@index([sessionId])
+  @@index([sessionId, userId])
 }
 
 model TaskParticipation {
@@ -426,7 +427,7 @@ model TaskParticipation {
   @@index([id])
   @@index([userId])
   @@index([taskId])
-  @@index([userId, taskId]) 
+  @@index([userId, taskId])
 }
 
 model DashboardSnapshot {
