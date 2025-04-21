@@ -10,7 +10,7 @@ export type SessionDetails = Pick<Sessions, 'id' | 'title' | 'description' | 'st
 
 export type TimeSlotDetails = Pick<SessionTimeSlot, 'id' | 'startTime' | 'endTime' | 'date' | 'status'>;
 
-export type SessionWithGroupsDto = SessionDetails & {
+export type SessionGroupsAndTimeSlotDto = SessionDetails & {
     timeSlots: TimeSlotDetails[];
     groups: SessionGroups[];
 };

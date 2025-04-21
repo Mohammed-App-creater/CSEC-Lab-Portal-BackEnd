@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { CountUpcomingSessionController } from './controllers/count-upcoming-session';
-import { get } from 'http';
-import { getSessionsByGroupIdController } from './controllers/get-session-by-groupId';
+import { getAllSessionsController } from './controllers/get-all-sessions.controller';
+import { getSessionsByGroupIdController } from './controllers/get-session-by-groupId.controller';
 const sessionRoutes = Router();
 
 
@@ -134,6 +134,11 @@ sessionRoutes.get('/count-upcoming-session', CountUpcomingSessionController.coun
 
 
 sessionRoutes.get('/groupId/:groupId/sessions', getSessionsByGroupIdController);
+
+
+
+
+sessionRoutes.get('/sessions', getAllSessionsController);
 
 
 

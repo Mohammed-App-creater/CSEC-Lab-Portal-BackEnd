@@ -6,11 +6,13 @@ const prisma = new PrismaClient();
 
 
 export const sessionRepository = {
-    getAllSessions: async () => {
+    getAllSessions: async (limit: number, page: number) => {
         const sessions = await prisma.sessions.findMany({
             include: {
                 timeSlot: true,
             },
+            skip: (page - 1) * limit,
+            take: limit,
         });
         return sessions;
     },
@@ -105,5 +107,7 @@ export const sessionRepository = {
         });
         return sessions;
     }
+
+    
 
 }

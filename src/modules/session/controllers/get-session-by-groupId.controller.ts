@@ -1,4 +1,4 @@
-import { getSessionsWithGroups } from '../use-cases/sessions-with-groups';
+import { getSessionsWithGroups } from '../use-cases/get-session-by-groupId.use-case';
 import { BaseError } from '@/shared/errors/BaseError';
 import { Request, Response, NextFunction } from 'express';
 

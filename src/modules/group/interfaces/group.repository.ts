@@ -88,6 +88,24 @@ export const GroupRepository = {
             },
         });
     },
+
+    findAllBySessionId: (sessionId: string) => {
+        return prisma.groups.findMany({
+            where: {
+                sessions: {
+                    some: {
+                        id: sessionId,
+                    },
+                },
+            },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                updatedAt: true,
+            },
+        });
+    },
     
 
 
