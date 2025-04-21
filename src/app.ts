@@ -15,6 +15,7 @@ import groupRouter from './modules/group/routes';
 import headsUpRoutes from './modules/headsup/routes';
 import { errorHandler } from './app/middleware/errorHandler';
 import roleRouter from './modules/role/routes';
+import eventRouter from './modules/_event/routes';
 
 
 
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use('/api/user', userRoutes);
 app.use('/api/division', divisionRoutes);
 app.use('/api/session', sessionRoutes);
+app.use('/api/event', eventRouter);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/announcement', announcementRouter);

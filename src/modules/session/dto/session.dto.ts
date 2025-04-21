@@ -1,5 +1,5 @@
 import { Sessions, SessionTimeSlot } from '@prisma/client';
-import { SessionGroups } from "@/modules/group/dto/group.dto";
+import { SessionGroupsDto } from "@/modules/group/dto/group.dto";
 
 
 
@@ -12,7 +12,7 @@ export type TimeSlotDetails = Pick<SessionTimeSlot, 'id' | 'startTime' | 'endTim
 
 export type SessionGroupsAndTimeSlotDto = SessionDetails & {
     timeSlots: TimeSlotDetails[];
-    groups: SessionGroups[];
+    groups: SessionGroupsDto[];
 };
 
 export type SessionWithTimeSlotsDto = SessionDetails & {

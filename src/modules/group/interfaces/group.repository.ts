@@ -106,6 +106,24 @@ export const GroupRepository = {
             },
         });
     },
+
+    findAllByEventId: (eventId: string) => {
+        return prisma.groups.findMany({
+            where: {
+                events: {
+                    some: {
+                        id: eventId,
+                    },
+                },
+            },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                updatedAt: true,
+            },
+        });
+    },
     
 
 

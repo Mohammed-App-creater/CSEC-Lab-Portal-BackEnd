@@ -385,9 +385,9 @@ model EventParticipation {
 
   // indexes
   @@index([id])
-  @@index([userId]) // might help for dedup checks or fast access
-  @@index([EventId]) // might help for dedup checks or fast access
-  @@index([EventId, userId]) // might help for dedup checks or fast access
+  @@index([userId]) 
+  @@index([EventId]) 
+  @@index([EventId, userId]) 
 }
 
 model SessionParticipation {
@@ -405,9 +405,9 @@ model SessionParticipation {
   // indexes
   @@index([id])
   @@index([role])
-  @@index([userId]) // might help for dedup checks or fast access
-  @@index([sessionId]) // might help for dedup checks or fast access
-  @@index([sessionId, userId]) // might help for dedup checks or fast access
+  @@index([userId]) 
+  @@index([sessionId]) 
+  @@index([sessionId, userId]) 
 }
 
 model TaskParticipation {
@@ -426,7 +426,7 @@ model TaskParticipation {
   @@index([id])
   @@index([userId])
   @@index([taskId])
-  @@index([userId, taskId]) // might help for dedup checks or fast access
+  @@index([userId, taskId]) 
 }
 
 model DashboardSnapshot {

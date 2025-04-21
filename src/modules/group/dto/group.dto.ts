@@ -86,6 +86,7 @@ export type AllGroupMemberDTO = {
     groupName: string;
     groupId: string;
     members: AllUserDTOWithGroup;
-};
-
-export type SessionGroups = Pick<GroupDto, 'id' | 'name'> 
+}; 
+ 
+export type SessionGroupsDto = Pick<GroupDto, 'id' | 'name'>  
+export type EventGroupsDto = Pick<GroupDto, 'id' | 'name'>  

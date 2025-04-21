@@ -13,6 +13,9 @@ export const sessionRepository = {
             },
             skip: (page - 1) * limit,
             take: limit,
+            orderBy: {
+                updatedAt: "desc",
+            },
         });
         return sessions;
     },
