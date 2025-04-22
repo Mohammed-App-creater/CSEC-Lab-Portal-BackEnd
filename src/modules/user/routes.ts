@@ -9,6 +9,9 @@ import { getUsersByRoleController } from './controllers/get-users-by-role.contro
 
 import { PrismaClient } from '@prisma/client';
 import { get } from 'http';
+import { updateUserRoleController } from './controllers/update-user-role.controller';
+import deleteUserController from './controllers/delete.user.controller';
+import updateUserSettingController from './controllers/updatee-userSetting.controller';
 const prisma = new PrismaClient();
 const userRouter = Router();
 
@@ -25,9 +28,12 @@ const userRouter = Router();
  *           schema:
  *             type: object
  *             required:
+ *               - remember
  *               - email
  *               - password
  *             properties:
+ *               remember: 
+ *                 type: boolean
  *               email:
  *                 type: string
  *                 format: email
@@ -36,6 +42,26 @@ const userRouter = Router();
  *     responses:
  *       200:
  *         description: Login successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzNjdkMTNiMS1iODVjLTQwMzItYjE2Mi00NTdmYjYzZTZlMzciLCJyb2xlSWQiOiJmODMyYTQ5MC1kZjIyLTQzNzktYTUwYi02N2I5YWUwODhhZjQiLCJpYXQiOjE3NDUzMDUwMjQsImV4cCI6MTc0NTM5MTQyNH0.xbENCBkFYBR6arBp2_m-HU1a_zoCYIazrT61GCui4v8
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       example: 367d13b1-b85c-4032-b162-457fb63e6e37
+ *                     name:
+ *                       type: string
+ *                       example: User6 Test6
+ *                     role:
+ *                       type: string
+ *                       example: DivisionHead
  *       401:
  *         description: Invalid credentials
  */
@@ -360,6 +386,104 @@ userRouter.post('/get-user-role', getUserRoleController);
  */
 
 userRouter.get('/get-users-by-role', getUsersByRoleController);
+
+
+/**
+ * @swagger
+ * /api/user/update-user-role:
+ *   patch:
+ *     summary: Update user role
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 format: uuid
+ *               roleId:
+ *                 type: string
+ *                 format: uuid
+ *     responses:
+ *       200:
+ *         description: User role successfully updated.
+ *       400:
+ *         description: Invalid input.
+ */
+userRouter.patch('/update-user-role', updateUserRoleController)
+
+/**
+ * @swagger
+ * openapi: 3.0.0
+ * info:
+ *   title: User Management API
+ *   version: 1.0.0
+ *   description: API for managing users, including deleting a user by ID.
+ * paths:
+ *   /users/{id}:
+ *     delete:
+ *       summary: Delete a user
+ *       description: Deletes a user by their UUID.
+ *       operationId: deleteUser
+ *       tags:
+ *         - Users
+ *       parameters:
+ *         - name: id
+ *           in: path
+ *           required: true
+ *           schema:
+ *             type: string
+ *             format: uuid
+ *           description: The UUID of the user to delete.
+ *       responses:
+ *         '200':
+ *           description: User deleted successfully
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   message:
+ *                     type: string
+ *                     example: Member John Doe is deleted successfully
+ *         '400':
+ *           description: Invalid UUID or bad request
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   message:
+ *                     type: string
+ *                     example: Invalid UUID format
+ *         '404':
+ *           description: User not found
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   message:
+ *                     type: string
+ *                     example: User not found or invalid user data
+ *         '500':
+ *           description: Internal server error
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   message:
+ *                     type: string
+ *                     example: Something went wrong
+ */
+
+userRouter.delete('/delete-user/:id', deleteUserController);
+
+userRouter.patch('/users/:id/settings', updateUserSettingController);
 
 
 

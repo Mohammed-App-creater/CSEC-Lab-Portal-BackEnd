@@ -2,6 +2,7 @@ import 'tsconfig-paths/register';
 import express from 'express';
 
 import cors from 'cors';
+import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './core/config/swaggerConfig';
 
@@ -28,6 +29,11 @@ app.use(express.json());
 
 
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+  });
+  
+
 
 app.use('/api/user', userRoutes);
 app.use('/api/division', divisionRoutes);
@@ -38,7 +44,7 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/announcement', announcementRouter);
 app.use('/api/group', groupRouter);
 app.use('/api/headsup', headsUpRoutes);
-app.use('api/role', roleRouter);
+app.use('/api/role', roleRouter);
 
 
 // Error handling middleware

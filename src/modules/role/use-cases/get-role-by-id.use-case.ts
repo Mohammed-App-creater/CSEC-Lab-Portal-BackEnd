@@ -1,8 +1,13 @@
-import { RoleRepository } from "../interfaces/role.repository"; 
+import { BaseError } from "@/shared/errors/BaseError";
+import { RoleRepository } from "../interfaces/role.repository";
+import { validateUUID } from "@/shared/utils/validateUUID";
 
-
-export  const getRoleByIdUseCase = async (id: string) => {
-  const role = await RoleRepository.findById(id);
-  if (!role) throw new Error('Role not found');
+export const getRoleByIdUseCase = async (roleId: string) => {
+  if (!roleId) throw new BaseError('ID is required', 400);
+  validateUUID(roleId);
+  const role = await RoleRepository.findById(roleId);
+  if (!role) throw new BaseError('Role not found');
   return role;
 }
+
+

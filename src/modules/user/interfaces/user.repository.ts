@@ -1,10 +1,10 @@
 import { PrismaClient, Role, User } from '@prisma/client';
 import { hashPassword } from '@shared/utils/hashPassword';
 import { RegisterUserDTO } from '../dto/auth-user.dto';
-import { AllUserDTOWithGroup, UserDTO } from '../dto/user.dto';
+import { UserDTO, UserSettingDTO } from '../dto/user.dto';
 import { normalizeUndefinedToNull } from '@shared/utils/normalizeUndefinedToNull'; // adjust path as needed
 import { getRoleByNameUseCase } from '@modules/role/use-cases/get-role-by-name.use-case';
-import { getRoleByIdUseCase } from '@modules/role/use-cases/get-role-by-id.use-case';
+import { BaseError } from '@/shared/errors/BaseError';
 
 
 const prisma = new PrismaClient();
@@ -29,6 +29,26 @@ export const getUserRole = {
     });
 
     return user?.Role.name || 'Unknown'; // default fallback
+  }
+};
+
+export const getUserSettqings = {
+  getUserSettings: async (userId: string): Promise<UserSettingDTO> => {
+    const userSettings = await prisma.userSetting.findUnique({
+      where: { userId },
+      select: {
+        id: true,
+        userId: true,
+        theme: true,
+        phonePublic: true,
+        authUpdateCalendar: true
+      },
+    });
+
+    if (!userSettings) {
+      throw new BaseError('User settings not found');
+    }
+    return userSettings;
   }
 };
 
@@ -84,7 +104,7 @@ export const CreateUser = {
     const { email, password, gender, DivisionId, groupId } = userData;
 
     if (!password) {
-      throw new Error('Password cannot be null or undefined');
+      throw new BaseError('Password cannot be null or undefined');
     }
 
     const hashedPassword = await hashPassword(password);
@@ -96,7 +116,7 @@ export const CreateUser = {
         gender,
         DivisionId,
         lastSeen: new Date(),
-        roleId: (await roleMember).id,  
+        roleId: (await roleMember).id,
         groups: groupId
           ? {
             connect: { id: groupId },  // Connect the user to the group by ID
@@ -114,6 +134,24 @@ export const UpdateUser = {
     return prisma.user.update({
       where: { id: userId },
       data: userData,
+    });
+  }
+};
+
+export const UpdateUserRole = {
+  updateRole: async (userId: string, roleId: string) => {
+    return prisma.user.update({
+      where: { id: userId },
+      data: { roleId: roleId },
+    });
+  }
+};
+
+export const UserSettings = {
+  update: async (userId: string, updates: Partial<UserSettingDTO>) => {
+    return prisma.userSetting.update({
+      where: { userId },
+      data: updates,
     });
   }
 };
@@ -164,7 +202,7 @@ export const FindAllUsers = {
     return {
       data: users.map(user => ({
         ...user,
-        roleId: user.Role?.id || '', 
+        roleId: user.Role?.id || '',
       })),
       total,
       page,
@@ -244,6 +282,17 @@ export const FindAllUsers = {
   }
 };
 
+export const DeleteUser = {
+  deleteUser: async (userId: string) => {
+    return prisma.user.update({
+      where: { id: userId },
+      data: {
+        isDeleted: true,
+        deletedAt: new Date(),
+      },
+    });
+  }
+};
 
 
 export const UserCount = {

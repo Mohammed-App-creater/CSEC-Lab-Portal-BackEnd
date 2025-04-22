@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome | CSEC Backend</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Lexend', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #0a0f1d, #111827);
+      color: #f1f5f9;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 600px;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 2.7rem;
+      margin-bottom: 1rem;
+      letter-spacing: 0.5px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: #94a3b8;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      background: #38bdf8;
+      color: #0f172a;
+      border-radius: 9999px;
+      font-weight: bold;
+    }
+
+    .logo {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .button {
+      margin-top: 1.5rem;
+      display: inline-block;
+      background-color: #38bdf8;
+      color: #0f172a;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #0ea5e9;
+      color: #e0f2fe;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">🛡️</div>
+    <h1>Welcome to CSEC Backend</h1>
+    <p>Your server is up & secure.<br />Ready to power the platform.</p>
+    <a class="button" href="/api-docs" target="_blank">📘 View API Documentation</a>
+    <div class="tag">CSEC @ ASTU</div>
+  </div>
+</body>
+</html>

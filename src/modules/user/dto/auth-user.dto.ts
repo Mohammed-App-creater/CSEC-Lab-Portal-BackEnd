@@ -1,6 +1,7 @@
 import { Gender } from "@prisma/client";
 
 export type LoginUserDTO = {
+    rememberMe?: boolean;
     email: string;
     password: string;
   };

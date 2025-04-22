@@ -56,7 +56,7 @@ attendanceRoutes.get('/attendance-rate', AttendanceRateController);
 
 /**
  * @swagger
- * /user-all-attendance:
+ * /api/attendance/user-all-attendance:
  *   post:
  *     tags:
  *       - Attendance
@@ -140,7 +140,7 @@ attendanceRoutes.post('/user-all-attendance', AllAttendanceController);
 
 /**
  * @swagger
- * /api/user/attendance-summary:
+ * /api/attendance/attendance-summary:
  *   post:
  *     summary: Get user attendance summary
  *     tags: [Attendance]

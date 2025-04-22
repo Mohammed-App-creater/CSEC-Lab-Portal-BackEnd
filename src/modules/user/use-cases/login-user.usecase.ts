@@ -4,28 +4,40 @@ import { getRoleByIdUseCase } from '@/modules/role/use-cases/get-role-by-id.use-
 import bcrypt from 'bcryptjs'; // or argon2
 import jwt from 'jsonwebtoken'; // optional
 import dotenv from 'dotenv';
+import { UserDTO } from '../dto/user.dto';
+import { BaseError } from '@/shared/errors/BaseError';
 dotenv.config();
 
-export const loginUserUseCase = async ({ email, password }: LoginUserDTO) => {
+export const loginUserUseCase = async ({ rememberMe, email, password }: LoginUserDTO): Promise<{ token: string, user: UserDTO }> => {
   const user = await findByEmail.findByEmail(email);
-  if (!user) throw new Error('Invalid credentials');
+  if (!user) throw new BaseError('Invalid credentials');
 
-  if (!user.password) throw new Error('Invalid credentials');
+  if (!user.password) throw new BaseError('Invalid credentials');
   const passwordMatch = await bcrypt.compare(password, user.password);
-  if (!passwordMatch) throw new Error('Invalid credentials');
+  if (!passwordMatch) throw new BaseError('Invalid credentials');
 
   const role = await getRoleByIdUseCase(user.roleId);
+
+
 
   const token = jwt.sign({ userId: user.id, roleId: role.id }, process.env.JWT_SECRET!, {
     expiresIn: '1d',
   });
 
+  const { password: _p, isDeleted, deletedAt, createdAt, updatedAt, ...safeUser } = user;
+
+  if (!rememberMe) {
+    const token = jwt.sign({ userId: user.id, roleId: role.id }, process.env.JWT_SECRET!, {
+      expiresIn: '1h',
+    });
+    return {
+      token: '',
+      user: user as UserDTO,
+    };
+  }
+
   return {
     token,
-    user: {
-      id: user.id,
-      name: [user.firstName, user.middleName, user.lastName].filter(Boolean).join(' '),
-      role: role.name,
-    },
+    user: safeUser as UserDTO,
   };
 };
