@@ -8,7 +8,7 @@ const announcementRouter = Router();
  *   - name: Announcement
  *     description: Announcement management
  * 
- * /announcement/recent:
+ * /api/announcement/recent:
  *   get:
  *     summary: Get recent announcements
  *     description: Fetch the most recent announcements.

@@ -8,7 +8,7 @@ const divisionRouter = Router();
 
 /**
  * @swagger
- * /division/{divisionId}/groups:
+ * /api/division/{divisionId}/groups:
  *   get:
  *     summary: Get all groups under a specific division
  *     tags: [Division]

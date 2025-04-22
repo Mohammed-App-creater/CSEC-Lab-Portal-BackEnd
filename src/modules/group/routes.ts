@@ -5,7 +5,7 @@ import { createGroupController } from './controllers/create-group.controller';
 
 /**
  * @swagger
- * /group-member/{groupId}/members/{page}/limit/{limit}:
+ * /api/group/group-member/{groupId}/members/{page}/limit/{limit}:
  *   get:
  *     summary: Get all members of a group with pagination
  *     tags: [Group]
@@ -54,7 +54,7 @@ groupRouter.get('/group-member/:groupId/members/:page/limit/:limit', GroupMember
 
 /**
  * @swagger
- * /group/create:
+ * /api/group/group/create:
  *   post:
  *     summary: Create a new group
  *     tags: [Group]

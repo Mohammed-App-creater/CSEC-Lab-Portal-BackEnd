@@ -8,3 +8,7 @@ export type PermissionsDTO = Permission;
 export type RoleAndPermissionDTO = Omit<Role, 'updatedAt' | 'createdAt'> & {
     permissions: {permission: PermissionsDTO}[];
 }
+
+export type CreateRoleDTO = Pick<Role, 'name'> & {
+    permissions: number[];
+}

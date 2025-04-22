@@ -50,4 +50,31 @@ export const RoleRepository = {
         });
         return role;
     },
+    getAllPermissions: async () => {
+        const permissions = await prisma.permission.findMany({
+            select: {
+                id: true,
+                key: true,
+                label: true,
+            },
+        });
+        return permissions;
+    },
+    create: async (name: string, permissionIds: number[]) => {
+        const role = await prisma.role.create({
+            data: {
+                name,
+                permissions: {
+                    create: permissionIds.map((permissionId) => ({
+                        permissionId,
+                    })),
+                },
+            },
+            select: {
+                id: true,
+                name: true,
+            },
+        });
+        return role;
+    },
 }; 
