@@ -6,7 +6,7 @@ export const getRoleByIdUseCase = async (roleId: string) => {
   if (!roleId) throw new BaseError('ID is required', 400);
   validateUUID(roleId);
   const role = await RoleRepository.findById(roleId);
-  if (!role) throw new Error('Role not found');
+  if (!role) throw new BaseError('Role not found');
   return role;
 }
 

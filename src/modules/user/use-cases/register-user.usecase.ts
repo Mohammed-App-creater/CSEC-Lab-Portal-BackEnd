@@ -27,15 +27,15 @@ export const registerUserUseCase = async ({
 }: RegisterUserDTO) => {
 
   if (!email || !password || !DivisionId || !groupId) {
-    throw new Error('Missing required fields');
+    throw new BaseError('Missing required fields');
   }
 
   if (!isUUID(DivisionId)) {
-    throw new Error(`Invalid UUID: ${DivisionId}`);
+    throw new BaseError(`Invalid UUID: ${DivisionId}`);
   }
 
   if (!isUUID(groupId)) {
-    throw new Error(`Invalid UUID: ${groupId}`);
+    throw new BaseError(`Invalid UUID: ${groupId}`);
   }
 
   const groupName = await prisma.groups.findUnique({

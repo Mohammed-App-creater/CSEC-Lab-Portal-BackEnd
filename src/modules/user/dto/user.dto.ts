@@ -1,6 +1,6 @@
 import { SocialLinkDTO } from '@modules/social-link/dto/social-link.dto';
 import { ResourceLinkDTO } from '@modules/resource-link/dto/resource-link.dto'
-import { ClubStatus, Gender } from "@prisma/client";
+import { ClubStatus, Gender, UserSetting } from "@prisma/client";
 import { User } from "@prisma/client";
 
 /**
@@ -119,3 +119,5 @@ export type UserRoleDTO = {
 export type UserProfileDTO = UserDTO & { socialLinks: SocialLinkDTO[] } & { resourceLinks: ResourceLinkDTO[] };
 
 export type UpdateUserRoleDTO = Pick<UserDTO, 'roleId'> & { userId: string };
+
+export type UserSettingDTO = UserSetting

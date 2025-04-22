@@ -14,12 +14,12 @@ export const updateUserRole = async (userId: string, roleId: string) => {
     if (user.isDeleted) {
         throw new BaseError('User is deleted', 400)
     }
-    if ( user.roleId === roleId) {
+    if (user.roleId === roleId) {
         throw new BaseError('User already has this role', 409)
     }
     const role = await getRoleByIdUseCase(roleId);
     if (!role) {
-        throw new Error('Role not found');
+        throw new BaseError('Role not found');
     }
     const updatedUser = await UpdateUserRole.updateRole(userId, roleId);
     return updatedUser;
