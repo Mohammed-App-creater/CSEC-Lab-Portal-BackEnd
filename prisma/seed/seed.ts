@@ -18,6 +18,7 @@ import SeedAttendance from './seed-attendance'; // Depends on Sessions and Event
 import seedAnnouncementsAndNotifications from './seed-announcements-notifications'; // Depends on Users, Events, Sessions, Groups
 
 import SeedReset from './seed-reset';
+import createSuperAdmin from './seed-superAdmin';
 
 const prisma = new PrismaClient();
 
@@ -25,6 +26,8 @@ async function main() {
   console.log('🌱 Starting master seeding...');
 
   // await SeedReset();                     // 0. Reset DB (optional, but useful for devs)
+
+  // await createSuperAdmin(); // 0. Create SuperAdmin user (optional, but useful for devs)
 
   // await seedConstants();                  // 1. Enums and constants
   // await SeedRole();                       // 2. Seed roles
@@ -43,6 +46,8 @@ async function main() {
   // await SeedAttendance();                 // 11. Attendance (needs events and sessions)
 
   // await seedAnnouncementsAndNotifications(25); // 12. Announcements + notifications
+
+
 
   console.log('✅ Master seed complete.');
 }

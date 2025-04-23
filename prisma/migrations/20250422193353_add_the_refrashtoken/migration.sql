@@ -171,6 +171,7 @@ CREATE TABLE "SessionTimeSlot" (
     "date" TIMESTAMP(3) NOT NULL,
     "startTime" TIMESTAMP(3) NOT NULL,
     "endTime" TIMESTAMP(3) NOT NULL,
+    "status" "Status" NOT NULL DEFAULT 'Planned',
 
     CONSTRAINT "SessionTimeSlot_pkey" PRIMARY KEY ("id")
 );
@@ -188,6 +189,7 @@ CREATE TABLE "Events" (
     "visibility" "EventVisibility" NOT NULL,
     "status" "Status" NOT NULL,
     "divisionId" UUID,
+    "mandatoryAttendance" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "creatorId" UUID NOT NULL,
@@ -415,6 +417,18 @@ CREATE TABLE "RolePermission" (
 );
 
 -- CreateTable
+CREATE TABLE "RefreshToken" (
+    "id" TEXT NOT NULL,
+    "userId" UUID NOT NULL,
+    "token" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "expiresAt" TIMESTAMP(3) NOT NULL,
+    "revoked" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "RefreshToken_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "_SessionDivision" (
     "A" UUID NOT NULL,
     "B" UUID NOT NULL,
@@ -546,9 +560,6 @@ CREATE INDEX "UserSetting_userId_idx" ON "UserSetting"("userId");
 
 -- CreateIndex
 CREATE INDEX "UserSetting_id_idx" ON "UserSetting"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Divisions_currentHeadID_key" ON "Divisions"("currentHeadID");
 
 -- CreateIndex
 CREATE INDEX "Divisions_name_idx" ON "Divisions"("name");
@@ -761,6 +772,15 @@ CREATE INDEX "RolePermission_permissionId_idx" ON "RolePermission"("permissionId
 CREATE UNIQUE INDEX "RolePermission_roleId_permissionId_key" ON "RolePermission"("roleId", "permissionId");
 
 -- CreateIndex
+CREATE INDEX "RefreshToken_userId_idx" ON "RefreshToken"("userId");
+
+-- CreateIndex
+CREATE INDEX "RefreshToken_token_idx" ON "RefreshToken"("token");
+
+-- CreateIndex
+CREATE INDEX "RefreshToken_id_idx" ON "RefreshToken"("id");
+
+-- CreateIndex
 CREATE INDEX "_SessionDivision_B_index" ON "_SessionDivision"("B");
 
 -- CreateIndex
@@ -876,6 +896,9 @@ ALTER TABLE "RolePermission" ADD CONSTRAINT "RolePermission_roleId_fkey" FOREIGN
 
 -- AddForeignKey
 ALTER TABLE "RolePermission" ADD CONSTRAINT "RolePermission_permissionId_fkey" FOREIGN KEY ("permissionId") REFERENCES "Permission"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "RefreshToken" ADD CONSTRAINT "RefreshToken_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_SessionDivision" ADD CONSTRAINT "_SessionDivision_A_fkey" FOREIGN KEY ("A") REFERENCES "Divisions"("id") ON DELETE CASCADE ON UPDATE CASCADE;

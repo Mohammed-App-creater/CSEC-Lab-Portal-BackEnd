@@ -28,7 +28,7 @@ async function seedRoles() {
     console.log('✅ Base roles seeded');
 }
 
-function SeedRole() {
+async function SeedRole(): Promise<void> {
     seedRoles()
         .catch((e) => {
             console.error(e);

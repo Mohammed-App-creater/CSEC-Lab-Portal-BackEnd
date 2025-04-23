@@ -3,13 +3,37 @@ import { v4 as uuidv4 } from 'uuid';
 
 const prisma = new PrismaClient();
 
-let SuperAdmin: { id: string } | null = null;
+let SuperAdmin: { id: string } | null = { id: 'ede32a34-d377-4d4f-8813-5e5473fc93c4' }; // Initialize SuperAdmin variable
 
 async function initializeSuperAdmin() {
     SuperAdmin = await prisma.role.findFirst({
         where: { name: 'SuperAdmin' },
     });
 }
+
+// Function to log all sessions in the database
+
+async function logAllSessions() {
+    const sessions = await prisma.sessions.findMany({
+        include: {
+            targetGroups: true,
+        },
+    });
+
+    if (sessions.length === 0) {
+        console.log('⚠️ No sessions found in the database.');
+    } else {
+        console.log(`📋 All Sessions (${sessions.length}):`);
+        sessions.forEach((session, index) => {
+            console.log(`\n🔹 Session #${index + 1}`);
+            console.log(`🆔 ID: ${session.id}`);
+            console.log(`📛 Title: ${session.title}`);
+            console.log(`📅 Date: ${session.createdAt}`); // Assuming 'createdAt' is the intended property
+            console.log(`🎯 Target Groups: ${session.targetGroups.map(g => g.name).join(', ') || 'None'}`);
+        });
+    }
+}
+
 
 
 // Function to seed session attendance for members only
@@ -74,7 +98,7 @@ async function seedSessionAttendance(sessionCount: number) {
 
 // Function to seed event attendance for members-only events
 async function seedEventAttendance(eventCount: number) {
-    await prisma.attendance.deleteMany({}); // Delete existing event attendance records
+    await prisma.attendance.deleteMany({ where: { NOT: { eventId: null } } }); // Delete existing event attendance records
     console.log('🧼 Old event attendance records deleted');
 
     // Fetch users and groups
@@ -125,16 +149,18 @@ async function seedEventAttendance(eventCount: number) {
 
 // Main function to seed both sessions and events attendance
 async function main() {
+    await initializeSuperAdmin();
+
     const sessionCount = 10; // Specify how many sessions to process
     const eventCount = 5;    // Specify how many events to process
+
+    // await logAllSessions();
     await seedSessionAttendance(sessionCount);
     await seedEventAttendance(eventCount);
 
     console.log('✅ All attendance data seeded');
-    await initializeSuperAdmin();
 }
 
-main();
 
 // Run the seeding process
 async function SeedAttendance() {

@@ -95,6 +95,7 @@ model User {
   Announcements Announcement[] @relation("UserAnnouncement")
 
   //indexes
+  RefreshToken RefreshToken[]
 
   @@index([id])
   @@index([clubStatus])
@@ -664,4 +665,19 @@ model RolePermission {
   @@index([id])
   @@index([roleId])
   @@index([permissionId])
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @db.Uuid
+  token     String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  revoked   Boolean  @default(false)
+
+  // indexes
+  @@index([userId])
+  @@index([token])
+  @@index([id])
 }
