@@ -1,9 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { v4 as uuidv4 } from 'uuid'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@shared/utils/prisma'
 import dotenv from 'dotenv'
 
-const prisma = new PrismaClient()
 dotenv.config()
 
 export const generateAccessToken = (userId: string) => {
@@ -12,7 +11,7 @@ export const generateAccessToken = (userId: string) => {
 
 export const generateRefreshToken = async (userId: string, rememberMe: boolean) => {
     const token = uuidv4()
-    const expiresAt = rememberMe?  new Date(Date.now() + 1000 * 60 * 60 * 24 * 7) : new Date(Date.now() + 1000 * 60 * 60 * 24 * 1) // 1 day or 7 days
+    const expiresAt = rememberMe ? new Date(Date.now() + 1000 * 60 * 60 * 24 * 7) : new Date(Date.now() + 1000 * 60 * 60 * 24 * 1) // 1 day or 7 days
 
     await prisma.refreshToken.create({
         data: {

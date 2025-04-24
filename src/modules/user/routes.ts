@@ -7,13 +7,13 @@ import { getUserProfileController } from './controllers/user-profile.controller'
 import { getUserRoleController } from './controllers/get-user-role';
 import { getUsersByRoleController } from './controllers/get-users-by-role.controller';
 
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 import { get } from 'http';
 import { updateUserRoleController } from './controllers/update-user-role.controller';
 import deleteUserController from './controllers/delete.user.controller';
 import updateUserSettingController from './controllers/updatee-userSetting.controller';
 import { refreshTokenController } from './controllers/refresh-token.controller';
-const prisma = new PrismaClient();
+
 const userRouter = Router();
 
 /**

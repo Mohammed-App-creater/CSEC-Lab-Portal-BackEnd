@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 
 // 👇 import all the seed modules
 import seedConstants from './seed-constants'; // Enums & static constants (must come early)
@@ -20,7 +20,7 @@ import seedAnnouncementsAndNotifications from './seed-announcements-notification
 import SeedReset from './seed-reset';
 import createSuperAdmin from './seed-superAdmin';
 
-const prisma = new PrismaClient();
+
 
 async function main() {
   console.log('🌱 Starting master seeding...');

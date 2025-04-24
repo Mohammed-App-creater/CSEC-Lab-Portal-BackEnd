@@ -1,8 +1,9 @@
-import { PrismaClient, AnnouncementVisibility, AnnouncementType, NotificationType } from '@prisma/client';
+import {  AnnouncementVisibility, AnnouncementType, NotificationType } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma'; 
 import { faker } from '@faker-js/faker';
 import { v4 as uuidv4 } from 'uuid';
 
-const prisma = new PrismaClient();
+
 
 async function seedAnnouncementsAndNotifications(announcementCount: number) {
   const SuperAdmin = await prisma.role.findFirst({

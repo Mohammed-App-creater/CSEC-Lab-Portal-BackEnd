@@ -1,7 +1,8 @@
-import { PrismaClient, ClubStatus, Gender, RoleStatus } from '@prisma/client';
+import {  ClubStatus, Gender } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 import { v4 as uuidv4 } from 'uuid';
 
-const prisma = new PrismaClient();
+
 
 async function seedUsers(count: number) {
   const SuperAdmin = await prisma.role.findFirst({

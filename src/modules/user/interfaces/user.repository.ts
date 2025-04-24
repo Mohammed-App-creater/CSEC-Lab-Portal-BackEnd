@@ -1,4 +1,5 @@
-import { PrismaClient, Role, User } from '@prisma/client';
+import {  Role } from '@prisma/client';
+import { prisma } from '@shared/utils/prisma';
 import { hashPassword } from '@shared/utils/hashPassword';
 import { RegisterUserDTO } from '../dto/auth-user.dto';
 import { UserDTO, UserSettingDTO } from '../dto/user.dto';
@@ -7,7 +8,7 @@ import { getRoleByNameUseCase } from '@modules/role/use-cases/get-role-by-name.u
 import { BaseError } from '@/shared/errors/BaseError';
 
 
-const prisma = new PrismaClient();
+
 
 const roleMember = getRoleByNameUseCase('Member');
 

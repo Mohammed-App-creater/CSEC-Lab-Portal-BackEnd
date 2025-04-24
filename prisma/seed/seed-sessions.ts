@@ -1,8 +1,9 @@
-import { PrismaClient, Tag, SessionRole } from '@prisma/client';
+import {  Tag, SessionRole } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma'; 
 import { v4 as uuidv4 } from 'uuid';
 import * as readline from 'readline';
 
-const prisma = new PrismaClient();
+
 
 // Setup readline interface to ask for user input
 const rl = readline.createInterface({
@@ -31,7 +32,7 @@ const getRandomDivisionAndGroup = (divisions: any[], groups: any[]) => {
 async function seedSessions(numSessions: number) {
     const SuperAdmin = await prisma.role.findFirst({
         where: { name: 'SuperAdmin' },
-      });
+    });
     await prisma.sessionParticipation.deleteMany({});
     await prisma.sessionTimeSlot.deleteMany({});
     await prisma.sessions.deleteMany({});
@@ -81,11 +82,11 @@ async function seedSessions(numSessions: number) {
         const month = (i % 12) + 1;
         const paddedMonth = month.toString().padStart(2, '0'); // Ensures '01', '02', ..., '12'
         const day = '10'; // or make this dynamic if needed
-        
+
         const dateString = `2025-${paddedMonth}-${day}`;
         const startTimeString = `${dateString}T10:00:00Z`; // Z = UTC
         const endTimeString = `${dateString}T12:00:00Z`;
-        
+
         await prisma.sessionTimeSlot.create({
             data: {
                 id: uuidv4(),

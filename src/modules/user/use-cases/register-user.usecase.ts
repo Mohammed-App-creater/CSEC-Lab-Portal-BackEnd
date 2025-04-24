@@ -4,13 +4,13 @@ import jwt from 'jsonwebtoken'; // optional
 import dotenv from 'dotenv';
 import { sendRegistrationEmail } from '@shared/exceptions/emailService';
 import { CreateUser, existingUser } from '../interfaces/user.repository';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 import { getRoleByIdUseCase } from '@/modules/role/use-cases/get-role-by-id.use-case';
 import { BaseError } from '@/shared/errors/BaseError';
 import { validate as isUUID } from 'uuid';
 
 
-const prisma = new PrismaClient();
+
 
 
 dotenv.config();

@@ -1,7 +1,8 @@
-import { PrismaClient, Status, Tag } from "@prisma/client";
+import { Status, Tag } from "@prisma/client";
+import { prisma } from "@shared/utils/prisma";
 import { SessionWithTimeSlotsAndGroupsDto } from "../dto/session.dto";
 
-const prisma = new PrismaClient();
+
 
 
 

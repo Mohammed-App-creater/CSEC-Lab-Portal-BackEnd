@@ -1,7 +1,8 @@
-import { PrismaClient,  Theme, UniversityStatus } from '@prisma/client';
+import {  Theme, UniversityStatus } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 import { v4 as uuidv4 } from 'uuid';
 
-const prisma = new PrismaClient();
+
 
 async function seedUserDetails() {
   const SuperAdmin = await prisma.role.findFirst({
@@ -12,7 +13,7 @@ async function seedUserDetails() {
     where: {
       roleId: { not: SuperAdmin?.id }
     },
-    
+
   });
 
   if (users.length === 0) {

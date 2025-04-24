@@ -1,12 +1,12 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 import { faker } from '@faker-js/faker'; // Import faker
 
-const prisma = new PrismaClient();
+
 
 async function main() {
     // Fetch some users dynamically
     const users = await prisma.user.findMany();
-    
+
     if (users.length === 0) {
         console.error('❌ No users found. Please seed users first.');
         process.exit(1);

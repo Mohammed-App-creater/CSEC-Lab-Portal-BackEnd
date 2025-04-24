@@ -1,7 +1,7 @@
 import { GroupCreateDto, GroupUpdateDto } from "../dto/group.dto";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@shared/utils/prisma";
 
-const prisma = new PrismaClient();
+
 
 
 export const GroupRepository = {
@@ -22,7 +22,7 @@ export const GroupRepository = {
             },
         });
     },
-    
+
     findById: (id: string) => {
 
         return prisma.groups.findUnique({
@@ -124,7 +124,7 @@ export const GroupRepository = {
             },
         });
     },
-    
+
 
 
 };

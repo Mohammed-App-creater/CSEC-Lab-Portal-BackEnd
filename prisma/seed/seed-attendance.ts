@@ -1,7 +1,7 @@
 import { PrismaClient, SessionRole, AttendanceStatus, Tag, EventVisibility } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 
-const prisma = new PrismaClient();
+
 
 let SuperAdmin: { id: string } | null = { id: 'ede32a34-d377-4d4f-8813-5e5473fc93c4' }; // Initialize SuperAdmin variable
 

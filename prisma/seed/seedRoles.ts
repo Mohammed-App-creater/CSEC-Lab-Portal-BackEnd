@@ -1,7 +1,8 @@
-import { PrismaClient, RoleStatus } from '@prisma/client';
+import {  RoleStatus } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 import { v4 as uuidv4 } from 'uuid';
 
-const prisma = new PrismaClient();
+
 
 const baseRoles = [
     'SuperAdmin',

@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { prisma } from '@/shared/utils/prisma';
+
 
 export const DivisionRepository = {
   create: (data: { name: string, currentHeadID: string }) => {
@@ -9,7 +9,7 @@ export const DivisionRepository = {
     return prisma.divisions.findMany();
   },
   divisionCount: () => {
-    return  prisma.divisions.count();
+    return prisma.divisions.count();
   },
 
   findByName: (name: string) => {
@@ -29,6 +29,6 @@ export const DivisionRepository = {
       },
     });
   }
-  
+
 };
 

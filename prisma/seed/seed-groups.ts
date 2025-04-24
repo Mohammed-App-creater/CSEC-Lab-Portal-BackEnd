@@ -1,12 +1,12 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 import { v4 as uuidv4 } from 'uuid';
 
-const prisma = new PrismaClient();
+
 
 async function seedGroups() {
     const SuperAdmin = await prisma.role.findFirst({
         where: { name: 'SuperAdmin' },
-      });
+    });
     await prisma.groups.deleteMany({});
     console.log('✅ Old groups deleted');
 

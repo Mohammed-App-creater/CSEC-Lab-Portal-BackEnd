@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs';
 
-const prisma = new PrismaClient();
+
 
 async function createSuperAdmin() {
     // Check if SuperAdmin role exists

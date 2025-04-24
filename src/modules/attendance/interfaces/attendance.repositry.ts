@@ -1,5 +1,6 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { prisma } from "@shared/utils/prisma";
+
+
 
 export const AttendanceRepository = {
      attendanceCount: () => {
@@ -79,5 +80,5 @@ export const AttendanceRepository = {
           })
      },
 
-     
+
 }

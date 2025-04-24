@@ -2,6 +2,7 @@ import { AnnouncementDTO } from '../dto/annoucement.dto';
 import { AnnouncementRepository } from '../interfaces/attendance.repositery';
 
 
+
 export const getRecentAnnouncements = async (limit: number): Promise<AnnouncementDTO[]> => {
     const announcements = await AnnouncementRepository.getRecentAnnouncements(limit);
     return announcements.map((announcement): AnnouncementDTO => ({

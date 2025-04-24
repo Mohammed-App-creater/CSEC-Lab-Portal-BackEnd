@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 
-const prisma = new PrismaClient();
+
 
 async function Reset() {
     await prisma.notification.deleteMany();
@@ -32,10 +32,10 @@ async function Reset() {
 
 
 async function SeedReset() {
-    try{
-    await Reset();
-    console.log('✅ Database reset complete.');
-    console.log('🌱 Starting master seeding...');
+    try {
+        await Reset();
+        console.log('✅ Database reset complete.');
+        console.log('🌱 Starting master seeding...');
     } catch (e) {
         console.error('❌ Master seed failed:', e);
         process.exit(1);

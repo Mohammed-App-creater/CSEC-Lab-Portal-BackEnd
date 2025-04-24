@@ -1,7 +1,7 @@
 import { CountUpcomingSessionDTO } from '../dto/count-upcoming-session.dto';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 
-const prisma = new PrismaClient();
+
 
 export const SessionRepository = {
     countUpcomingSession: async (): Promise<CountUpcomingSessionDTO> => {

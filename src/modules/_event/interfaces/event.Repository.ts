@@ -1,5 +1,5 @@
-import { PrismaClient, Status, EventVisibility, Tag } from "@prisma/client";
-const prisma = new PrismaClient();
+import {  Status, EventVisibility, Tag } from "@prisma/client";
+import { prisma } from "@shared/utils/prisma";
 
 
 export const EventRepository = {

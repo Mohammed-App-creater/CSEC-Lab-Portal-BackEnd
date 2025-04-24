@@ -1,7 +1,8 @@
-import { PrismaClient, Tag, Status, EventVisibility } from '@prisma/client';
+import {  Tag, Status, EventVisibility } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 import { v4 as uuidv4 } from 'uuid';
 
-const prisma = new PrismaClient();
+
 
 async function seedEvents(eventCount: number) {
     const SuperAdmin = await prisma.role.findFirst({
@@ -89,26 +90,26 @@ async function seedEvents(eventCount: number) {
             status: Status;
             creatorId: string;
             groups?: {
-            connect: { id: string }[];
+                connect: { id: string }[];
             };
         }
 
         const createdEvent: EventData = await prisma.events.create({
             data: {
-            id: uuidv4(),
-            title: event.title,
-            description: event.description,
-            startDate: event.startDate,
-            startTime: event.startTime,
-            endTime: event.endTime,
-            divisionId: event.divisionId,
-            tags: event.tags,
-            visibility: event.visibility,
-            status: event.status,
-            creatorId: event.creatorId,
-            groups: {
-                connect: divisionGroups.map((group) => ({ id: group.id })),
-            },
+                id: uuidv4(),
+                title: event.title,
+                description: event.description,
+                startDate: event.startDate,
+                startTime: event.startTime,
+                endTime: event.endTime,
+                divisionId: event.divisionId,
+                tags: event.tags,
+                visibility: event.visibility,
+                status: event.status,
+                creatorId: event.creatorId,
+                groups: {
+                    connect: divisionGroups.map((group) => ({ id: group.id })),
+                },
             },
         });
 

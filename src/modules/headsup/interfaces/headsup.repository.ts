@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@shared/utils/prisma";
 
-const prisma = new PrismaClient();
+
 
 
 export const HeadsUpRepository = {
-  getHeadsUps: (userId: string) =>{
+  getHeadsUps: (userId: string) => {
     return prisma.headsUp.findMany({
       where: {
         userId,
@@ -17,11 +17,11 @@ export const HeadsUpRepository = {
       },
     });
   },
-    getHeadsUpById: (id: string) => {
-        return prisma.headsUp.findUnique({
-        where: {
-            id,
-        },
-        });
-    },
+  getHeadsUpById: (id: string) => {
+    return prisma.headsUp.findUnique({
+      where: {
+        id,
+      },
+    });
+  },
 }

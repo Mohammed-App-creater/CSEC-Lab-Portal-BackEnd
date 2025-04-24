@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/shared/utils/prisma";
 import { ResourceLinkCreateDTO, ResourceLinkUpdateDTO  } from "../dto/resource-link.dto";
 
-const prisma = new PrismaClient()
 
 export const ResourceLinkRepository = {
     async createSocialLink(resourceLink: ResourceLinkCreateDTO) {

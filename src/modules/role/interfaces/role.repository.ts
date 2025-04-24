@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 
-const prisma = new PrismaClient();
+
 
 
 export const RoleRepository = {

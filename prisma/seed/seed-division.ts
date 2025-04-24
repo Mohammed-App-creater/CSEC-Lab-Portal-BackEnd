@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/shared/utils/prisma';
 
-const prisma = new PrismaClient();
+
 
 async function seedDivisions() {
     // Deleting any existing divisions before seeding

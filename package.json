@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "ts-node-dev --respawn  src/app/server.ts",
     "n": "nodemon src/app/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+
+    "tsup": "tsup src/app/server.ts --watch --onSuccess \"node dist/server.js\"",
+    "build": "tsup src/app/server.ts --format esm,cjs"
   },
   "repository": {
     "type": "git",
@@ -47,6 +50,7 @@
     "prisma": "^6.6.0",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
+    "tsup": "^8.4.0",
     "typescript": "^5.8.3"
   },
   "prisma": {
