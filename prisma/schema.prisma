@@ -671,7 +671,8 @@ model RefreshToken {
   id        String   @id @default(uuid())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String   @db.Uuid
-  token     String
+  token     String   @unique
+  rememberMe Boolean  @default(false)
   createdAt DateTime @default(now())
   expiresAt DateTime
   revoked   Boolean  @default(false)

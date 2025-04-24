@@ -17,6 +17,7 @@ import headsUpRoutes from './modules/headsup/routes';
 import { errorHandler } from './app/middleware/errorHandler';
 import roleRouter from './modules/role/routes';
 import eventRouter from './modules/_event/routes';
+import cookieParser from 'cookie-parser';
 
 
 
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 
 

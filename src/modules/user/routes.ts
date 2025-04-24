@@ -12,6 +12,7 @@ import { get } from 'http';
 import { updateUserRoleController } from './controllers/update-user-role.controller';
 import deleteUserController from './controllers/delete.user.controller';
 import updateUserSettingController from './controllers/updatee-userSetting.controller';
+import { refreshTokenController } from './controllers/refresh-token.controller';
 const prisma = new PrismaClient();
 const userRouter = Router();
 
@@ -483,7 +484,68 @@ userRouter.patch('/update-user-role', updateUserRoleController)
 
 userRouter.delete('/delete-user/:id', deleteUserController);
 
+
+/**
+ * @swagger
+ * /api/user/update-user-settings/{id}:
+ *   patch:
+ *     summary: Update user settings
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the user to update settings for
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               theme:
+ *                 type: string
+ *                 enum: [LIGHT, DARK, SYSTEM]
+ *                 description: The UI theme preference
+ *               phonePublic:
+ *                 type: boolean
+ *                 description: Whether the user's phone is publicly visible
+ *               authUpdateCalendar:
+ *                 type: boolean
+ *                 description: Whether the user allows auto-update of calendar events
+ *     responses:
+ *       200:
+ *         description: Settings updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 userId:
+ *                   type: string
+ *                 theme:
+ *                   type: string
+ *                   enum: [LIGHT, DARK, SYSTEM]
+ *                 phonePublic:
+ *                   type: boolean
+ *                 authUpdateCalendar:
+ *                   type: boolean
+ *       400:
+ *         description: Invalid input or bad request
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+
 userRouter.patch('/users/:id/settings', updateUserSettingController);
+
+
+userRouter.get('/refresh-token', refreshTokenController);
 
 
 

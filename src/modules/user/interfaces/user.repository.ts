@@ -287,6 +287,7 @@ export const DeleteUser = {
     return prisma.user.update({
       where: { id: userId },
       data: {
+        email: null,
         isDeleted: true,
         deletedAt: new Date(),
       },

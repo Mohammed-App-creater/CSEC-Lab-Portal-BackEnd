@@ -1,43 +1,50 @@
 import { LoginUserDTO } from '../dto/auth-user.dto';
 import { findByEmail } from '../interfaces/user.repository';
 import { getRoleByIdUseCase } from '@/modules/role/use-cases/get-role-by-id.use-case';
-import bcrypt from 'bcryptjs'; // or argon2
-import jwt from 'jsonwebtoken'; // optional
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { UserDTO } from '../dto/user.dto';
 import { BaseError } from '@/shared/errors/BaseError';
+import { generateRefreshToken, generateAccessToken } from '../services/tokenService';
+import { fa } from '@faker-js/faker/.';
+
 dotenv.config();
 
-export const loginUserUseCase = async ({ rememberMe, email, password }: LoginUserDTO): Promise<{ token: string, user: UserDTO }> => {
+export const loginUserUseCase = async ({
+  rememberMe = false,
+  email,
+  password,
+}: LoginUserDTO): Promise<{ accessToken: string; refreshToken: string; user: UserDTO }> => {
   const user = await findByEmail.findByEmail(email);
-  if (!user) throw new BaseError('Invalid credentials');
-
-  if (!user.password) throw new BaseError('Invalid credentials');
-  const passwordMatch = await bcrypt.compare(password, user.password);
-  if (!passwordMatch) throw new BaseError('Invalid credentials');
-
-  const role = await getRoleByIdUseCase(user.roleId);
-
-
-
-  const token = jwt.sign({ userId: user.id, roleId: role.id }, process.env.JWT_SECRET!, {
-    expiresIn: '1d',
-  });
-
-  const { password: _p, isDeleted, deletedAt, createdAt, updatedAt, ...safeUser } = user;
-
-  if (!rememberMe) {
-    const token = jwt.sign({ userId: user.id, roleId: role.id }, process.env.JWT_SECRET!, {
-      expiresIn: '1h',
-    });
-    return {
-      token: '',
-      user: user as UserDTO,
-    };
+  if (!user || !user.password) {
+    throw new BaseError('Invalid credentials');
   }
 
+  const passwordMatch = await bcrypt.compare(password, user.password);
+  if (!passwordMatch) {
+    throw new BaseError('Invalid credentials');
+  }
+
+
+  // access token lifetime based on "rememberMe"
+
+  const accessToken = generateAccessToken(user.id);
+
+  // const accessToken = jwt.sign(
+  //   { userId: user.id, roleId: role.id },
+  //   process.env.JWT_SECRET!,
+  //   { expiresIn: rememberMe ? '1d' : '1h' }
+  // );
+
+  const refreshToken = await generateRefreshToken(user.id, rememberMe); // stored in DB
+
+  // remove sensitive fields
+  const { password: _p, isDeleted, deletedAt, createdAt, updatedAt, ...safeUser } = user;
+
   return {
-    token,
+    accessToken,
+    refreshToken,
     user: safeUser as UserDTO,
   };
 };

@@ -22,3 +22,19 @@ export type LoginUserResponseDTO = {
     gender?: Gender; // use your actual Gender enum type here
     groupId?: string;
   }
+
+  export interface AuthResponseDTO {
+    accessToken: string
+    refreshToken: string
+  }
+  
+  // When user requests token refresh
+  export interface RefreshTokenRequestDTO {
+    refreshToken: string
+  }
+  
+  // Response for refresh token
+  export interface RefreshTokenResponseDTO {
+    accessToken: string
+    refreshToken: string
+  }

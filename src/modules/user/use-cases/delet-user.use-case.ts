@@ -8,6 +8,12 @@ export const deleteUserUseCase = async (userId: string) => {
     if (!user || !user.id) {
         throw new BaseError('User not found or invalid user data');
     }
+    if (user.isDeleted) {
+        throw new BaseError('User already deleted');
+    }
     const deletedUser = await DeleteUser.deleteUser(userId);
+    if (!deletedUser) {
+        throw new BaseError('Failed to delete user');
+    }
     return { message: `Member ${deletedUser.firstName}   ${deletedUser.middleName} is deleted successfully` };
 }  
