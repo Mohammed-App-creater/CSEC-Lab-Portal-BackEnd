@@ -10,10 +10,9 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"],
-      "@shared/*": ["./shared/*"],
-      "@modules/*": ["./modules/*"],
+      "@shared/*": ["shared/*"],
+      "@modules/*": ["modules/*"]
     }
   },
-  "include": ["src", "prisma"],
-
+  "include": ["src", "prisma"]
 }
