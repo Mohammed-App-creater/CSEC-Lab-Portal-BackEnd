@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { RequestHandler, Router } from 'express';
 import { loginController } from './controllers/login.controller';
 import { registerController } from './controllers/register.controller';
 import { countUserController } from './controllers/count-user.controller';
@@ -13,6 +13,10 @@ import { updateUserRoleController } from './controllers/update-user-role.control
 import deleteUserController from './controllers/delete.user.controller';
 import updateUserSettingController from './controllers/updatee-userSetting.controller';
 import { refreshTokenController } from './controllers/refresh-token.controller';
+import { logoutController } from './controllers/logout.controller';
+import { authMiddleware } from './middlewares/authMiddleware';
+import { getUserById } from './use-cases/get-user-by-id';
+import { getUserByIdController } from './controllers/get-user-by-id.controller';
 
 const userRouter = Router();
 
@@ -546,6 +550,11 @@ userRouter.patch('/users/:id/settings', updateUserSettingController);
 
 
 userRouter.get('/refresh-token', refreshTokenController);
+
+userRouter.get('/get-user-by-id/:id', getUserByIdController);
+
+
+userRouter.get('/logout', authMiddleware , logoutController  as unknown as RequestHandler);
 
 
 

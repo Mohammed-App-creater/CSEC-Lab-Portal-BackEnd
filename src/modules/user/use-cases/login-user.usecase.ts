@@ -1,13 +1,10 @@
 import { LoginUserDTO } from '../dto/auth-user.dto';
 import { findByEmail } from '../interfaces/user.repository';
-import { getRoleByIdUseCase } from '@/modules/role/use-cases/get-role-by-id.use-case';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { UserDTO } from '../dto/user.dto';
 import { BaseError } from '@/shared/errors/BaseError';
 import { generateRefreshToken, generateAccessToken } from '../services/tokenService';
-import { fa } from '@faker-js/faker/.';
 
 dotenv.config();
 

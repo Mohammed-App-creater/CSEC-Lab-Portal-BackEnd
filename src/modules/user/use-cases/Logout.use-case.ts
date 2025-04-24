@@ -4,12 +4,13 @@ import { revokeRefreshToken } from '../services/tokenService'
 
 
 
-export const logout = async (userId: string) => {
-    // Validate the userId
-    if (!validateUUID(userId)) {
-        throw new BaseError('Invalid user ID', 400);
+export const logoutUseCase = async (userId: string) => {
+    if (!userId) {
+        throw new BaseError('User ID is required', 400);
     }
-
+    // Validate the userId
+    validateUUID(userId)
+      
     // Revoke the refresh token
     try {
         await revokeRefreshToken(userId);

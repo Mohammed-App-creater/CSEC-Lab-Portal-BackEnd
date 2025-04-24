@@ -1,4 +1,6 @@
+import { Request } from "express";
 import { Gender } from "@prisma/client";
+import { UserDTO } from "./user.dto";
 
 export type LoginUserDTO = {
     rememberMe?: boolean;
@@ -38,3 +40,10 @@ export type LoginUserResponseDTO = {
     accessToken: string
     refreshToken: string
   }
+
+  // types/express/index.d.ts or types/custom.d.ts
+
+
+export interface AuthenticatedRequest extends Request {
+  user: UserDTO; 
+}
