@@ -3,6 +3,7 @@ import { createDivisionController } from './controllers/create-division.controll
 import { countDivisionController } from './controllers/count-division.controller';
 import { DivisionGroupsController } from './controllers/division-groups.controler';
 import { getDivisionGroupMembersController } from './controllers/get-division-groupsAndMember.controller'
+import { getAllDivisionsController } from './controllers/get-all-divisions.controller';
 const divisionRouter = Router();
 
 
@@ -138,7 +139,7 @@ divisionRouter.get('/count-division', countDivisionController);
  *         description: Internal server error
  */
 
-divisionRouter.post('/groups-and-members', getDivisionGroupMembersController );
+divisionRouter.post('/groups-and-members', getDivisionGroupMembersController);
 
 /**
  * @swagger
@@ -205,6 +206,10 @@ divisionRouter.post('/groups-and-members', getDivisionGroupMembersController );
 
 
 divisionRouter.get('/:divisionId/groups', DivisionGroupsController);
+
+
+
+divisionRouter.get('/divisions', getAllDivisionsController)
 
 
 
