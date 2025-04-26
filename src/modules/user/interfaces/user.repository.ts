@@ -6,6 +6,7 @@ import { UserDTO, UserSettingDTO } from '../dto/user.dto';
 import { normalizeUndefinedToNull } from '@shared/utils/normalizeUndefinedToNull'; // adjust path as needed
 import { getRoleByNameUseCase } from '@modules/role/use-cases/get-role-by-name.use-case';
 import { BaseError } from '@/shared/errors/BaseError';
+import { w } from '@faker-js/faker/dist/airline-BUL6NtOJ';
 
 
 
@@ -183,6 +184,14 @@ export const FindAllUsers = {
         specialty: true,
         cvUrl: true,
         lastSeen: true,
+        universityInfo:{
+          select: {
+            currentYear: true,
+            universityId: true,
+            status: true,
+            expectedGraduationYear: true, 
+          }
+        },
         Role: {
           select: {
             id: true,
@@ -300,5 +309,8 @@ export const DeleteUser = {
 export const UserCount = {
   userCount: () => {
     return prisma.user.count();
+  },
+  countUserWhere: (where: any) => {
+    return prisma.user.count({ where });
   }
 };

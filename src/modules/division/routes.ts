@@ -4,6 +4,7 @@ import { countDivisionController } from './controllers/count-division.controller
 import { DivisionGroupsController } from './controllers/division-groups.controler';
 import { getDivisionGroupMembersController } from './controllers/get-division-groupsAndMember.controller'
 import { getAllDivisionsController } from './controllers/get-all-divisions.controller';
+import { getAllDivisionGroupsController } from './controllers/get-all-division-groups.contrroller';
 const divisionRouter = Router();
 
 
@@ -210,6 +211,25 @@ divisionRouter.get('/:divisionId/groups', DivisionGroupsController);
 
 
 divisionRouter.get('/divisions', getAllDivisionsController)
+
+
+/**
+ * @swagger
+ * /api/division/all-divisions-and-groups:
+ *   get:
+ *     summary: Get all divisions
+ *     tags: [Division]
+ *     responses:
+ *       200:
+ *         description: A list of all divisions
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/DivisionDto'
+ */
+divisionRouter.get('/all-divisions-and-groups', getAllDivisionGroupsController);
 
 
 

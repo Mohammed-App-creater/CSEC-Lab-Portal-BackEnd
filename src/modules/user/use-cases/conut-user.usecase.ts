@@ -7,3 +7,10 @@ export const countUserUseCase = async (): Promise<CountUserDTO> => {
         count
     };
 };
+
+export const countUserWhereUseCase = async (where: any): Promise<CountUserDTO> => {
+    const count = await UserCount.countUserWhere(where);
+    return {
+        count
+    };
+}

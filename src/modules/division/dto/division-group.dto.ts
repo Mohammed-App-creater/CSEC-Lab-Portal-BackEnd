@@ -26,6 +26,16 @@ export type DivisionGroupDto = {
     groups: GroupDto[];
 };
 
+export type DivisionGroupsDto = {
+    groups: DivisionGroupDto;
+    name: string;
+    id: string;
+    description: string | null;
+    imageUrl: string | null;
+    establishedAt: Date | null;
+    currentHeadID: string | null;
+}
+
 /**
  * @swagger
  * components:
@@ -58,7 +68,7 @@ export type DivisionGroupMemberDto = {
     id: string;
     name: string;
     groupsAndMembers: AllGroupMemberDTO[];
-    
+
 };
 
 
