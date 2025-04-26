@@ -1,4 +1,4 @@
-import {  Role } from '@prisma/client';
+import { Role } from '@prisma/client';
 import { prisma } from '@shared/utils/prisma';
 import { hashPassword } from '@shared/utils/hashPassword';
 import { RegisterUserDTO } from '../dto/auth-user.dto';
@@ -152,11 +152,12 @@ export const UpdateUserRole = {
 export const UserSettings = {
   update: async (userId: string, updates: Partial<UserSettingDTO>) => {
     return prisma.userSetting.update({
-      where: { userId },
+      where: { userId: userId },
       data: updates,
     });
-  }
+  },
 };
+
 
 export const FindAllUsers = {
   findAllUsers: async (page = 1, limit = 10): Promise<{ data: UserDTO[]; total: number; page: number; limit: number; totalPages: number }> => {
@@ -184,12 +185,12 @@ export const FindAllUsers = {
         specialty: true,
         cvUrl: true,
         lastSeen: true,
-        universityInfo:{
+        universityInfo: {
           select: {
             currentYear: true,
             universityId: true,
             status: true,
-            expectedGraduationYear: true, 
+            expectedGraduationYear: true,
           }
         },
         Role: {
@@ -231,6 +232,8 @@ export const FindAllUsers = {
           },
         },
       },
+      skip: (page - 1) * limit, // move here
+      take: limit,              // move here
       select: {
         id: true,
         firstName: true,
@@ -254,22 +257,17 @@ export const FindAllUsers = {
             name: true,
           },
         },
-      },
-    })).map(normalizeUndefinedToNull);
-
-
-    const paginatedUsers = await prisma.user.findMany({
-      where: {
-        deletedAt: null,
-        groups: {
-          some: {
-            id: groupId,
+        universityInfo: {
+          select: {
+            currentYear: true,
+            universityId: true,
+            status: true,
+            expectedGraduationYear: true,
           },
         },
       },
-      skip: (page - 1) * limit,
-      take: limit,
-    });
+    })).map(normalizeUndefinedToNull);
+
 
     const total = await prisma.user.count({
       where: {
@@ -290,6 +288,7 @@ export const FindAllUsers = {
       totalPages: Math.ceil(total / limit),
     };
   }
+
 };
 
 export const DeleteUser = {

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { AttendanceRateController } from './controllers/attendance-rate.controller';
 import { AllAttendanceController } from './controllers/all-attendance.controller';
 import { userAttendanceSummaryController } from './controllers/user-attendaance-summary.controller';
+import { getAllAttendanceController } from './controllers/getAllAttendance.controller';
 
 
 const attendanceRoutes = Router();
@@ -190,5 +191,8 @@ attendanceRoutes.post('/user-all-attendance', AllAttendanceController);
  */
 
 attendanceRoutes.post('/user-attendance-summary', userAttendanceSummaryController);
+
+
+attendanceRoutes.get('/get-all-attendance', getAllAttendanceController);
 
 export default attendanceRoutes;

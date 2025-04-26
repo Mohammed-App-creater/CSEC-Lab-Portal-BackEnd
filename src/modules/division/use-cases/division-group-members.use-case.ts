@@ -11,12 +11,8 @@ export const getDivisionGroupMembersUseCase = async (divisionId: string): Promis
 
         const groupsAndMembers = await Promise.all(
             groups.map(async (group) => {
-                const { members } = await GroupMemberUseCase.allGroupMembers(group.id);
-                return {
-                    groupName: group.name,
-                    groupId: group.id,
-                    members,
-                };
+                const data = await GroupMemberUseCase.allGroupMembers(group.id, 1, 5);
+                return { ...data }
             })
         );
 
