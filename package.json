@@ -5,7 +5,7 @@
   "main": "./src/app/server.ts",
   "scripts": {
     "dev": "ts-node-dev --respawn  src/app/server.ts",
-    "n": "nodemon src/app/server.ts",
+    "nodemon": "nodemon src/app/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node -r tsconfig-paths/register dist/server.js",
     "tsup": "tsup src/app/server.ts --watch --onSuccess \"node -r tsconfig-paths/register dist/server.js\"",
@@ -54,6 +54,7 @@
     "typescript": "^5.8.3"
   },
   "prisma": {
-    "seed": "ts-node --transpile-only prisma/seed/seed.ts"
+    "seed": "ts-node --transpile-only prisma/seed/seed.ts",
+    "prepare": "prisma generate"
   }
 }
