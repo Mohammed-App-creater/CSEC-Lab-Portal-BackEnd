@@ -16,5 +16,5 @@
       "@modules/*": ["modules/*"]
     }
   },
-  "include": ["src", "prisma"]
+  "include": ["src", "src/app/prisma"]
 }
