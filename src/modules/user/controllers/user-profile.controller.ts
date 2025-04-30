@@ -1,8 +1,8 @@
-import { getUserProfile } from '../use-cases/user-profile.use-case'
-import { Request, Response } from 'express';
+import { getUserProfile, updateUserProfileUseCase } from '../use-cases/user-profile.use-case'
+import { Request, Response, NextFunction } from 'express';
 import { UserProfileDTO } from '../dto/user.dto';
 
-export const getUserProfileController = async (req: Request, res: Response) => {
+export const getUserProfileController = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
         const userId = req.body.userId;
@@ -11,9 +11,24 @@ export const getUserProfileController = async (req: Request, res: Response) => {
         }
         const userProfile: UserProfileDTO = await getUserProfile(userId);
         res.status(200).json(userProfile);
+        return;
     } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-        res.status(500).json({ error: errorMessage });
+        next(error);
     }
 }
 
+
+export const updateUserProfileController = async (req: Request, res: Response,  next: NextFunction) => {
+    try {
+        const userId = req.body.id;
+        if (!userId) {
+            res.status(400).json({ error: 'User ID is required' });
+        }
+        const userProfileData: UserProfileDTO = req.body;
+        const updatedUserProfile = await updateUserProfileUseCase(userId, userProfileData);
+        res.status(200).json(updatedUserProfile);
+        return;
+    } catch (error) {
+        next(error);
+    }
+}

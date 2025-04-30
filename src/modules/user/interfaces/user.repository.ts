@@ -1,8 +1,8 @@
-import { Role } from '@prisma/client';
+import { Role, UniversityStatus } from '@prisma/client';
 import { prisma } from '@shared/utils/prisma';
 import { hashPassword } from '@shared/utils/hashPassword';
 import { RegisterUserDTO } from '../dto/auth-user.dto';
-import { UserDTO, UserSettingDTO } from '../dto/user.dto';
+import { UserDTO, UserSettingDTO, UserUniversityInfoDTO } from '../dto/user.dto';
 import { normalizeUndefinedToNull } from '@shared/utils/normalizeUndefinedToNull'; // adjust path as needed
 import { getRoleByNameUseCase } from '@modules/role/use-cases/get-role-by-name.use-case';
 import { BaseError } from '@/shared/errors/BaseError';
@@ -127,6 +127,70 @@ export const CreateUser = {
       },
     });
   },
+};
+
+export const UpdateUserPassword = {
+  updatePassword: async (userId: string, password: string) => {
+    const hashedPassword = await hashPassword(password);
+    return prisma.user.update({
+      where: { id: userId },
+      data: { password: hashedPassword },
+    });
+  }
+};
+
+
+export const UserUniversityInfo = {
+  getUserUniversityInfo: async (userId: string): Promise<UserUniversityInfoDTO> => {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        universityInfo: {
+          select: {
+            id: true,
+            currentYear: true,
+            universityId: true,
+            status: true,
+            expectedGraduationYear: true,
+            major: true,
+            department: true,
+          },
+        },
+      },
+    });
+
+    return user?.universityInfo ?? {
+      id: '',
+      status: UniversityStatus.onCampus,
+      currentYear: null,
+      expectedGraduationYear: null,
+      major: null,
+      universityId: null,
+      department: null,
+    };
+  },
+
+  updateUserUniversityInfo: async (userId: string, universityInfo: UserUniversityInfoDTO) => {
+    return prisma.universityInfo.update({
+      where: { userId },
+      data: universityInfo,
+    });
+  },
+
+  createUserUniversityInfo: async (userId: string, universityInfo: UserUniversityInfoDTO) => {
+    return prisma.universityInfo.create({
+      data: {
+        ...universityInfo,
+        userId,
+      },
+    });
+  },
+  
+  deleteUserUniversityInfo: async (userId: string) => {
+    return prisma.universityInfo.delete({
+      where: { userId },
+    });
+  }
 };
 
 

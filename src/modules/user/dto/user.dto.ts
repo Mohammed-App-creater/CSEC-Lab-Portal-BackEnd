@@ -1,6 +1,6 @@
 import { SocialLinkDTO } from '@modules/social-link/dto/social-link.dto';
 import { ResourceLinkDTO } from '@modules/resource-link/dto/resource-link.dto'
-import { ClubStatus, Gender, UserSetting } from "@prisma/client";
+import { UserSetting, UniversityInfo } from "@prisma/client";
 import { User } from "@prisma/client";
 
 /**
@@ -115,8 +115,32 @@ export type UserRoleDTO = {
     role: string;
 }
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     UserUniversityInfoDTO:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *         department:
+ *           type: string
+ *         section:
+ *           type: string
+ *         year:
+ *           type: integer
+ *         campus:
+ *           type: string
+ */
 
-export type UserProfileDTO = UserDTO & { socialLinks: SocialLinkDTO[] } & { resourceLinks: ResourceLinkDTO[] };
+
+export type UserUniversityInfoDTO = Omit<UniversityInfo, 'userId' >;
+
+export type UserProfileDTO = UserDTO & { socialLinks: SocialLinkDTO[] } & { resourceLinks: ResourceLinkDTO[] } & { universityInfo: UserUniversityInfoDTO };
+
+export type UpdateUserProfileDTO = Partial<UserProfileDTO> & Partial<Pick<User, 'password'>> & { userId: string };
 
 export type UpdateUserRoleDTO = Pick<UserDTO, 'roleId'> & { userId: string };
 

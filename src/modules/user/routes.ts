@@ -3,12 +3,9 @@ import { loginController } from './controllers/login.controller';
 import { registerController } from './controllers/register.controller';
 import { countUserController } from './controllers/count-user.controller';
 import { findAllUsersController } from './controllers/all-users.controller';
-import { getUserProfileController } from './controllers/user-profile.controller';
+import { getUserProfileController, updateUserProfileController } from './controllers/user-profile.controller';
 import { getUserRoleController } from './controllers/get-user-role';
 import { getUsersByRoleController } from './controllers/get-users-by-role.controller';
-
-import { prisma } from '@/shared/utils/prisma';
-import { get } from 'http';
 import { updateUserRoleController } from './controllers/update-user-role.controller';
 import deleteUserController from './controllers/delete.user.controller';
 import updateUserSettingController from './controllers/updatee-userSetting.controller';
@@ -548,13 +545,63 @@ userRouter.delete('/delete-user/:id', deleteUserController);
 
 userRouter.patch('/users/:id/settings', updateUserSettingController);
 
+/**
+ * @swagger
+ * /api/user/update-user-profile:
+ *   patch:
+ *     summary: Update user profile including basic info, social links, resource links, and university info.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             allOf:
+ *               - $ref: '#/components/schemas/UserProfileDTO'
+ *               - type: object
+ *                 properties:
+ *                   universityInfo:
+ *                     $ref: '#/components/schemas/UserUniversityInfoDTO'
+ *     responses:
+ *       200:
+ *         description: Successfully updated the user profile.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/UserProfileDTO'
+ *                 - type: object
+ *                   properties:
+ *                     userId:
+ *                       type: string
+ *                     universityInfo:
+ *                       $ref: '#/components/schemas/UserUniversityInfoDTO'
+ *       400:
+ *         description: Bad request, missing or invalid data.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *       404:
+ *         description: User not found.
+ *       500:
+ *         description: Internal server error.
+ */
+
+
+userRouter.patch('/update-user-profile', updateUserProfileController);
+
 
 userRouter.get('/refresh-token', refreshTokenController);
 
 userRouter.get('/get-user-by-id/:id', getUserByIdController);
 
 
-userRouter.get('/logout', authMiddleware , logoutController  as unknown as RequestHandler);
+userRouter.get('/logout', authMiddleware, logoutController as unknown as RequestHandler);
 
 
 
