@@ -3,18 +3,18 @@ import { ResourceLinkCreateDTO, ResourceLinkUpdateDTO  } from "../dto/resource-l
 
 
 export const ResourceLinkRepository = {
-    async createSocialLink(resourceLink: ResourceLinkCreateDTO) {
-        return await prisma.resourceLink.create({
+    async createDivisionResourceLink(resourceLink: ResourceLinkCreateDTO) {
+        return await prisma.divisionsResourceLink.create({
             data: resourceLink
         });
     },
-    async getResourceLinks(userId: string) {
-        return await prisma.resourceLink.findMany({
-            where: { userId },
+    async getDivisionResourceLinks(divisionId: string) {
+        return await prisma.divisionsResourceLink.findMany({
+            where: { divisionId },
             orderBy: { CreatedAt: 'desc' },
             select: {
                 id: true,
-                userId: true,
+                divisionId: true,
                 resourceLinkName: true,
                 resourceLinkUrl: true,
                 CreatedAt: true,
@@ -23,23 +23,23 @@ export const ResourceLinkRepository = {
         });
     },
     async getResourceLinkById(id: string) {
-        return await prisma.resourceLink.findUnique({
+        return await prisma.divisionsResourceLink.findUnique({
             where: { id }
         });
     },
-    async getAllResourceLinkByUserId(userId: string) {
-        return await prisma.resourceLink.findMany({
-            where: { userId }
+    async getAllResourceLinkByDivisionId(divisionId: string) {
+        return await prisma.divisionsResourceLink.findMany({
+            where: { divisionId }
         });
     },
-    async updateResourceLink(id: string, resourceLink: ResourceLinkUpdateDTO) {
-        return await prisma.resourceLink.update({
+    async updateDivisionResourceLink(id: string, resourceLink: ResourceLinkUpdateDTO) {
+        return await prisma.divisionsResourceLink.update({
             where: { id },
             data: resourceLink
         });
     },
-    async deleteResourceLink(id: string) {
-        return await prisma.resourceLink.delete({
+    async deleteDivisionResourceLink(id: string) {
+        return await prisma.divisionsResourceLink.delete({
             where: { id }
         });
     }

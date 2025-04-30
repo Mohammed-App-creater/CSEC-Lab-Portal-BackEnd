@@ -1,11 +1,11 @@
-import { ResourceLink } from '@prisma/client';
+import {   DivisionsResourceLink } from '@prisma/client';
 
-export type ResourceLinkDTO = Pick<ResourceLink, 'id' | 'userId' | 'resourceLinkName' | 'resourceLinkUrl' | 'updatedAt'>
+export type ResourceLinkDTO = Pick<DivisionsResourceLink, 'id' | 'divisionId' | 'resourceLinkName' | 'resourceLinkUrl' | 'updatedAt'>
 
-export type ResourceLinkCreateDTO = Omit<ResourceLink, 'createdAt' | 'updateAt'> 
+export type ResourceLinkCreateDTO = Omit<DivisionsResourceLink, 'createdAt' | 'updateAt'> 
 
-export type ResourceLinkUpdateDTO = Partial<Omit<ResourceLinkDTO, 'id' | 'userId' | 'createdAt' | 'updateAt'>>
+export type ResourceLinkUpdateDTO = Partial<Omit<ResourceLinkDTO, 'id' | 'divisionId' | 'createdAt' | 'updatedAt'>>
 
 export type ResourceLinkDeleteDTO = Pick<ResourceLinkDTO, 'id'>
 
-export type ResourceLinkGetDTO = Pick<ResourceLinkDTO, 'id' | 'userId'>
+export type ResourceLinkGetDTO = Pick<ResourceLinkDTO, 'id' | 'divisionId'>

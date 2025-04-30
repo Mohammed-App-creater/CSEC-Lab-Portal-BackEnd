@@ -2,6 +2,7 @@ import 'tsconfig-paths/register';
 import express from 'express';
 
 import cors from 'cors';
+import { corsOptions } from './core/config/cors.config';
 import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './core/config/swaggerConfig';
@@ -18,7 +19,7 @@ import { errorHandler } from './app/middleware/errorHandler';
 import roleRouter from './modules/role/routes';
 import eventRouter from './modules/_event/routes';
 import cookieParser from 'cookie-parser';
-import { corsOptions } from './core/config/cors.config';
+import DivisionResourceRouter from './modules/divisionResorce/route';
 
 
 
@@ -49,6 +50,7 @@ app.use('/api/announcement', announcementRouter);
 app.use('/api/group', groupRouter);
 app.use('/api/headsup', headsUpRoutes);
 app.use('/api/role', roleRouter);
+app.use('/api/division-resources', DivisionResourceRouter);
 
 
 // Error handling middleware
