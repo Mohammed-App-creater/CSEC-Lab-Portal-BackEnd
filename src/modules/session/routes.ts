@@ -4,7 +4,10 @@ import { getAllSessionsController } from './controllers/get-all-sessions.control
 import { getSessionsByGroupIdController } from './controllers/get-session-by-groupId.controller';
 import { CreateEventController } from '../_event/controllers/create-event.controller';
 import { createSessionController } from './controllers/create-session.controller';
+import  { getUpcomingSessionsController } from './controllers/upcoming-sessions.controller'
+
 const sessionRoutes = Router();
+
 
 
 /**
@@ -274,7 +277,81 @@ sessionRoutes.get('/sessions', getAllSessionsController);
  *                   type: string
  */
 
-sessionRoutes.post('/create', createSessionController)
+sessionRoutes.post('/create', createSessionController);
+
+
+/**
+ * @swagger
+ * /sessions/upcoming:
+ *   get:
+ *     summary: Get upcoming sessions with pagination
+ *     description: Fetch upcoming sessions starting from today and future dates. Supports pagination.
+ *     tags:
+ *       - Sessions
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: Page number (optional)
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Number of items per page (optional)
+ *     responses:
+ *       200:
+ *         description: A list of upcoming sessions grouped by date
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       date:
+ *                         type: string
+ *                         format: date
+ *                         example: 2025-04-28
+ *                       sessions:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             id:
+ *                               type: string
+ *                               format: uuid
+ *                               example: "f28b1d7e-ec9a-4e1b-8f2c-2f9e49d5f846"
+ *                             title:
+ *                               type: string
+ *                               example: "Cybersecurity Awareness Session"
+ *                             startTime:
+ *                               type: string
+ *                               example: "09:00"
+ *                             divisionName:
+ *                               type: string
+ *                               example: "SEC Division"
+ *                             tags:
+ *                               type: array
+ *                               items:
+ *                                 type: string
+ *                               example: ["CPD", "Training"]
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
+ */
+
+
+sessionRoutes.get("/sessions/upcoming", getUpcomingSessionsController);
 
 
 

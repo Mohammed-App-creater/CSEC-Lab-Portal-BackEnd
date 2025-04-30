@@ -595,7 +595,7 @@ model FileCategories {
   // Relations
   files File[] @relation("FileCategories")
 
-  // 
+  //
   @@index([id])
   @@index([name])
 }

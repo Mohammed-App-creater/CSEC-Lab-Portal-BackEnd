@@ -6,7 +6,6 @@ import { SessionWithTimeSlotsAndGroupsDto } from "../dto/session.dto";
 
 
 
-
 export const sessionRepository = {
     getAllSessions: async (limit: number, page: number) => {
         const sessions = await prisma.sessions.findMany({
@@ -144,8 +143,38 @@ export const sessionRepository = {
             },
         });
         return sessions;
-    }
+    },
+
+    getUpcomingSessionsWithTimeSlots: async (page: number, limit: number) => {
+        const today = new Date();
+
+        const timeSlots = await prisma.sessionTimeSlot.findMany({
+            where: {
+                date: {
+                    gte: today, // only future and today
+                },
+                status: "Planned", // optional: only planned sessions
+            },
+            include: {
+                session: {
+                    select: {
+                        id: true,
+                        title: true,
+                        tags: true,
+                    },
+                },
+            },
+            orderBy: [
+                { date: 'asc' },
+                { startTime: 'asc' },
+            ],
+            skip: (page - 1) * limit,
+            take: limit,
+        });
+
+        return timeSlots;
+    },
 
 
 
-}
+};
