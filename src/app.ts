@@ -32,10 +32,11 @@ app.use(cookieParser());
 
 
 const filePath =
-  process.env.NODE_ENV === 'production'
+  // process.env.NODE_ENV === 'production' 
+  true
     ? path.join(__dirname, 'index.html')  // from dist/
     : path.join(__dirname, '../src/index.html');  // from src/
-
+  console.log('filePath', filePath);
 app.get('/', (req, res) => {
   res.sendFile(filePath);
 });

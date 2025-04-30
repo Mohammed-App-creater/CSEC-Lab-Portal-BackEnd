@@ -8,8 +8,8 @@
     "nodemon": "nodemon src/app/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node -r tsconfig-paths/register dist/server.js",
-    "tsup": "tsup src/app/server.ts --watch --onSuccess \"node -r tsconfig-paths/register dist/server.js\"",
-    "build": "tsup src/app/server.ts --format esm,cjs"
+    "tsup": "tsup --watch --onSuccess \"node -r tsconfig-paths/register dist/server.js\"",
+    "build": "tsup src/app/server.ts --format esm,cjs && cp src/index.html dist/"
   },
   "repository": {
     "type": "git",
