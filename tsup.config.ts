@@ -17,7 +17,7 @@ export default defineConfig({
       name: 'copy-index-html',
       setup(build) {
         build.onEnd(() => {
-          const srcPath = path.resolve('src/index.html')
+          const srcPath = path.resolve('index.html')
           const destPath = path.resolve('dist/index.html')
 
           if (fs.existsSync(srcPath)) {
