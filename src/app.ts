@@ -18,6 +18,7 @@ import { errorHandler } from './app/middleware/errorHandler';
 import roleRouter from './modules/role/routes';
 import eventRouter from './modules/_event/routes';
 import cookieParser from 'cookie-parser';
+import { corsOptions } from './core/config/cors.config';
 
 
 
@@ -25,7 +26,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use(cors({ origin: '*' }));
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
