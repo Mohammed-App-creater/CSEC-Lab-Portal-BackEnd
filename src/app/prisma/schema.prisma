@@ -161,13 +161,14 @@ model Divisions {
   updatedAt     DateTime  @updatedAt
 
   // Relations
-  currentHeadID String?      @db.Uuid
-  currentHead   User?        @relation("DivisionHead", fields: [currentHeadID], references: [id], onDelete: SetNull)
-  user          User[]       @relation("UserDivision")
-  socialLinks   socialLink[] @relation("DivisionSocialLink")
-  sessions      Sessions[]   @relation("SessionDivision")
-  groups        Groups[]     @relation("DivisionGroups")
-  events        Events[]     @relation("EventDivision")
+  currentHeadID         String?                 @db.Uuid
+  currentHead           User?                   @relation("DivisionHead", fields: [currentHeadID], references: [id], onDelete: SetNull)
+  user                  User[]                  @relation("UserDivision")
+  socialLinks           socialLink[]            @relation("DivisionSocialLink")
+  sessions              Sessions[]              @relation("SessionDivision")
+  groups                Groups[]                @relation("DivisionGroups")
+  events                Events[]                @relation("EventDivision")
+  DivisionsResourceLink DivisionsResourceLink[] @relation("DivisionResourceLink")
 
   // indexes
   @@index([name])
@@ -668,17 +669,31 @@ model RolePermission {
 }
 
 model RefreshToken {
-  id        String   @id @default(uuid())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String   @db.Uuid
-  token     String   @unique
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String   @db.Uuid
+  token      String   @unique
   rememberMe Boolean  @default(false)
-  createdAt DateTime @default(now())
-  expiresAt DateTime
-  revoked   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  expiresAt  DateTime
+  revoked    Boolean  @default(false)
 
   // indexes
   @@index([userId])
   @@index([token])
+  @@index([id])
+}
+
+model DivisionsResourceLink {
+  id               String     @id @default(uuid()) @db.Uuid
+  resourceLinkName String
+  resourceLinkUrl  String
+  divisionId       String?    @db.Uuid
+  division         Divisions? @relation("DivisionResourceLink", fields: [divisionId], references: [id], onDelete: Cascade)
+  CreatedAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  // indexes
+  @@index([divisionId])
   @@index([id])
 }

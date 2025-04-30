@@ -216,7 +216,7 @@ sessionRoutes.get('/sessions', getAllSessionsController);
  *                       "7cd90e93-933b-4af9-8859-5d48e1fa8c5f"
  *                     ]
  *                   timeSlots:
- *                     type: array
+ *                     type:
  *                     items:
  *                       type: object
  *                       required:
