@@ -31,10 +31,14 @@ app.use(cookieParser());
 
 
 
+const filePath =
+  process.env.NODE_ENV === 'production'
+    ? path.join(__dirname, 'index.html')  // from dist/
+    : path.join(__dirname, '../src/index.html');  // from src/
+
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-  });
-  
+  res.sendFile(filePath);
+});
 
 
 app.use('/api/user', userRoutes);
