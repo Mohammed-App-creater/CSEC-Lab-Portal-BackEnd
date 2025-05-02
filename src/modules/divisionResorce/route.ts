@@ -1,8 +1,79 @@
 import { CRUDDivisionResourceController } from './controllers/CRUD-Division-Resource-.controller';
 import { Router } from 'express';
+import { getAllDivisionsResourceController } from './controllers/get-AllDivisions-Resource.Controller';
 
 const DivisionResourceRouter = Router();
 const CRUDDivisionResourceControllerInstance = new CRUDDivisionResourceController();
+
+
+/**
+ * @swagger
+ * paths:
+ *   /all-divisions-resource:
+ *     get:
+ *       summary: Get all divisions with their resource links
+ *       tags:
+ *         - DivisionResources
+ *       responses:
+ *         '200':
+ *           description: Successfully retrieved all divisions with resource links
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     name:
+ *                       type: string
+ *                       example: CPD
+ *                     id:
+ *                       type: string
+ *                       format: uuid
+ *                       example: bc539ae7-1452-4bc4-9e1b-f2b030c4215c
+ *                     resourceLink:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: string
+ *                             format: uuid
+ *                             example: c4c66795-c267-4c49-a13e-124c6934a064
+ *                           resourceLinkName:
+ *                             type: string
+ *                             example: Weekly Meeting Notes
+ *                           resourceLinkUrl:
+ *                             type: string
+ *                             format: uri
+ *                             example: https://example.com/weekly-notes.pdf
+ *                           divisionId:
+ *                             type: string
+ *                             format: uuid
+ *                             example: bc539ae7-1452-4bc4-9e1b-f2b030c4215c
+ *                           CreatedAt:
+ *                             type: string
+ *                             format: date-time
+ *                             example: 2025-05-02T13:32:26.493Z
+ *                           updatedAt:
+ *                             type: string
+ *                             format: date-time
+ *                             example: 2025-05-02T13:33:02.276Z
+ *         '400':
+ *           description: No divisions found
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   message:
+ *                     type: string
+ *                     example: There is no Divisions, please create a division first
+ */
+
+
+DivisionResourceRouter.get('/all-divisions-resource', getAllDivisionsResourceController);
+
 
 /**
  * @swagger
@@ -66,6 +137,7 @@ DivisionResourceRouter.get('/:divisionId', CRUDDivisionResourceControllerInstanc
  *         description: Resource Link not found
  */
 DivisionResourceRouter.get('/link/:id', CRUDDivisionResourceControllerInstance.getDivisionResourceLinkById.bind(CRUDDivisionResourceControllerInstance));
+
 
 /**
  * @swagger
@@ -131,5 +203,8 @@ DivisionResourceRouter.put('/:id', CRUDDivisionResourceControllerInstance.update
  *         description: Division Resource Link deleted successfully
  */
 DivisionResourceRouter.delete('/:id', CRUDDivisionResourceControllerInstance.deleteDivisionResourceLink.bind(CRUDDivisionResourceControllerInstance));
+
+
+
 
 export default DivisionResourceRouter;

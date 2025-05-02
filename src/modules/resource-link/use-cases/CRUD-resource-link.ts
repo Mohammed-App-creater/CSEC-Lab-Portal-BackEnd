@@ -1,5 +1,5 @@
 import { ResourceLinkRepository } from '../interfaces/resource-link.repository';
-import { ResourceLinkCreateDTO, ResourceLinkDeleteDTO, ResourceLinkUpdateDTO, ResourceLinkDTO } from '../dto/resource-link.dto'; 
+import { ResourceLinkCreateDTO, ResourceLinkDeleteDTO, ResourceLinkUpdateDTO, ResourceLinkDTO } from '../dto/resource-link.dto';
 
 
 export const CreateResourceLink = async (resourceLink: ResourceLinkCreateDTO): Promise<ResourceLinkDTO> => {
@@ -7,7 +7,7 @@ export const CreateResourceLink = async (resourceLink: ResourceLinkCreateDTO): P
     return ResourceLinkCreated;
 }
 
-export const GetResourceLinks = async (userId: string): Promise<ResourceLinkDTO[]>  => {
+export const GetResourceLinks = async (userId: string): Promise<ResourceLinkDTO[]> => {
     const ResourceLinks = await ResourceLinkRepository.getResourceLinks(userId);
     return ResourceLinks;
 }
@@ -22,12 +22,12 @@ export const GetAllResourceLinkByUserId = async (userId: string): Promise<Resour
     return ResourceLink;
 }
 
-export const UpdateResourceLink = async (id: string, resourceLink: ResourceLinkUpdateDTO): Promise<ResourceLinkDTO>  => {
+export const UpdateResourceLink = async (id: string, resourceLink: ResourceLinkUpdateDTO): Promise<ResourceLinkDTO> => {
     const ResourceLinkUpdated = await ResourceLinkRepository.updateResourceLink(id, resourceLink);
     return ResourceLinkUpdated;
 }
 
-export const DeleteResourceLink = async (id: string): Promise<ResourceLinkDeleteDTO>  => {
+export const DeleteResourceLink = async (id: string): Promise<ResourceLinkDeleteDTO> => {
     const ResourceLinkDeleted = await ResourceLinkRepository.deleteResourceLink(id);
     return ResourceLinkDeleted;
 }

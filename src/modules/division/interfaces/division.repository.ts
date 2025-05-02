@@ -16,6 +16,15 @@ export const DivisionRepository = {
     return prisma.divisions.findFirst({ where: { name } });
   },
 
+  findAllDivisionId: () => {
+    return prisma.divisions.findMany({
+      select: {
+        id: true,
+        name: true,
+      }
+    })
+  },
+
   findById: (id: string) => {
     return prisma.divisions.findUnique({ where: { id } });
   },

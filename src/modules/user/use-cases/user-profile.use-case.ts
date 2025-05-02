@@ -1,7 +1,7 @@
 import { UserProfileDTO, UpdateUserProfileDTO, UserUniversityInfoDTO } from '../dto/user.dto';
 import { findById, UpdateUser, UserUniversityInfo } from '../interfaces/user.repository';
 import { GetAllSocialLinkByUserId, UpdateSocialLink, CreateSocialLink } from '@modules/social-link/use-cases/CRUD-social-link';
-import { GetAllResourceLinkByUserId, CreateResourceLink, UpdateResourceLink } from '@modules/resource-link/use-cases/CRUD-resource-link'
+import { GetAllResourceLinkByUserId, CreateResourceLink, UpdateResourceLink } from '@/modules/resource-link/use-cases/CRUD-resource-link'
 import { BaseError } from '@/shared/errors/BaseError';
 import { validateUUID } from '@/shared/utils/validateUUID';
 
@@ -49,7 +49,7 @@ export const updateUserProfileUseCase = async (userId: string, userProfileData: 
         throw new BaseError('Email Is required', 400);
     }
 
-    const { socialLinks, resourceLinks, universityInfo,  ...userProfile } = userProfileData;
+    const { socialLinks, resourceLinks, universityInfo, ...userProfile } = userProfileData;
     const SocialLinks = socialLinks || [];
     const ResourceLinks = resourceLinks || [];
     const UniversityInfo = universityInfo || {} as UserUniversityInfoDTO;

@@ -1,4 +1,4 @@
-import { GroupDto, AllGroupMemberDTO } from '@modules/group/dto/group.dto';
+import { GroupDto, AllGroupMemberDTO } from '@/modules/group/dto/group.dto';
 import { Divisions } from '@prisma/client';
 
 /**
@@ -70,6 +70,8 @@ export type DivisionGroupMemberDto = {
     groupsAndMembers: AllGroupMemberDTO[];
 
 };
+
+export type DivisionIdDto = Pick<Divisions, 'id' | 'name'>;
 
 
 export type DivisionDto = Omit<Divisions, 'createdAt' | 'updatedAt'>

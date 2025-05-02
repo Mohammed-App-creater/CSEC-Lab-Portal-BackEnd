@@ -33,8 +33,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 
-const filePath = path.join(__dirname, '../src/index.html');  
-  console.log('filePath', filePath);
+const filePath = path.join(__dirname, '../src/index.html');
+console.log('filePath', filePath);
 app.get('/', (req, res) => {
   res.sendFile(filePath);
 });

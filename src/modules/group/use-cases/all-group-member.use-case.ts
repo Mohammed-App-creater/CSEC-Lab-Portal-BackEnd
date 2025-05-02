@@ -12,7 +12,7 @@ export const GroupMemberUseCase = {
     if (!groupId) {
       throw new Error('Group ID is required');
     }
-    
+
     if (page === undefined || page < 1) {
       throw new Error('Page number must be greater than 0');
     }

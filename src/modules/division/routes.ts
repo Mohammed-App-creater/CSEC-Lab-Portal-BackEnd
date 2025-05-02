@@ -5,6 +5,7 @@ import { DivisionGroupsController } from './controllers/division-groups.controle
 import { getDivisionGroupMembersController } from './controllers/get-division-groupsAndMember.controller'
 import { getAllDivisionsController } from './controllers/get-all-divisions.controller';
 import { getAllDivisionGroupsController } from './controllers/get-all-division-groups.contrroller';
+import { getAllDivisionsIdController } from './controllers/gir-all-divisions-id.controller';
 const divisionRouter = Router();
 
 
@@ -212,6 +213,8 @@ divisionRouter.get('/:divisionId/groups', DivisionGroupsController);
 
 divisionRouter.get('/divisions', getAllDivisionsController)
 
+divisionRouter.get('/divisions-id', getAllDivisionsIdController);
+
 
 /**
  * @swagger
@@ -230,6 +233,8 @@ divisionRouter.get('/divisions', getAllDivisionsController)
  *                 $ref: '#/components/schemas/DivisionDto'
  */
 divisionRouter.get('/all-divisions-and-groups', getAllDivisionGroupsController);
+
+
 
 
 

@@ -1,5 +1,5 @@
 import { SocialLinkDTO } from '@modules/social-link/dto/social-link.dto';
-import { ResourceLinkDTO } from '@modules/resource-link/dto/resource-link.dto'
+import { ResourceLinkDTO } from '@/modules/resource-link/dto/resource-link.dto'
 import { UserSetting, UniversityInfo } from "@prisma/client";
 import { User } from "@prisma/client";
 
@@ -136,7 +136,7 @@ export type UserRoleDTO = {
  */
 
 
-export type UserUniversityInfoDTO = Omit<UniversityInfo, 'userId' >;
+export type UserUniversityInfoDTO = Omit<UniversityInfo, 'userId'>;
 
 export type UserProfileDTO = UserDTO & { socialLinks: SocialLinkDTO[] } & { resourceLinks: ResourceLinkDTO[] } & { universityInfo: UserUniversityInfoDTO };
 

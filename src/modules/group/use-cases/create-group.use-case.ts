@@ -1,8 +1,8 @@
-import { GroupRepository } from  '../interfaces/group.repository'
+import { GroupRepository } from '../interfaces/group.repository'
 import { GroupDto } from '../dto/group.dto'
 import { addGroupUseCase } from '@modules/division/use-cases/add-group.use-case'
 
-export const createGroupUseCase = async (name: string, divisionId: string ): Promise<GroupDto | object> => {
+export const createGroupUseCase = async (name: string, divisionId: string): Promise<GroupDto | object> => {
     const test = await GroupRepository.findByName(name);
     if (test) {
         return { "message": "Group already exists" };
@@ -14,7 +14,7 @@ export const createGroupUseCase = async (name: string, divisionId: string ): Pro
     }
     const groupId = group.id;
     const division = await addGroupUseCase(divisionId, groupId);
-    
+
     if (!division) {
         return { "message": "Division not found" };
     }

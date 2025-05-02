@@ -1,4 +1,4 @@
-import { CreateResourceLink, DeleteResourceLink, GetAllResourceLinkByUserId, GetResourceLinkById, GetResourceLinks, UpdateResourceLink } from '../use-cases/CRUD-Division-Resource.use-case';
+import { CreateResourceLink, DeleteResourceLink, GetAllResourceLinkByDivisionId, GetResourceLinkById, GetResourceLinks, UpdateResourceLink } from '../use-cases/CRUD-Division-Resource.use-case';
 import { Request, Response, NextFunction } from 'express';
 import { BaseError } from '@/shared/errors/BaseError';
 
@@ -55,7 +55,7 @@ export class CRUDDivisionResourceController {
     async getAllResourceLinkByUserId(req: Request, res: Response, next: NextFunction) {
         try {
             const { divisionId } = req.params;
-            const ResourceLink = await GetAllResourceLinkByUserId(divisionId);
+            const ResourceLink = await GetAllResourceLinkByDivisionId(divisionId);
             res.status(200).json({
                 status: 'success',
                 message: 'Division Resource Links retrieved successfully',
