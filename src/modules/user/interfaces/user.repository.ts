@@ -286,6 +286,77 @@ export const FindAllUsers = {
     };
   },
 
+  findAllUsersBySessionId: async (sessionId: string, page: number, limit: number) => {
+    const Users: UserDTO[] = (await prisma.user.findMany({
+      where: {
+        deletedAt: null,
+        sessions: {
+          some: {
+            id: sessionId,
+          },
+        },
+      },
+      skip: (page - 1) * limit, // move here
+      take: limit,              // move here
+      select: {
+        id: true,
+        firstName: true,
+        middleName: true,
+        lastName: true,
+        gender: true,
+        email: true,
+        phone_number: true,
+        telegramUserName: true,
+        bio: true,
+        berthDate: true,
+        profileImageUrl: true,
+        clubStatus: true,
+        specialty: true,
+        cvUrl: true,
+        lastSeen: true,
+        roleId: true,
+        Role: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        universityInfo: {
+          select: {
+            currentYear: true,
+            universityId: true,
+            status: true,
+            expectedGraduationYear: true,
+          },
+        },
+      },
+    })).map(normalizeUndefinedToNull);
+
+
+    
+
+
+    const total = await prisma.user.count({
+      where: {
+        deletedAt: null,
+        sessions: {
+          some: {
+            id: sessionId,
+          },
+        },
+      },
+    });
+
+    return {
+      data: Users,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
+  },
+
+
   findAllUsersByGroupId: async (groupId: string, page: number, limit: number) => {
     const Users: UserDTO[] = (await prisma.user.findMany({
       where: {
@@ -331,6 +402,9 @@ export const FindAllUsers = {
         },
       },
     })).map(normalizeUndefinedToNull);
+
+
+    
 
 
     const total = await prisma.user.count({

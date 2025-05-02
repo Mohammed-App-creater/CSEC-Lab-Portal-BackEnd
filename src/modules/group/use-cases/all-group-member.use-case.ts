@@ -19,10 +19,10 @@ export const GroupMemberUseCase = {
     if (limit === undefined || limit < 1) {
       throw new Error('Limit must be greater than 0');
     }
-    const members = await GroupRepository.findById(groupId);
+    const Group = await GroupRepository.findBySessionId(groupId);
     return {
-      groupName: members?.name ?? '',
-      groupId: members?.id ?? '',
+      groupName: Group?.name ?? '',
+      groupId: Group?.id ?? '',
       members: await AllGroupMemberUseCase.allGroupMembers(groupId, page, limit),
     };
   },

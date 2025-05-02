@@ -1,5 +1,5 @@
 import { prisma } from "@/shared/utils/prisma";
-import { ResourceLinkCreateDTO, ResourceLinkUpdateDTO } from "../../group/dto/resource-link.dto";
+import { ResourceLinkCreateDTO, ResourceLinkUpdateDTO } from "../dto/resource-link.dto";
 
 
 export const ResourceLinkRepository = {

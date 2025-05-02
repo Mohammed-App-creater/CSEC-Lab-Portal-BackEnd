@@ -20,6 +20,7 @@ import roleRouter from './modules/role/routes';
 import eventRouter from './modules/_event/routes';
 import cookieParser from 'cookie-parser';
 import DivisionResourceRouter from './modules/divisionResorce/route';
+import { jwtValidator } from './app/middleware/JWTValidator';
 
 
 
@@ -45,7 +46,7 @@ app.use('/api/division', divisionRoutes);
 app.use('/api/session', sessionRoutes);
 app.use('/api/event', eventRouter);
 app.use('/api/attendance', attendanceRoutes);
-app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/dashboard', jwtValidator, dashboardRoutes);
 app.use('/api/announcement', announcementRouter);
 app.use('/api/group', groupRouter);
 app.use('/api/headsup', headsUpRoutes);

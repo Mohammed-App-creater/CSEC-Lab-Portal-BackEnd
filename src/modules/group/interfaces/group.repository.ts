@@ -37,6 +37,26 @@ export const GroupRepository = {
             },
         });
     },
+
+    findBySessionId: (id: string) => {
+
+        return prisma.groups.findFirst({
+            where: {
+                sessions: {
+                    some: {
+                        id: id,
+                    },
+                },
+            },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                updatedAt: true,
+            },
+        });
+    },
+
     create: (name: string) => {
         return prisma.groups.create({
             data: {

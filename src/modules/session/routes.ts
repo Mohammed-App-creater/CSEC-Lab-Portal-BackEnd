@@ -4,7 +4,7 @@ import { getAllSessionsController } from './controllers/get-all-sessions.control
 import { getSessionsByGroupIdController } from './controllers/get-session-by-groupId.controller';
 import { CreateEventController } from '../_event/controllers/create-event.controller';
 import { createSessionController } from './controllers/create-session.controller';
-import  { getUpcomingSessionsController } from './controllers/upcoming-sessions.controller'
+import { getUpcomingSessionsController } from './controllers/upcoming-sessions.controller'
 
 const sessionRoutes = Router();
 
@@ -140,6 +140,121 @@ sessionRoutes.get('/count-upcoming-session', CountUpcomingSessionController.coun
 
 sessionRoutes.get('/groupId/:groupId/sessions', getSessionsByGroupIdController);
 
+
+
+/**
+ * @swagger
+ * tags:
+ *   - name: Sessions
+ *     description: Operations related to sessions
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     TimeSlot:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *         status:
+ *           type: string
+ *           enum: [ACTIVE, INACTIVE, COMPLETED]
+ *         startTime:
+ *           type: string
+ *           format: date-time
+ *         endTime:
+ *           type: string
+ *           format: date-time
+ *         date:
+ *           type: string
+ *           format: date
+ *     Group:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *         name:
+ *           type: string
+ *         description:
+ *           type: string
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *     Session:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *         name:
+ *           type: string
+ *         description:
+ *           type: string
+ *         timeSlots:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/TimeSlot'
+ *         groups:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Group'
+ */
+
+/**
+ * @swagger
+ * /sessions:
+ *   get:
+ *     summary: Get all sessions with related groups and time slots
+ *     description: Fetches all sessions with their associated groups and time slots, paginated.
+ *     operationId: getAllSessions
+ *     tags:
+ *       - Sessions
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           example: 10
+ *         description: The number of sessions to retrieve per page (default is 10).
+ *       - in: query
+ *         name: page
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *         description: The page number for pagination (default is 1).
+ *     responses:
+ *       '200':
+ *         description: A list of sessions with associated groups and time slots
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Session'
+ *       '400':
+ *         description: Invalid input (either limit or page is not an integer or less than 1)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Limit and page must be greater than 0'
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Internal server error'
+ */
 
 
 

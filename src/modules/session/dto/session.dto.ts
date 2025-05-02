@@ -9,7 +9,7 @@ export type TimeSlotDetails = Pick<SessionTimeSlot, 'id' | 'startTime' | 'endTim
 
 export type SessionGroupsAndTimeSlotDto = SessionDetails & {
     timeSlots: TimeSlotDetails[];
-    groups: SessionGroupsDto[];
+    groups: SessionGroupsDto[] ;
 };
 
 export type SessionWithTimeSlotsDto = SessionDetails & {
