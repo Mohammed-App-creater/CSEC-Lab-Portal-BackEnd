@@ -5,7 +5,8 @@ import { Request, Response } from 'express'
 export const GroupMemberController = {
     allGroupMembers: async (req: Request, res: Response) => {
         try {
-            const { groupId, page, limit } = req.params;
+            const { groupId} = req.params;
+            const { page, limit } = req.query;
             const members = await GroupMemberUseCase.allGroupMembers(groupId, Number(page), Number(limit));
             res.status(200).json(members)
         } catch (error) {

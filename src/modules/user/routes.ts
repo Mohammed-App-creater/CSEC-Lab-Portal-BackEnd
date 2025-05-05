@@ -387,7 +387,7 @@ userRouter.post('/get-user-role', getUserRoleController);
  *                     type: string
  */
 
-userRouter.get('/get-users-by-role', getUsersByRoleController);
+userRouter.post('/get-users-by-role', getUsersByRoleController);
 
 
 /**

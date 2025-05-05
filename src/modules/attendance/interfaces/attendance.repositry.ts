@@ -1,5 +1,7 @@
 import { prisma } from "@shared/utils/prisma";
 import { getAllAttendances } from "../use-cases/get-all-attendance.use-case";
+import { AttendanceStatus } from "@prisma/client";
+import { get } from "http";
 
 
 
@@ -120,5 +122,71 @@ export const AttendanceRepository = {
                },
           })
      },
+
+     getAttendanceById: (id: string) => {
+          return prisma.attendance.findUnique({
+               where: {
+                    id: id
+               }
+          })
+     },
+     getAttendanceByEventId: (eventId: string) => {
+          return prisma.attendance.findMany({
+               where: {
+                    eventId: eventId
+               }
+          })
+     },
+     getAttendanceBySessionId: (sessionId: string) => {
+          return prisma.attendance.findMany({
+               where: {
+                    sessionId: sessionId
+               }
+          })
+     },
+
+     getAttendanceBySessionIdAndGroupId: (sessionId: string, groupId: string) => {
+          return prisma.attendance.findMany({
+               where: {
+                    sessionId: sessionId,
+                    user: {
+                         groups: {
+                              some: {
+                                   id: groupId
+                              }
+                         }
+                    },
+                    
+               },
+               select: {
+                    id: true,
+                    sessionId: true,
+                    userId: true,
+                    status: true,
+                    user: {
+                         select: {
+                              id: true,
+                              firstName: true,
+                              lastName: true,
+                              profileImageUrl: true,
+                         }
+                    },
+               },
+               
+          })
+     },
+     
+     createManyAttendancesBySessionId: (sessionId: string, userIds: string[]) => {
+         const data = userIds.map(userId => ({
+             sessionId,
+             userId,
+             status: AttendanceStatus.UNMARKED, 
+         }));
+     
+         return prisma.attendance.createMany({
+             data,
+             skipDuplicates: true,
+         });
+     }
 
 }

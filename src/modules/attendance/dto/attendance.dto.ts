@@ -12,3 +12,5 @@ export type AttendanceUserSummaryDto = {
     absent: number;
     updateAt: Date;
 }
+
+

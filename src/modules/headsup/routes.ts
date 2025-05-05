@@ -1,5 +1,7 @@
+import { he } from '@faker-js/faker/.';
 import { getAllHeadsUpController } from './controllers/get-all-headsup.controller'
 import { Router } from 'express';
+import { createHeadsUpController } from './controllers/create-headsup.conttroler';
 
 const headsUpRoutes = Router();
 
@@ -51,5 +53,7 @@ const headsUpRoutes = Router();
  */
 
 headsUpRoutes.post('/user-heads-up', getAllHeadsUpController)
+
+headsUpRoutes.post('/create', createHeadsUpController)
 
 export default headsUpRoutes;

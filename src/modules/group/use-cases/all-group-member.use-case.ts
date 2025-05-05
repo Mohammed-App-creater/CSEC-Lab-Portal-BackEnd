@@ -8,10 +8,10 @@ import { validateUUID } from '@/shared/utils/validateUUID';
 
 export const GroupMemberUseCase = {
   allGroupMembers: async (groupId: string, page?: number, limit?: number): Promise<AllGroupMemberDTO> => {
-    validateUUID(groupId);
     if (!groupId) {
       throw new Error('Group ID is required');
     }
+    validateUUID(groupId);
 
     if (page === undefined || page < 1) {
       throw new Error('Page number must be greater than 0');
@@ -19,7 +19,7 @@ export const GroupMemberUseCase = {
     if (limit === undefined || limit < 1) {
       throw new Error('Limit must be greater than 0');
     }
-    const Group = await GroupRepository.findBySessionId(groupId);
+    const Group = await GroupRepository.findById(groupId);
     return {
       groupName: Group?.name ?? '',
       groupId: Group?.id ?? '',

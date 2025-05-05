@@ -23,7 +23,7 @@ export const registerUserUseCase = async ({
   password,
   DivisionId,
   groupId,
-  gender
+  gender = "Male"
 }: RegisterUserDTO) => {
 
   if (!email || !password || !DivisionId || !groupId) {

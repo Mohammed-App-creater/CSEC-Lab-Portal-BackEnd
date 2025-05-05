@@ -29,6 +29,18 @@ export const sessionRepository = {
         });
         return session;
     },
+    getSessionBySessionIdAndGroupId: async (sessionId: string, groupId: string) => {
+        const session = await prisma.sessions.findFirst({
+            where: {
+                id: sessionId,
+                targetGroups: { some: { id: groupId } },
+            },
+            include: {
+                timeSlot: true,
+            },
+        });
+        return session;
+    },
     getSessionByTitle: async (title: string) => {
         const session = await prisma.sessions.findFirst({
             where: { title },

@@ -3,6 +3,8 @@ import { AttendanceRateController } from './controllers/attendance-rate.controll
 import { AllAttendanceController } from './controllers/all-attendance.controller';
 import { userAttendanceSummaryController } from './controllers/user-attendaance-summary.controller';
 import { getAllAttendanceController } from './controllers/getAllAttendance.controller';
+import { getAttendanceBySessionIdAndGroupIdController, getAttendanceBySessionIdController } from './controllers/get-attendance-sessionId.controller';
+import { createGroupSessionAttendanceController } from './controllers/create.session-attendance';
 
 
 const attendanceRoutes = Router();
@@ -194,5 +196,85 @@ attendanceRoutes.post('/user-attendance-summary', userAttendanceSummaryControlle
 
 
 attendanceRoutes.get('/get-all-attendance', getAllAttendanceController);
+
+/**
+ * @swagger
+ * /api/attendance/session-attendance/{sessionId}:
+ *   get:
+ *     summary: Get attendance by session ID
+ *     tags:
+ *       - Attendance
+ *     parameters:
+ *       - name: sessionId
+ *         in: path
+ *         required: true
+ *         description: The ID of the session to retrieve attendance for.
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: Successful response with attendance data.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Attendance'
+ *
+ *       400:
+ *        description: Bad request - Invalid session ID format.
+ *        content:
+ *          application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *             message:
+ *              type: string
+ *             example: Invalid session ID format.
+ */
+
+attendanceRoutes.get('/session-attendance/:sessionId', getAttendanceBySessionIdController);
+
+/**
+ * @swagger
+ * /api/attendance/create-session-attendance:
+ *   post:
+ *     summary: Create attendance for a session
+ *     tags:
+ *       - Attendance
+ *     parameters:
+ *       - name: sessionId
+ *         in: path
+ *         required: true
+ *         description: The ID of the session to create attendance for.
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 format: uuid
+ *                 description: The ID of the user to create attendance for.
+ *
+ *     responses:
+ *       201:
+ *         description: Attendance created successfully.
+ *
+ *       400:
+ *         description: Bad request - Invalid session ID or user ID format.
+ *
+ */
+
+attendanceRoutes.post('/create-session-attendance/:sessionId', createGroupSessionAttendanceController)
+
+attendanceRoutes.get('/sessions/:sessionId/groupId/:groupId', getAttendanceBySessionIdAndGroupIdController);
+
 
 export default attendanceRoutes;

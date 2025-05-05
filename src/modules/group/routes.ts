@@ -51,7 +51,7 @@ import { getAllGroupsByDivisionIdController } from './controllers/get-all-grooup
  */
 
 
-groupRouter.get('/group-member/:groupId/members/:page/limit/:limit', GroupMemberController.allGroupMembers);
+groupRouter.get('/group-member/:groupId', GroupMemberController.allGroupMembers);
 
 /**
  * @swagger

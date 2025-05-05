@@ -2,7 +2,6 @@ import { Router } from 'express';
 import { CountUpcomingSessionController } from './controllers/count-upcoming-session';
 import { getAllSessionsController } from './controllers/get-all-sessions.controller';
 import { getSessionsByGroupIdController } from './controllers/get-session-by-groupId.controller';
-import { CreateEventController } from '../_event/controllers/create-event.controller';
 import { createSessionController } from './controllers/create-session.controller';
 import { getUpcomingSessionsController } from './controllers/upcoming-sessions.controller'
 
@@ -467,6 +466,7 @@ sessionRoutes.post('/create', createSessionController);
 
 
 sessionRoutes.get("/sessions/upcoming", getUpcomingSessionsController);
+
 
 
 

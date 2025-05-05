@@ -6,7 +6,6 @@ import { UserDTO, UserSettingDTO, UserUniversityInfoDTO } from '../dto/user.dto'
 import { normalizeUndefinedToNull } from '@shared/utils/normalizeUndefinedToNull'; // adjust path as needed
 import { getRoleByNameUseCase } from '@modules/role/use-cases/get-role-by-name.use-case';
 import { BaseError } from '@/shared/errors/BaseError';
-import { w } from '@faker-js/faker/dist/airline-BUL6NtOJ';
 
 
 
@@ -63,6 +62,7 @@ export const getUsersByRole = {
         isDeleted: false,
       },
       select: {
+        id: true,
         firstName: true,
         middleName: true,
         lastName: true,
