@@ -7,6 +7,11 @@ import { validateUUID } from '@/shared/utils/validateUUID';
 
 
 export const getUserProfile = async (userId: string): Promise<UserProfileDTO> => {
+    if (!userId) {
+        throw new BaseError('User ID is required', 400);
+    }
+    validateUUID(userId);
+
     const user = await findById.findById(userId);
     if (!user || !user.id) {
         throw new BaseError('User not found or invalid user data');

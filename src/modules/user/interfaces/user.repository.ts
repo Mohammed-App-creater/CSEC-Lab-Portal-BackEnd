@@ -92,8 +92,34 @@ export const existingUser = {
       where: { email },
     });
     return user;
+  },
+  existingUserInGroup: async (groupId: string, email: string) => {
+    const user = await prisma.user.findFirst({
+      where: {
+        email,
+        groups: {
+          some: {
+            id: groupId,
+          },
+        },
+      },
+    });
+    return user;
   }
-}
+};
+
+export const connectUserToGroup = {
+  connectUserToGroup: async (userId: string, groupId: string) => {
+    return prisma.user.update({
+      where: { id: userId },
+      data: {
+        groups: {
+          connect: { id: groupId },
+        },
+      },
+    });
+  }
+};
 
 export const findById = {
   findById: (id: string) => {
@@ -249,6 +275,12 @@ export const FindAllUsers = {
         specialty: true,
         cvUrl: true,
         lastSeen: true,
+        Divisions: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         universityInfo: {
           select: {
             currentYear: true,

@@ -3,7 +3,7 @@ import { hashPassword } from '@shared/utils/hashPassword';
 import jwt from 'jsonwebtoken'; // optional
 import dotenv from 'dotenv';
 import { sendRegistrationEmail } from '@shared/exceptions/emailService';
-import { CreateUser, existingUser } from '../interfaces/user.repository';
+import { CreateUser, existingUser, connectUserToGroup } from '../interfaces/user.repository';
 import { prisma } from '@/shared/utils/prisma';
 import { getRoleByIdUseCase } from '@/modules/role/use-cases/get-role-by-id.use-case';
 import { BaseError } from '@/shared/errors/BaseError';
@@ -57,8 +57,18 @@ export const registerUserUseCase = async ({
   }
 
   const ExistingUser = await existingUser.existingUser(email);
-  if (ExistingUser) {
-    return { message: 'Email already registered' };
+  const ExistingUserInGroup = await existingUser.existingUserInGroup(groupId, email);
+
+  if (ExistingUser && ExistingUserInGroup) {
+    throw new BaseError("message: User already registered in this group", 409);
+  }
+
+  if (ExistingUser && !ExistingUserInGroup) {
+    console.log('Existing user found:', ExistingUser.id, 'Group ID:', groupId);
+    await connectUserToGroup.connectUserToGroup( ExistingUser.id, groupId);
+    return {
+      message: 'User successfully Connected to group',
+    };
   }
 
   const HashedPassword = await hashPassword(password);

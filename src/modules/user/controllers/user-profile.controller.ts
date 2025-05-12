@@ -8,6 +8,7 @@ export const getUserProfileController = async (req: Request, res: Response, next
         const userId = req.body.userId;
         if (!userId) {
             res.status(400).json({ error: 'User ID is required' });
+            return;
         }
         const userProfile: UserProfileDTO = await getUserProfile(userId);
         res.status(200).json(userProfile);

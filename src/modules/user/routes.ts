@@ -14,6 +14,8 @@ import { logoutController } from './controllers/logout.controller';
 import { authMiddleware } from './middlewares/authMiddleware';
 import { getUserById } from './use-cases/get-user-by-id';
 import { getUserByIdController } from './controllers/get-user-by-id.controller';
+import { jwtValidator } from '@/app/middleware/JWTValidator';
+import { validateTokenController } from './controllers/validateToken.controller';
 
 const userRouter = Router();
 
@@ -100,6 +102,9 @@ userRouter.post('/login', loginController);
  */
 
 userRouter.post('/register', registerController);
+
+
+userRouter.get('/validate-token', jwtValidator, validateTokenController);
 
 /**
  * @swagger

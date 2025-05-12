@@ -1,8 +1,8 @@
 import { getUserAttendanceSummary } from '../use-cases/user-attendance-summry.use-case';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 
-export const userAttendanceSummaryController = async (req: Request, res: Response) => {
+export const userAttendanceSummaryController = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = req.body.id;
         const attendanceSummary = await getUserAttendanceSummary(userId);
@@ -11,9 +11,6 @@ export const userAttendanceSummaryController = async (req: Request, res: Respons
             data: attendanceSummary
         });
     } catch (error) {
-        res.status(500).json({
-            status: 'error',
-            message: error instanceof Error ? error.message : 'An unknown error occurred'
-        });
+       next(error);
     }
 };
