@@ -9,6 +9,7 @@ const allowedOrigins = [
   'http://localhost:3004',
   'https://your-prod-site.com',
   'https://lab-project-frontend-3xxp.vercel.app/',
+  'https://lab-project-frontend-3xxp.vercel.app'
 ];
 
 export const corsOptions: CorsOptions = {
