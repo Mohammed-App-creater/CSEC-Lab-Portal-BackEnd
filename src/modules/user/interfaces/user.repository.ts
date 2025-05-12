@@ -66,6 +66,7 @@ export const getUsersByRole = {
         firstName: true,
         middleName: true,
         lastName: true,
+        profileImageUrl: true,
         Divisions: {
           select: {
             id: true,
@@ -124,6 +125,15 @@ export const connectUserToGroup = {
 export const findById = {
   findById: (id: string) => {
     return prisma.user.findUnique({ where: { id } });
+  }
+};
+
+export const updateUserRole = {
+  updateUserRole: async (userId: string, roleId: string) => {
+    return prisma.user.update({
+      where: { id: userId },
+      data: { roleId },
+    });
   }
 };
 

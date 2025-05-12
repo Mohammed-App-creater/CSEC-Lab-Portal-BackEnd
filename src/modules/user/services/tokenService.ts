@@ -35,6 +35,7 @@ export const validateRefreshToken = async (token: string) => {
 export const revokeRefreshToken = async (token: string) => {
     // await prisma.refreshToken.deleteMany();
     console.log("Token to revoke:", token)  
+    
     await prisma.refreshToken.findUnique({ where: { token } })
         .then((record) => {
             if (!record) {
@@ -48,7 +49,7 @@ export const revokeRefreshToken = async (token: string) => {
             throw new Error(`Error finding token: ${error.message}`)
         })
     await prisma.refreshToken.update({
-        where: { token: "4d2728ca-1f03-435c-a751-e4609bd66395" },
+        where: { token: token },
         data: { revoked: true },
     })
 }

@@ -103,6 +103,8 @@ userRouter.post('/login', loginController);
 
 userRouter.post('/register', registerController);
 
+userRouter.patch('/update-user-role', updateUserRoleController);
+
 
 userRouter.get('/validate-token', jwtValidator, validateTokenController);
 
