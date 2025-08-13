@@ -21,6 +21,8 @@ import eventRouter from './modules/_event/routes';
 import cookieParser from 'cookie-parser';
 import DivisionResourceRouter from './modules/divisionResorce/route';
 import { jwtValidator } from './app/middleware/JWTValidator';
+import { Request, Response } from "express";
+
 
 
 
@@ -52,6 +54,34 @@ app.use('/api/group', groupRouter);
 app.use('/api/headsup', headsUpRoutes);
 app.use('/api/role', roleRouter);
 app.use('/api/division-resources', DivisionResourceRouter);
+
+app.get('/api/astumsjbootcamp', (req: Request, res: Response) => {
+  res.status(200).json({
+    message: 'Welcome to ASTUMSJ Bootcamp API',
+    version: '1.0.0',
+    The_Password: '+2519x20y4y8z',
+    Hint: 'Replace x, y, and z with the code you get in the lecture'
+  });
+});
+
+app.post('/api/astumsjbootcamp', (req: Request, res: Response) => {
+  const { password } = req.body;
+  if(!password){
+    return res.status(400).json({
+      message: 'Password is required'
+    });
+  }
+  if (password === '+251972014889') {
+    return res.status(200).json({
+      message: 'Congratulations! You have successfully completed the ASTUMSJ Bootcamp challenge.',
+      your_reward: 'I love you from Mohammed Sadik'
+    });
+  } else {
+    return res.status(401).json({
+      message: 'Incorrect Password'
+    });
+  }
+});
 
 
 // Error handling middleware
