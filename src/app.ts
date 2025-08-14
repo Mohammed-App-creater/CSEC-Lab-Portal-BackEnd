@@ -78,7 +78,7 @@ app.post('/api/astumsjbootcamp', (req: Request, res: Response) => {
     });
     return;
   }
-  if (password === '+534435') {
+  if (password === '534435') {
     res.status(200).json({
       message: 'Congratulations! You have successfully completed the ASTUMSJ Bootcamp challenge.',
       your_reward: 'You have unlocked the secret code: 552294. send this code to the instructor to claim your reward.'
