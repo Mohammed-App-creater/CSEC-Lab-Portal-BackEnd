@@ -59,7 +59,7 @@ app.get('/api/astumsjbootcamp', (req: Request, res: Response) => {
   res.status(200).json({
     message: 'Welcome to ASTUMSJ Bootcamp API',
     version: '1.0.0',
-    The_Password: '+2519x20y4y8z',
+    The_Password: '+2519( x + 4)20( y-3 )488( z + 4 )',
     Hint: 'Replace x, y, and z with the code you get in the lecture'
   });
 });
