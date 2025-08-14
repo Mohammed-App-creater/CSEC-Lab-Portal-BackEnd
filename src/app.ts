@@ -59,7 +59,7 @@ app.get('/api/astumsjbootcamp', (req: Request, res: Response) => {
   res.status(200).json({
     message: 'Welcome to ASTUMSJ Bootcamp API',
     version: '1.0.0',
-    The_Password: '+2519( x + 4)20( y-3 )488( z + 4 )',
+    The_Password: '5x4y3z',
     Hint: 'Replace x, y, and z with the code you get in the lecture'
   });
 });
@@ -78,10 +78,10 @@ app.post('/api/astumsjbootcamp', (req: Request, res: Response) => {
     });
     return;
   }
-  if (password === '+251972014889') {
+  if (password === '+534435') {
     res.status(200).json({
       message: 'Congratulations! You have successfully completed the ASTUMSJ Bootcamp challenge.',
-      your_reward: 'I love you from Mohammed Sadik'
+      your_reward: 'You have unlocked the secret code: 552294. send this code to the instructor to claim your reward.'
     });
     return;
   } else {
