@@ -65,21 +65,30 @@ app.get('/api/astumsjbootcamp', (req: Request, res: Response) => {
 });
 
 app.post('/api/astumsjbootcamp', (req: Request, res: Response) => {
+  if (!req.body || !req.body.password) {
+    res.status(400).json({
+      message: 'Password is required'
+    }); 
+    return;
+  }
   const { password } = req.body;
   if(!password){
-    return res.status(400).json({
+    res.status(400).json({
       message: 'Password is required'
     });
+    return;
   }
   if (password === '+251972014889') {
-    return res.status(200).json({
+    res.status(200).json({
       message: 'Congratulations! You have successfully completed the ASTUMSJ Bootcamp challenge.',
       your_reward: 'I love you from Mohammed Sadik'
     });
+    return;
   } else {
-    return res.status(401).json({
+    res.status(401).json({
       message: 'Incorrect Password'
     });
+    return;
   }
 });
 
